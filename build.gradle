@@ -40,8 +40,9 @@ subprojects {
         }
     }
 
-    task cucumber {
-        dependsOn assemble, compileTestJava
+    task cucumber(type: Test, dependsOn: [assemble, compileTestJava]) {
+        group = "Verification"
+        description = "Runs acceptance tests"
         doLast {
             javaexec {
                 main = "cucumber.api.cli.Main"
@@ -50,4 +51,5 @@ subprojects {
             }
         }
     }
+    test.dependsOn cucumber
 }
