@@ -32,6 +32,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void addQuestion(String question, int quizId) {
+        if (question == null || question.trim().isEmpty()) throw new IllegalArgumentException();
         Quiz quiz = quizMap.get(quizId);
         Question question1 = quizClient.createQuestion(question);
         quiz.addQuestion(question1);

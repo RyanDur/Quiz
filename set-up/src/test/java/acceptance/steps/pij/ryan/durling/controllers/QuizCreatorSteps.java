@@ -98,4 +98,25 @@ public class QuizCreatorSteps {
         assertTrue(expected);
     }
 
+    @Given("^I add an empty question like \"([^\"]*)\"$")
+    public void I_add_an_empty_question_like(String question) throws Throwable {
+        boolean expected = false;
+        try {
+            quizCreator.addQuestion(question, quizId);
+        } catch (IllegalArgumentException e) {
+            expected = true;
+        }
+        assertTrue(expected);
+    }
+
+    @Given("^I try to add a null question$")
+    public void I_try_to_add_a_null_question() throws Throwable {
+        boolean expected = false;
+        try {
+            quizCreator.addQuestion(null, quizId);
+        } catch (IllegalArgumentException e) {
+            expected = true;
+        }
+        assertTrue(expected);
+    }
 }

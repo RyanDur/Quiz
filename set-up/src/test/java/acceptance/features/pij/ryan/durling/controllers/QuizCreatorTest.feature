@@ -32,7 +32,6 @@ Feature: The ability to create quiz's
   Scenario: should not be able to make a quiz with null for a name
     Given I create a quiz named null
 
-
   Scenario Outline: should be able to add a question to a quiz
     Given I create a quiz named <name>
     When I add a question like <question>
@@ -42,3 +41,14 @@ Feature: The ability to create quiz's
     | name  | question |
     | "foo" | "bar?"   |
     | "bar" | "foo?"   |
+
+  Scenario Outline: should not be able to add an empty question
+    Given I add an empty question like <question>
+
+  Examples:
+    | question |
+    | ""       |
+    | " "      |
+
+  Scenario: should not be able to add a null question
+    Given I try to add a null question
