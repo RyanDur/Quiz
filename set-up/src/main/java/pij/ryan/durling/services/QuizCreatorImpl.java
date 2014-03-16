@@ -1,22 +1,22 @@
-package pij.ryan.durling.controllers;
+package pij.ryan.durling.services;
 
-import pij.ryan.durling.client.QuizClient;
+import pij.ryan.durling.servers.QuizServer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 
 public class QuizCreatorImpl implements QuizCreator {
 
-    private final QuizClient quizClient;
+    private final QuizServer quizServer;
     private Quiz quiz;
 
-    public QuizCreatorImpl(QuizClient quizClient) {
-        this.quizClient = quizClient;
+    public QuizCreatorImpl(QuizServer quizServer) {
+        this.quizServer = quizServer;
     }
 
     @Override
     public int create(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException();
-        quiz = quizClient.createQuiz(name);
+        quiz = quizServer.createQuiz(name);
         return quiz.getId();
     }
 
@@ -34,14 +34,14 @@ public class QuizCreatorImpl implements QuizCreator {
     @Override
     public void save() {
         if (quiz != null) {
-            quizClient.save(quiz);
+            quizServer.save(quiz);
         }
     }
 
     @Override
     public Question createQuestion(String question) throws IllegalArgumentException {
         if (inValid(question)) throw new IllegalArgumentException();
-        return quizClient.createQuestion(question);
+        return quizServer.createQuestion(question);
     }
 
     private boolean inValid(Question question) {

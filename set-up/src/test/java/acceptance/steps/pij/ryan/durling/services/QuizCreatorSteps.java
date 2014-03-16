@@ -1,13 +1,13 @@
-package acceptance.steps.pij.ryan.durling.controllers;
+package acceptance.steps.pij.ryan.durling.services;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import pij.ryan.durling.client.QuizClient;
-import pij.ryan.durling.controllers.QuizCreator;
-import pij.ryan.durling.controllers.QuizCreatorImpl;
+import pij.ryan.durling.servers.QuizServer;
+import pij.ryan.durling.services.QuizCreator;
+import pij.ryan.durling.services.QuizCreatorImpl;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 public class QuizCreatorSteps {
 
     private QuizCreator quizCreator;
-    private QuizClient mockQuizClient = mock(QuizClient.class);
+    private QuizServer mockQuizServer = mock(QuizServer.class);
     private Quiz mockQuiz = mock(Quiz.class);
     private Question mockQuestion = mock(Question.class);
     private Integer quizId;
@@ -38,7 +38,7 @@ public class QuizCreatorSteps {
 
     @Given("^a user has a quiz creator$")
     public void a_user_has_a_quiz_creator() throws Throwable {
-        quizCreator = new QuizCreatorImpl(mockQuizClient);
+        quizCreator = new QuizCreatorImpl(mockQuizServer);
     }
 
     @When("^a user creates a quiz named \"([^\"]*)\"$")
@@ -48,7 +48,7 @@ public class QuizCreatorSteps {
 
         when(mockQuiz.getName()).thenReturn(name);
         when(mockQuiz.getId()).thenReturn(id);
-        when(mockQuizClient.createQuiz(anyString())).thenReturn(mockQuiz);
+        when(mockQuizServer.createQuiz(anyString())).thenReturn(mockQuiz);
 
         try {
             quizId = quizCreator.create(name);
@@ -63,14 +63,14 @@ public class QuizCreatorSteps {
 
         assertThat(actual.getName(), is(equalTo(expected)));
         assertThat(thrown, is(nullValue()));
-        verify(mockQuizClient).createQuiz(anyString());
+        verify(mockQuizServer).createQuiz(anyString());
         verify(mockQuiz).getId();
     }
 
     @Then("^a quiz should not be created$")
     public void a_quiz_should_not_be_created() throws Throwable {
         assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
-        verify(mockQuizClient, never()).createQuiz(anyString());
+        verify(mockQuizServer, never()).createQuiz(anyString());
     }
 
     @And("^not return the quiz ID$")
@@ -92,12 +92,6 @@ public class QuizCreatorSteps {
         }
     }
 
-    private Set<Question> getQuestions(Question... mockQuestions) {
-        Set<Question> questions = new HashSet<>();
-        addAll(questions, mockQuestions);
-        return questions;
-    }
-
     @And("^a user adds a question$")
     public void a_user_adds_a_question() throws Throwable {
         // Express the Regexp above with the code you wish you had
@@ -107,7 +101,7 @@ public class QuizCreatorSteps {
     @Then("^the question should be added$")
     public void the_question_should_be_added() throws Throwable {
         assertThat(thrown, is(not(instanceOf(IllegalArgumentException.class))));
-        verify(mockQuizClient).createQuestion(anyString());
+        verify(mockQuizServer).createQuestion(anyString());
         verify(mockQuiz).addQuestion(eq(mockQuestion));
     }
 
@@ -120,7 +114,7 @@ public class QuizCreatorSteps {
     @Then("^the question should not be created$")
     public void the_question_should_not_be_created() throws Throwable {
         assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
-        verify(mockQuizClient, never()).createQuestion(anyString());
+        verify(mockQuizServer, never()).createQuestion(anyString());
     }
 
     @When("^a user saves the quiz$")
@@ -130,7 +124,7 @@ public class QuizCreatorSteps {
 
     @Then("^the quiz should not be saved$")
     public void the_quiz_should_not_be_saved() throws Throwable {
-        verify(mockQuizClient, never()).save(eq(mockQuiz));
+        verify(mockQuizServer, never()).save(eq(mockQuiz));
     }
 
     @And("^return the quiz ID$")
@@ -140,13 +134,13 @@ public class QuizCreatorSteps {
 
     @Then("^the quiz should be saved$")
     public void the_quiz_should_be_saved() throws Throwable {
-        verify(mockQuizClient).save(eq(mockQuiz));
+        verify(mockQuizServer).save(eq(mockQuiz));
     }
 
     @And("^a user creates a question with \"([^\"]*)\"$")
     public void a_user_creates_a_question_with(String questionString) throws Throwable {
         if (nullValue.equals(questionString)) questionString = null;
-        when(mockQuizClient.createQuestion(anyString())).thenReturn(mockQuestion);
+        when(mockQuizServer.createQuestion(anyString())).thenReturn(mockQuestion);
 
         try {
             question = quizCreator.createQuestion(questionString);
@@ -158,5 +152,11 @@ public class QuizCreatorSteps {
     @And("^adds the question to the quiz$")
     public void adds_the_question_to_the_quiz() throws Throwable {
         quizCreator.addQuestion(question);
+    }
+
+    private Set<Question> getQuestions(Question... mockQuestions) {
+        Set<Question> questions = new HashSet<>();
+        addAll(questions, mockQuestions);
+        return questions;
     }
 }

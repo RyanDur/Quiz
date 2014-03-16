@@ -1,4 +1,4 @@
-package pij.ryan.durling.controllers;
+package pij.ryan.durling.services;
 
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
