@@ -5,6 +5,7 @@ import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuizCreatorImpl implements QuizCreator {
@@ -36,6 +37,19 @@ public class QuizCreatorImpl implements QuizCreator {
         Quiz quiz = quizMap.get(quizId);
         Question question1 = quizClient.createQuestion(question);
         quiz.addQuestion(question1);
+    }
+
+    @Override
+    public void save(int quizId) {
+        Quiz quiz = quizMap.get(quizId);
+        if (quiz != null) {
+            quizClient.save(quiz);
+        }
+    }
+
+    @Override
+    public List<Quiz> getQuizzes() {
+        return quizClient.getQuizList();
     }
 
     private boolean inValid(String argument) {

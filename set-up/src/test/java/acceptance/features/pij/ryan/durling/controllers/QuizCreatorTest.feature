@@ -52,3 +52,18 @@ Feature: The ability to create quiz's
 
   Scenario: should not be able to add a null question
     Given I try to add a null question
+
+
+  Scenario Outline: should be able to save it to the server
+    Given I create a quiz named <name>
+    When I save it to the server
+    Then I should be able to retrieve it
+
+  Examples:
+    | name  |
+    | "foo" |
+    | "bar" |
+
+  Scenario: should not be able to save a null quiz
+    When I try to save null to the server
+    Then the server should not be called

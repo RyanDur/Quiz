@@ -3,8 +3,6 @@ package acceptance.steps.pij.ryan.durling.controllers;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 import pij.ryan.durling.client.QuizClient;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.controllers.QuizCreatorImpl;
@@ -22,9 +20,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class QuizCreatorSteps {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     private QuizCreator quizCreator;
     private int quizId;
@@ -118,5 +113,30 @@ public class QuizCreatorSteps {
             expected = true;
         }
         assertTrue(expected);
+    }
+
+    @When("^I save it to the server$")
+    public void I_save_it_to_the_server() throws Throwable {
+        quizCreator.save(quizId);
+        verify(mockQuizClient).save(eq(mockQuiz));
+    }
+
+    @Then("^I should be able to retrieve it$")
+    public void I_should_be_able_to_retrieve_it() throws Throwable {
+        List<Quiz> quizList = Arrays.asList(mockQuiz);
+        when(mockQuizClient.getQuizList()).thenReturn(quizList);
+        Quiz actual = quizCreator.getQuizzes().get(0);
+
+        assertThat(mockQuiz, is(equalTo(actual)));
+    }
+
+    @When("^I try to save null to the server$")
+    public void I_try_to_save_null_to_the_server() throws Throwable {
+        quizCreator.save(quizId);
+    }
+
+    @Then("^the server should not be called$")
+    public void the_server_should_not_be_called() throws Throwable {
+        verify(mockQuizClient, never()).save(null);
     }
 }
