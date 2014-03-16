@@ -1,17 +1,16 @@
 package pij.ryan.durling.controllers;
 
+import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
-
-import java.util.List;
 
 public interface QuizCreator {
     int create(String name);
 
     Quiz getQuiz();
 
-    void addQuestion(String question);
+    void addQuestion(Question question);
 
     void save();
 
-    List<Quiz> getQuizzes();
+    Question createQuestion(String question);
 }

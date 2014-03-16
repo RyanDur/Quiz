@@ -1,7 +1,7 @@
 Feature: The ability to create quiz's
 
   As a Quiz master
-  I want to be able to make a quiz's
+  I want to be able to make a quiz
   So that a player can have fun.
 
   The set-up client program should enable a user who wishes to organise an electronic
@@ -35,18 +35,19 @@ Feature: The ability to create quiz's
 
   Scenario Outline: should be able to add a question to a quiz
     When a user creates a quiz named <name>
-    And a user adds a question like <question>
-    Then the quiz should have that <question>
+    And a user creates a question with <question>
+    And adds the question to the quiz
+    Then the question should be added
 
   Examples:
     | name  | question |
-    | "foo" | "bar?"   |
-    | "bar" | "foo?"   |
+    | "foo" | "foo?"   |
+    | "bar" | "bar?"   |
 
-  Scenario Outline: should not be able to add an empty question
+  Scenario Outline: should not be able to create an empty question
     When a user creates a quiz named <name>
-    And a user adds a question like <question>
-    Then the question should not be added
+    And a user creates a question with <question>
+    Then the question should not be created
 
   Examples:
     | name  | question |
@@ -57,7 +58,7 @@ Feature: The ability to create quiz's
   Scenario Outline: should be able to save it to the server
     When a user creates a quiz named <name>
     And a user saves the quiz
-    Then a user should be able to retrieve it
+    Then the quiz should be saved
 
   Examples:
     | name  |
