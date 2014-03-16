@@ -18,7 +18,8 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public int create(String name) {
+    public int create(String name) throws IllegalArgumentException {
+        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException();
         Quiz quiz = quizClient.create(name);
         quizMap.put(quiz.getId(), quiz);
         return quiz.getId();

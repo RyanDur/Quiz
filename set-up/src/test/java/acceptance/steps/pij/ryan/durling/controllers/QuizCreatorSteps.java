@@ -3,9 +3,11 @@ package acceptance.steps.pij.ryan.durling.controllers;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
+import pij.ryan.durling.Client.QuizClient;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.controllers.QuizCreatorImpl;
-import pij.ryan.durling.Client.QuizClient;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 
@@ -15,10 +17,14 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class QuizCreatorSteps {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private QuizCreator quizCreator;
     private int quizId;
@@ -69,4 +75,27 @@ public class QuizCreatorSteps {
 
         assertThat(actual.getQuestion(), is(equalTo(expected)));
     }
+
+    @Given("^I create a quiz without a \"([^\"]*)\"$")
+    public void I_create_a_quiz_without_a(String name) throws Throwable {
+        boolean expected = false;
+        try {
+            quizCreator.create(name);
+        } catch (IllegalArgumentException e) {
+            expected = true;
+        }
+        assertTrue(expected);
+    }
+
+    @Given("^I create a quiz named null$")
+    public void I_create_a_quiz_named_null() throws Throwable {
+        boolean expected = false;
+        try {
+            quizCreator.create(null);
+        } catch (IllegalArgumentException e) {
+            expected = true;
+        }
+        assertTrue(expected);
+    }
+
 }

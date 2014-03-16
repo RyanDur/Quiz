@@ -9,8 +9,10 @@ Feature: The ability to create quiz's
   for the quiz, and a set of possible answers for each question. This will return a quiz game
   id.
 
-  Scenario Outline: should be able to name a quiz
+  Background:
     Given I have a quiz creator
+
+  Scenario Outline: should be able to name a quiz
     When I create a quiz named <name>
     Then I should have a quiz with the name <name>
 
@@ -19,9 +21,20 @@ Feature: The ability to create quiz's
     | "foo" |
     | "bar" |
 
+  Scenario Outline: should not be able to make a quiz without a name
+    Given I create a quiz without a <name>
+
+  Examples:
+    | name |
+    | ""   |
+    | " "  |
+
+  Scenario: should not be able to make a quiz with null for a name
+    Given I create a quiz named null
+
+
   Scenario Outline: should be able to add a question to a quiz
-    Given I have a quiz creator
-    And I create a quiz named <name>
+    Given I create a quiz named <name>
     When I add a question like <question>
     Then the quiz should have that <question>
 
