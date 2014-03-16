@@ -7,11 +7,11 @@ import java.util.List;
 public interface QuizCreator {
     int create(String name);
 
-    Quiz get(int quizId);
+    Quiz getQuiz();
 
-    void addQuestion(String question, int quizId);
+    void addQuestion(String question);
 
-    void save(int quizId);
+    void save();
 
     List<Quiz> getQuizzes();
 }

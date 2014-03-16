@@ -4,44 +4,38 @@ import pij.ryan.durling.client.QuizClient;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class QuizCreatorImpl implements QuizCreator {
 
     private final QuizClient quizClient;
-    private final Map<Integer,Quiz> quizMap;
+    private Quiz quiz;
 
     public QuizCreatorImpl(QuizClient quizClient) {
         this.quizClient = quizClient;
-        quizMap = new HashMap<>();
     }
 
     @Override
     public int create(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException();
-        Quiz quiz = quizClient.createQuiz(name);
-        quizMap.put(quiz.getId(), quiz);
+        quiz = quizClient.createQuiz(name);
         return quiz.getId();
     }
 
     @Override
-    public Quiz get(int quizId) {
-        return quizMap.get(quizId);
+    public Quiz getQuiz() {
+        return quiz;
     }
 
     @Override
-    public void addQuestion(String question, int quizId) throws IllegalArgumentException {
+    public void addQuestion(String question) throws IllegalArgumentException {
         if (inValid(question)) throw new IllegalArgumentException();
-        Quiz quiz = quizMap.get(quizId);
         Question question1 = quizClient.createQuestion(question);
         quiz.addQuestion(question1);
     }
 
     @Override
-    public void save(int quizId) {
-        Quiz quiz = quizMap.get(quizId);
+    public void save() {
         if (quiz != null) {
             quizClient.save(quiz);
         }
