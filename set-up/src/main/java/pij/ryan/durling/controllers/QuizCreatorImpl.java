@@ -20,7 +20,7 @@ public class QuizCreatorImpl implements QuizCreator {
     @Override
     public int create(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException();
-        Quiz quiz = quizClient.create(name);
+        Quiz quiz = quizClient.createQuiz(name);
         quizMap.put(quiz.getId(), quiz);
         return quiz.getId();
     }

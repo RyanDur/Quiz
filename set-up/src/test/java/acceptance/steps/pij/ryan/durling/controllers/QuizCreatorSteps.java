@@ -43,10 +43,10 @@ public class QuizCreatorSteps {
         mockQuiz = mock(Quiz.class);
         when(mockQuiz.getName()).thenReturn(name);
         when(mockQuiz.getId()).thenReturn(id);
-        when(mockQuizClient.create(anyString())).thenReturn(mockQuiz);
+        when(mockQuizClient.createQuiz(anyString())).thenReturn(mockQuiz);
 
         quizId = quizCreator.create(name);
-        verify(mockQuizClient).create(anyString());
+        verify(mockQuizClient).createQuiz(anyString());
     }
 
     @Then("^I should have a quiz with the name \"([^\"]*)\"$")
