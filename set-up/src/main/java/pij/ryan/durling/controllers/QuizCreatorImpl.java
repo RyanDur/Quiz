@@ -19,7 +19,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public int create(String name) throws IllegalArgumentException {
-        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException();
+        if (valid(name)) throw new IllegalArgumentException();
         Quiz quiz = quizClient.create(name);
         quizMap.put(quiz.getId(), quiz);
         return quiz.getId();
@@ -32,9 +32,13 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void addQuestion(String question, int quizId) throws IllegalArgumentException {
-        if (question == null || question.trim().isEmpty()) throw new IllegalArgumentException();
+        if (valid(question)) throw new IllegalArgumentException();
         Quiz quiz = quizMap.get(quizId);
         Question question1 = quizClient.createQuestion(question);
         quiz.addQuestion(question1);
+    }
+
+    private boolean valid(String argument) {
+        return argument == null || argument.trim().isEmpty();
     }
 }
