@@ -23,19 +23,18 @@ public class QuizCreatorSteps {
 
     private QuizCreator quizCreator;
     private int quizId;
-    private QuizClient mockQuizClient;
-    private Quiz mockQuiz;
+    private QuizClient mockQuizClient = mock(QuizClient.class);
+    private Quiz mockQuiz = mock(Quiz.class);
+    private Question mockQuestion = mock(Question.class);
 
-    @Given("^I have a quiz creator$")
-    public void I_have_a_quiz_creator() throws Throwable {
-        mockQuizClient = mock(QuizClient.class);
+    @Given("^a user has a quiz creator$")
+    public void a_user_has_a_quiz_creator() throws Throwable {
         quizCreator = new QuizCreatorImpl(mockQuizClient);
     }
 
-    @When("^I create a quiz named \"([^\"]*)\"$")
-    public void I_create_a_quiz_named(String name) throws Throwable {
+    @When("^a user creates a quiz named \"([^\"]*)\"$")
+    public void a_user_creates_a_quiz_named(String name) throws Throwable {
         int id = 3;
-        mockQuiz = mock(Quiz.class);
         when(mockQuiz.getName()).thenReturn(name);
         when(mockQuiz.getId()).thenReturn(id);
         when(mockQuizClient.createQuiz(anyString())).thenReturn(mockQuiz);
@@ -44,16 +43,15 @@ public class QuizCreatorSteps {
         verify(mockQuizClient).createQuiz(anyString());
     }
 
-    @Then("^I should have a quiz with the name \"([^\"]*)\"$")
-    public void I_should_have_a_quiz_with_the_name(String expected) throws Throwable {
+    @Then("^they should have a quiz with the name \"([^\"]*)\"$")
+    public void they_should_have_a_quiz_with_the_name(String expected) throws Throwable {
         Quiz actual = quizCreator.get(quizId);
 
         assertThat(actual.getName(), is(equalTo(expected)));
     }
 
-    @When("^I add a question like \"([^\"]*)\"$")
-    public void I_add_a_question_like(String question) throws Throwable {
-        Question mockQuestion = mock(Question.class);
+    @When("^a user adds a question like \"([^\"]*)\"$")
+    public void a_user_adds_a_question_like(String question) throws Throwable {
         List<Question> questions = Arrays.asList(mockQuestion);
         when(mockQuizClient.createQuestion(anyString())).thenReturn(mockQuestion);
         when(mockQuiz.getQuestions()).thenReturn(questions);
@@ -61,6 +59,7 @@ public class QuizCreatorSteps {
 
         quizCreator.addQuestion(question, quizId);
         verify(mockQuizClient).createQuestion(anyString());
+        verify(mockQuiz).addQuestion(eq(mockQuestion));
     }
 
     @Then("^the quiz should have that \"([^\"]*)\"$")
@@ -71,8 +70,8 @@ public class QuizCreatorSteps {
         assertThat(actual.getQuestion(), is(equalTo(expected)));
     }
 
-    @Given("^I create a quiz without a \"([^\"]*)\"$")
-    public void I_create_a_quiz_without_a(String name) throws Throwable {
+    @When("^a user creates a quiz without a \"([^\"]*)\"$")
+    public void a_user_creates_a_quiz_without_a(String name) throws Throwable {
         boolean expected = false;
         try {
             quizCreator.create(name);
@@ -82,8 +81,8 @@ public class QuizCreatorSteps {
         assertTrue(expected);
     }
 
-    @Given("^I create a quiz named null$")
-    public void I_create_a_quiz_named_null() throws Throwable {
+    @Given("^a user creates a quiz named null$")
+    public void a_user_creates_a_quiz_named_null() throws Throwable {
         boolean expected = false;
         try {
             quizCreator.create(null);
@@ -93,8 +92,8 @@ public class QuizCreatorSteps {
         assertTrue(expected);
     }
 
-    @Given("^I add an empty question like \"([^\"]*)\"$")
-    public void I_add_an_empty_question_like(String question) throws Throwable {
+    @Given("^a user adds an empty question like \"([^\"]*)\"$")
+    public void a_user_adds_an_empty_question_like(String question) throws Throwable {
         boolean expected = false;
         try {
             quizCreator.addQuestion(question, quizId);
@@ -104,8 +103,8 @@ public class QuizCreatorSteps {
         assertTrue(expected);
     }
 
-    @Given("^I try to add a null question$")
-    public void I_try_to_add_a_null_question() throws Throwable {
+    @Given("^a user tries to add a null question$")
+    public void a_user_tries_to_add_a_null_question() throws Throwable {
         boolean expected = false;
         try {
             quizCreator.addQuestion(null, quizId);
@@ -115,14 +114,8 @@ public class QuizCreatorSteps {
         assertTrue(expected);
     }
 
-    @When("^I save it to the server$")
-    public void I_save_it_to_the_server() throws Throwable {
-        quizCreator.save(quizId);
-        verify(mockQuizClient).save(eq(mockQuiz));
-    }
-
-    @Then("^I should be able to retrieve it$")
-    public void I_should_be_able_to_retrieve_it() throws Throwable {
+    @Then("^a user should be able to retrieve it$")
+    public void a_user_should_be_able_to_retrieve_it() throws Throwable {
         List<Quiz> quizList = Arrays.asList(mockQuiz);
         when(mockQuizClient.getQuizList()).thenReturn(quizList);
         Quiz actual = quizCreator.getQuizzes().get(0);
@@ -130,13 +123,30 @@ public class QuizCreatorSteps {
         assertThat(mockQuiz, is(equalTo(actual)));
     }
 
-    @When("^I try to save null to the server$")
-    public void I_try_to_save_null_to_the_server() throws Throwable {
+    @When("^a user saves the quiz$")
+    public void a_user_saves_the_quiz() throws Throwable {
         quizCreator.save(quizId);
     }
 
     @Then("^the server should not be called$")
     public void the_server_should_not_be_called() throws Throwable {
         verify(mockQuizClient, never()).save(null);
+    }
+
+    @Then("^a quiz should not be created$")
+    public void a_quiz_should_not_be_created() throws Throwable {
+        verify(mockQuizClient, never()).createQuiz(anyString());
+    }
+
+    @When("^a user tries to save a null quiz$")
+    public void a_user_tries_to_save_a_null_quiz() throws Throwable {
+        int nonExistentQuizID = 1000;
+        quizCreator.save(nonExistentQuizID);
+    }
+
+    @Then("^the question should not be added$")
+    public void the_question_should_not_be_added() throws Throwable {
+        verify(mockQuizClient, never()).createQuestion(anyString());
+        verify(mockQuiz, never()).addQuestion(eq(mockQuestion));
     }
 }

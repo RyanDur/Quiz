@@ -10,11 +10,11 @@ Feature: The ability to create quiz's
   id.
 
   Background:
-    Given I have a quiz creator
+    Given a user has a quiz creator
 
   Scenario Outline: should be able to name a quiz
-    When I create a quiz named <name>
-    Then I should have a quiz with the name <name>
+    When a user creates a quiz named <name>
+    Then they should have a quiz with the name <name>
 
   Examples:
     | name  |
@@ -22,7 +22,8 @@ Feature: The ability to create quiz's
     | "bar" |
 
   Scenario Outline: should not be able to make a quiz without a name
-    Given I create a quiz without a <name>
+    When a user creates a quiz without a <name>
+    Then a quiz should not be created
 
   Examples:
     | name |
@@ -30,11 +31,12 @@ Feature: The ability to create quiz's
     | " "  |
 
   Scenario: should not be able to make a quiz with null for a name
-    Given I create a quiz named null
+    When a user creates a quiz named null
+    Then a quiz should not be created
 
   Scenario Outline: should be able to add a question to a quiz
-    Given I create a quiz named <name>
-    When I add a question like <question>
+    Given a user creates a quiz named <name>
+    When a user adds a question like <question>
     Then the quiz should have that <question>
 
   Examples:
@@ -43,21 +45,30 @@ Feature: The ability to create quiz's
     | "bar" | "foo?"   |
 
   Scenario Outline: should not be able to add an empty question
-    Given I add an empty question like <question>
+    Given a user creates a quiz named <name>
+    When a user adds an empty question like <question>
+    Then the question should not be added
 
   Examples:
-    | question |
-    | ""       |
-    | " "      |
+    | name  | question |
+    | "foo" | ""       |
+    | "bar" | " "      |
 
-  Scenario: should not be able to add a null question
-    Given I try to add a null question
+  Scenario Outline: should not be able to add a null question
+    Given a user creates a quiz named <name>
+    Given a user tries to add a null question
+    Then the question should not be added
+
+  Examples:
+    | name  |
+    | "foo" |
+    | "bar" |
 
 
   Scenario Outline: should be able to save it to the server
-    Given I create a quiz named <name>
-    When I save it to the server
-    Then I should be able to retrieve it
+    Given a user creates a quiz named <name>
+    When a user saves the quiz
+    Then a user should be able to retrieve it
 
   Examples:
     | name  |
@@ -65,5 +76,5 @@ Feature: The ability to create quiz's
     | "bar" |
 
   Scenario: should not be able to save a null quiz
-    When I try to save null to the server
+    When a user tries to save a null quiz
     Then the server should not be called
