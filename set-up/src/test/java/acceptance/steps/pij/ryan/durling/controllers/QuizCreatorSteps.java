@@ -5,7 +5,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import pij.ryan.durling.Client.QuizClient;
+import pij.ryan.durling.client.QuizClient;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.controllers.QuizCreatorImpl;
 import pij.ryan.durling.registry.Question;

@@ -1,4 +1,4 @@
-package pij.ryan.durling.Client;
+package pij.ryan.durling.client;
 
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;

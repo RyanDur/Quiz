@@ -1,6 +1,6 @@
 package pij.ryan.durling.controllers;
 
-import pij.ryan.durling.Client.QuizClient;
+import pij.ryan.durling.client.QuizClient;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 
@@ -31,7 +31,7 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public void addQuestion(String question, int quizId) {
+    public void addQuestion(String question, int quizId) throws IllegalArgumentException {
         if (question == null || question.trim().isEmpty()) throw new IllegalArgumentException();
         Quiz quiz = quizMap.get(quizId);
         Question question1 = quizClient.createQuestion(question);
