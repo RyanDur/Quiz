@@ -3,5 +3,5 @@
 *.iws
 .gradle
 .DS_Store
-build
-out
+build/
+out/
