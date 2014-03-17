@@ -133,3 +133,4 @@ Feature: The ability to create quizzes
     | name  |
     | "foo" |
     | "bar" |
+    
