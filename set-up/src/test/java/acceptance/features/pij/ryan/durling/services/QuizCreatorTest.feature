@@ -4,11 +4,6 @@ Feature: The ability to create quizzes
   I want to be able to make a quiz
   So that a player can have fun.
 
-  The set-up client program should enable a user who wishes to organise an electronic
-  quiz game to create a new quiz (i.e., a set of questions) on the server, with a given name
-  for the quiz, and a set of possible answers for each question. This will return a quiz game
-  id.
-
   Background:
     Given a user has a quiz creator
 
