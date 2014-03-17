@@ -49,6 +49,15 @@ Feature: The ability to create quizzes
     | "bar" | " "      | 2     |
     | "baz" | "null"   | 3     |
 
+  Scenario Outline: should not be able to create a question without a quiz
+    And a user creates a question with <question> and <value>
+    Then the question should not be created without a quiz
+
+  Examples:
+    | question | value |
+    | "foo?"   | 7     |
+    | "bar?"   | 3     |
+
   Scenario Outline: should not be able to add a question to a quiz with a value less than one
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>

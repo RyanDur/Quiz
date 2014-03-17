@@ -1,9 +1,10 @@
 package pij.ryan.durling.services;
 
+import unit.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.registry.Answer;
-import pij.ryan.durling.servers.QuizServer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
+import pij.ryan.durling.servers.QuizServer;
 
 public class QuizCreatorImpl implements QuizCreator {
 
@@ -22,8 +23,10 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public Question createQuestion(String question, int value) throws IllegalArgumentException {
+    public Question createQuestion(String question, int value) throws IllegalArgumentException, IllegalQuizCreationException {
         if (inValid(question) || value < 1) throw new IllegalArgumentException();
+        Quiz quiz = getQuiz();
+        if (quiz == null) throw new IllegalQuizCreationException();
         return quiz.createQuestion(question, value);
     }
 
@@ -41,7 +44,7 @@ public class QuizCreatorImpl implements QuizCreator {
     @Override
     public void save() {
         if (quiz != null && quiz.isValid()) {
-            quizServer.save(quiz);
+            quizServer.save(getQuiz());
         }
     }
 

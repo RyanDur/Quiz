@@ -4,6 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import unit.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.registry.Answer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
@@ -117,7 +118,7 @@ public class QuizCreatorSteps {
 
         try {
             question = quizCreator.createQuestion(questionString, value);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalQuizCreationException e) {
             thrown = e;
         }
     }
@@ -161,5 +162,11 @@ public class QuizCreatorSteps {
     @And("^is an invalid quiz$")
     public void is_an_invalid_quiz() throws Throwable {
         when(mockQuiz.isValid()).thenReturn(false);
+    }
+
+    @Then("^the question should not be created without a quiz$")
+    public void the_question_should_not_be_created_without_a_quiz() throws Throwable {
+        assertThat(thrown, is(instanceOf(IllegalQuizCreationException.class)));
+        verify(mockQuiz, never()).createQuestion(anyString(), anyInt());
     }
 }
