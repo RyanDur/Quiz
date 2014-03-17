@@ -90,7 +90,6 @@ Feature: The ability to create quizzes
     | "bar" | "baz?"   | 3     | " "    | "false" |
     | "baz" | "bar?"   | 3     | "null" | "false" |
 
-
   Scenario Outline: should not be able to add an answer without a question
     When a user creates a quiz named <name>
     And a user adds <answer> and mark if its <correct>

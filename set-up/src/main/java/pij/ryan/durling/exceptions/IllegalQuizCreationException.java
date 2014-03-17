@@ -1,4 +1,4 @@
-package unit.exceptions;
+package pij.ryan.durling.exceptions;
 
 public class IllegalQuizCreationException extends Exception {
     public IllegalQuizCreationException() {

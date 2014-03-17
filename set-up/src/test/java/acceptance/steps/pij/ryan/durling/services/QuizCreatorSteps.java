@@ -4,13 +4,13 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.registry.Answer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
-import pij.ryan.durling.servers.QuizServer;
+import pij.ryan.durling.resources.QuizServer;
 import pij.ryan.durling.services.QuizCreator;
 import pij.ryan.durling.services.QuizCreatorImpl;
-import unit.exceptions.IllegalQuizCreationException;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.nullValue;

@@ -2,7 +2,7 @@ package acceptance.steps.pij.ryan.durling.exceptions;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import unit.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;

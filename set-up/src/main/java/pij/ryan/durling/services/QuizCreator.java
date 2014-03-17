@@ -1,6 +1,6 @@
 package pij.ryan.durling.services;
 
-import unit.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.registry.Answer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;

@@ -1,4 +1,4 @@
-package pij.ryan.durling.servers;
+package pij.ryan.durling.resources;
 
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
