@@ -133,8 +133,3 @@ Feature: The ability to create quizzes
     | name  |
     | "foo" |
     | "bar" |
-
-  Scenario: example
-    Given I have this situation
-    When something happens
-    Then This should be the outcome

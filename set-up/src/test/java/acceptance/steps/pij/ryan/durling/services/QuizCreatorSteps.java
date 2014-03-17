@@ -1,17 +1,16 @@
 package acceptance.steps.pij.ryan.durling.services;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import unit.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.registry.Answer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 import pij.ryan.durling.servers.QuizServer;
 import pij.ryan.durling.services.QuizCreator;
 import pij.ryan.durling.services.QuizCreatorImpl;
+import unit.exceptions.IllegalQuizCreationException;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -169,23 +168,5 @@ public class QuizCreatorSteps {
     public void the_question_should_not_be_created_without_a_quiz() throws Throwable {
         assertThat(thrown, is(instanceOf(IllegalQuizCreationException.class)));
         verify(mockQuiz, never()).createQuestion(anyString(), anyInt());
-    }
-
-    @Given("^I have this situation$")
-    public void I_have_this_situation() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
-    }
-
-    @When("^something happens$")
-    public void something_happens() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
-    }
-
-    @Then("^This should be the outcome$")
-    public void This_should_be_the_outcome() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
     }
 }
