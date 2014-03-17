@@ -21,6 +21,7 @@ Feature: The ability to create quizzes
     When a user creates a quiz named <name>
     Then a quiz should not be created
     And not return the quiz ID
+    And throw an IllegalArgumentException
 
   Examples:
     | name   |
@@ -42,6 +43,7 @@ Feature: The ability to create quizzes
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>
     Then the question should not be created
+    And throw an IllegalArgumentException
 
   Examples:
     | name  | question | value |
@@ -51,7 +53,8 @@ Feature: The ability to create quizzes
 
   Scenario Outline: should not be able to create a question without a quiz
     And a user creates a question with <question> and <value>
-    Then the question should not be created without a quiz
+    Then the question should not be created
+    And throw an IllegalQuizCreationException
 
   Examples:
     | question | value |
@@ -62,6 +65,7 @@ Feature: The ability to create quizzes
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>
     Then the question should not be created
+    And throw an IllegalArgumentException
 
   Examples:
     | name  | question | value |
@@ -69,12 +73,12 @@ Feature: The ability to create quizzes
 
   Scenario Outline: should be able to add an answer to a question
     When a user creates a quiz named <name>
-    And a user creates a question with <question> and <value>
+    And a user creates a question with <question> and <score>
     And a user adds <answer> and mark if its <correct>
     Then the answer should be added
 
   Examples:
-    | name  | question | value | answer | correct |
+    | name  | question | score | answer | correct |
     | "foo" | "foo?"   | 7     | "baz"  | "true"  |
     | "bar" | "bar?"   | 3     | "foo"  | "false" |
 
@@ -83,6 +87,7 @@ Feature: The ability to create quizzes
     And a user creates a question with <question> and <value>
     And a user adds <answer> and mark if its <correct>
     Then the answer should not should be added
+    And throw an IllegalArgumentException
 
   Examples:
     | name  | question | value | answer | correct |
@@ -94,6 +99,7 @@ Feature: The ability to create quizzes
     When a user creates a quiz named <name>
     And a user adds <answer> and mark if its <correct>
     Then the answer should not should be added
+    And throw an IllegalArgumentException
 
   Examples:
     | name  | answer | correct |
@@ -102,33 +108,41 @@ Feature: The ability to create quizzes
 
   Scenario Outline: should be able to save it to the server
     When a user creates a quiz named <name>
-    And is a valid quiz
+    And the quiz is <valid>
     And a user saves the quiz
     Then the quiz should be saved
 
   Examples:
-    | name  |
-    | "foo" |
-    | "bar" |
+    | name  | valid   |
+    | "foo" | "false" |
+    | "bar" | "false" |
 
   Scenario Outline: should not be able to save an improperly named quiz
     When a user creates a quiz named <name>
-    And is a valid quiz
+    And the quiz is <valid>
+    And a user saves the quiz
     Then the quiz should not be saved
+    And throw an IllegalQuizCreationException
 
   Examples:
-    | name   |
-    | ""     |
-    | " "    |
-    | "null" |
+    | name   | valid   |
+    | ""     | "false" |
+    | " "    | "false" |
+    | "null" | "false" |
 
   Scenario Outline: should not be able to save it to the server if the quiz is invalid
     When a user creates a quiz named <name>
-    And is an invalid quiz
+    And the quiz is <valid>
     And a user saves the quiz
     Then the quiz should not be saved
+    And throw an InvalidQuizException
 
   Examples:
-    | name  |
-    | "foo" |
-    | "bar" |
+    | name  | valid  |
+    | "foo" | "true" |
+    | "bar" | "true" |
+
+  Scenario: should not be able to save a quiz that does not exist
+    When a user saves the quiz
+    Then the quiz should not be saved
+    And throw an IllegalQuizCreationException

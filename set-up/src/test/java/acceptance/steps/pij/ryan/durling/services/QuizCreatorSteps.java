@@ -5,7 +5,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
-import pij.ryan.durling.registry.Answer;
+import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 import pij.ryan.durling.resources.QuizServer;
@@ -31,7 +31,6 @@ public class QuizCreatorSteps {
     private Integer quizId;
     private Throwable thrown;
     private Question question;
-    private String nullValue = "null";
 
     @Given("^a user has a quiz creator$")
     public void a_user_has_a_quiz_creator() throws Throwable {
@@ -40,7 +39,7 @@ public class QuizCreatorSteps {
 
     @When("^a user creates a quiz named \"([^\"]*)\"$")
     public void a_user_creates_a_quiz_named(String name) throws Throwable {
-        if (nullValue.equals(name)) name = null;
+        name = ifNull(name);
         int id = 3;
 
         when(mockQuiz.getName()).thenReturn(name);
@@ -66,7 +65,6 @@ public class QuizCreatorSteps {
 
     @Then("^a quiz should not be created$")
     public void a_quiz_should_not_be_created() throws Throwable {
-        assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
         verify(mockQuizServer, never()).createQuiz(anyString());
     }
 
@@ -84,13 +82,16 @@ public class QuizCreatorSteps {
 
     @Then("^the question should not be created$")
     public void the_question_should_not_be_created() throws Throwable {
-        assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
         verify(mockQuiz, never()).createQuestion(anyString(), anyInt());
     }
 
     @When("^a user saves the quiz$")
     public void a_user_saves_the_quiz() throws Throwable {
-        quizCreator.save();
+        try {
+            quizCreator.save();
+        } catch (IllegalQuizCreationException | InvalidQuizException e) {
+            thrown = e;
+        }
     }
 
     @Then("^the quiz should not be saved$")
@@ -110,7 +111,7 @@ public class QuizCreatorSteps {
 
     @When("^a user creates a question with \"([^\"]*)\" and (\\d+)$")
     public void a_user_creates_a_question_with_and(String questionString, int value) throws Throwable {
-        if (nullValue.equals(questionString)) questionString = null;
+        questionString = ifNull(questionString);
 
         when(mockQuestion.getQuestion()).thenReturn(questionString);
         when(mockQuestion.getValue()).thenReturn(value);
@@ -131,42 +132,52 @@ public class QuizCreatorSteps {
 
     @When("^a user adds \"([^\"]*)\" and mark if its \"([^\"]*)\"$")
     public void a_user_adds_and_mark_if_its(String answerString, String valueString) throws Throwable {
-        boolean value = false;
-        if (valueString.equals("true")) value = true;
-        if (nullValue.equals(answerString)) answerString = null;
-        Answer mockAnswer = mock(Answer.class);
-
-        when(mockAnswer.getAnswer()).thenReturn(answerString);
-        when(mockAnswer.getValue()).thenReturn(value);
-        when(mockQuestion.createAnswer(anyString(), anyBoolean())).thenReturn(mockAnswer);
+        boolean value = ifTrue(valueString);
+        String answer = ifNull(answerString);
 
         try {
-            quizCreator.createAnswer(question, answerString, value);
+            quizCreator.createAnswer(question, answer, value);
         } catch (IllegalArgumentException e) {
             thrown = e;
         }
     }
 
-
     @Then("^the answer should not should be added$")
     public void the_answer_should_not_should_be_added() throws Throwable {
-        assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
         verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
     }
 
-    @And("^is a valid quiz$")
-    public void is_a_valid_quiz() throws Throwable {
-        when(mockQuiz.isValid()).thenReturn(true);
+    @And("^the quiz is \"([^\"]*)\"$")
+    public void the_quiz_is(String validString) throws Throwable {
+        boolean valid = ifTrue(validString);
+        when(mockQuiz.isInValid()).thenReturn(valid);
     }
 
-    @And("^is an invalid quiz$")
-    public void is_an_invalid_quiz() throws Throwable {
-        when(mockQuiz.isValid()).thenReturn(false);
+    @And("^throw an IllegalArgumentException$")
+    public void throw_an_IllegalArgumentException() throws Throwable {
+        assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
     }
 
-    @Then("^the question should not be created without a quiz$")
-    public void the_question_should_not_be_created_without_a_quiz() throws Throwable {
+    @And("^throw an IllegalQuizCreationException$")
+    public void throw_an_IllegalQuizCreationException() throws Throwable {
         assertThat(thrown, is(instanceOf(IllegalQuizCreationException.class)));
-        verify(mockQuiz, never()).createQuestion(anyString(), anyInt());
+    }
+
+    @And("^throw an InvalidQuizException$")
+    public void throw_an_InvalidQuizException() throws Throwable {
+        assertThat(thrown, is(instanceOf(InvalidQuizException.class)));
+    }
+
+    private String ifNull(String argument) {
+        String nullValue = "null";
+        if (nullValue.equals(argument)) argument = null;
+        return argument;
+    }
+
+    private boolean ifTrue(String argument) {
+        boolean value = false;
+        String aTrueValue = "true";
+        if (aTrueValue.equals(argument)) value = true;
+        return value;
     }
 }

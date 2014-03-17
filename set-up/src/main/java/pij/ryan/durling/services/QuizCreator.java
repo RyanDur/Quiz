@@ -1,6 +1,7 @@
 package pij.ryan.durling.services;
 
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.registry.Answer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
@@ -14,5 +15,5 @@ public interface QuizCreator {
 
     Quiz getQuiz();
 
-    void save();
+    void save() throws IllegalQuizCreationException, InvalidQuizException;
 }

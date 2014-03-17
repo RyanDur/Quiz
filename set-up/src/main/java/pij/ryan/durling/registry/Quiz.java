@@ -7,5 +7,5 @@ public interface Quiz {
 
     Question createQuestion(String questionString, int value);
 
-    boolean isValid();
+    boolean isInValid();
 }

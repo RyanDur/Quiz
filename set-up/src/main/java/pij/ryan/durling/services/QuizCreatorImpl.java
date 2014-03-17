@@ -1,6 +1,7 @@
 package pij.ryan.durling.services;
 
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.registry.Answer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
@@ -42,10 +43,11 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public void save() {
-        if (quiz != null && quiz.isValid()) {
-            quizServer.save(getQuiz());
-        }
+    public void save() throws IllegalQuizCreationException, InvalidQuizException {
+        Quiz quiz = getQuiz();
+        if (quiz == null) throw new IllegalQuizCreationException();
+        if (quiz.isInValid()) throw new InvalidQuizException();
+        quizServer.save(getQuiz());
     }
 
     private boolean inValid(Question question) {
