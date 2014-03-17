@@ -1,5 +1,6 @@
 package pij.ryan.durling.services;
 
+import pij.ryan.durling.registry.Answer;
 import pij.ryan.durling.servers.QuizServer;
 import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
@@ -16,6 +17,7 @@ public class QuizCreatorImpl implements QuizCreator {
     @Override
     public int create(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException();
+
         quiz = quizServer.createQuiz(name);
         return quiz.getId();
     }
@@ -26,12 +28,6 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public void addQuestion(Question question) throws IllegalArgumentException {
-        if (inValid(question)) throw new IllegalArgumentException();
-        quiz.addQuestion(question);
-    }
-
-    @Override
     public void save() {
         if (quiz != null) {
             quizServer.save(quiz);
@@ -39,14 +35,22 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public Question createQuestion(String question) throws IllegalArgumentException {
-        if (inValid(question)) throw new IllegalArgumentException();
-        return quizServer.createQuestion(question);
+    public Question createQuestion(String question, int value) throws IllegalArgumentException {
+        if (inValid(question) || value < 1) throw new IllegalArgumentException();
+
+        return quiz.createQuestion(question, value);
+    }
+
+    @Override
+    public Answer createAnswer(Question question, String answer, boolean value) {
+        if (inValid(question) ||  inValid(answer)) throw new IllegalArgumentException();
+        return question.createAnswer(answer, value);
     }
 
     private boolean inValid(Question question) {
         return question == null;
     }
+
     private boolean inValid(String argument) {
         return argument == null || argument.trim().isEmpty();
     }

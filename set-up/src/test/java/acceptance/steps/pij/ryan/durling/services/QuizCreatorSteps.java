@@ -1,20 +1,16 @@
 package acceptance.steps.pij.ryan.durling.services;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import pij.ryan.durling.registry.Answer;
+import pij.ryan.durling.registry.Question;
+import pij.ryan.durling.registry.Quiz;
 import pij.ryan.durling.servers.QuizServer;
 import pij.ryan.durling.services.QuizCreator;
 import pij.ryan.durling.services.QuizCreatorImpl;
-import pij.ryan.durling.registry.Question;
-import pij.ryan.durling.registry.Quiz;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.util.Collections.addAll;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -79,42 +75,16 @@ public class QuizCreatorSteps {
         verify(mockQuiz, never()).getId();
     }
 
-    @When("^a user adds a question like \"([^\"]*)\"$")
-    public void a_user_adds_a_question_like(String question) throws Throwable {
-        Set<Question> questions = getQuestions(mockQuestion);
-        when(mockQuiz.getQuestions()).thenReturn(questions);
-        when(mockQuestion.getQuestion()).thenReturn(question);
-
-        try {
-            quizCreator.addQuestion(mockQuestion);
-        } catch (IllegalArgumentException e) {
-            thrown = e;
-        }
-    }
-
-    @And("^a user adds a question$")
-    public void a_user_adds_a_question() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
-    }
-
     @Then("^the question should be added$")
     public void the_question_should_be_added() throws Throwable {
         assertThat(thrown, is(not(instanceOf(IllegalArgumentException.class))));
-        verify(mockQuizServer).createQuestion(anyString());
-        verify(mockQuiz).addQuestion(eq(mockQuestion));
+        verify(mockQuiz).createQuestion(anyString(), anyInt());
     }
-
-    @Then("^the question should not be added$")
-    public void the_question_should_not_be_added() throws Throwable {
-        verify(mockQuiz, never()).addQuestion(eq(mockQuestion));
-    }
-
 
     @Then("^the question should not be created$")
     public void the_question_should_not_be_created() throws Throwable {
         assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
-        verify(mockQuizServer, never()).createQuestion(anyString());
+        verify(mockQuiz, never()).createQuestion(anyString(), anyInt());
     }
 
     @When("^a user saves the quiz$")
@@ -137,26 +107,49 @@ public class QuizCreatorSteps {
         verify(mockQuizServer).save(eq(mockQuiz));
     }
 
-    @And("^a user creates a question with \"([^\"]*)\"$")
-    public void a_user_creates_a_question_with(String questionString) throws Throwable {
+    @When("^a user creates a question with \"([^\"]*)\" and (\\d+)$")
+    public void a_user_creates_a_question_with_and(String questionString, int value) throws Throwable {
         if (nullValue.equals(questionString)) questionString = null;
-        when(mockQuizServer.createQuestion(anyString())).thenReturn(mockQuestion);
+
+        when(mockQuestion.getQuestion()).thenReturn(questionString);
+        when(mockQuestion.getValue()).thenReturn(value);
+        when(mockQuiz.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
 
         try {
-            question = quizCreator.createQuestion(questionString);
+            question = quizCreator.createQuestion(questionString, value);
         } catch (IllegalArgumentException e) {
             thrown = e;
         }
     }
 
-    @And("^adds the question to the quiz$")
-    public void adds_the_question_to_the_quiz() throws Throwable {
-        quizCreator.addQuestion(question);
+    @Then("^the answer should be added$")
+    public void the_answer_should_be_added() throws Throwable {
+        assertThat(thrown, is(not(instanceOf(IllegalArgumentException.class))));
+        verify(mockQuestion).createAnswer(anyString(), anyBoolean());
     }
 
-    private Set<Question> getQuestions(Question... mockQuestions) {
-        Set<Question> questions = new HashSet<>();
-        addAll(questions, mockQuestions);
-        return questions;
+    @When("^a user adds \"([^\"]*)\" and mark if its \"([^\"]*)\"$")
+    public void a_user_adds_and_mark_if_its(String answerString, String valueString) throws Throwable {
+        boolean value = false;
+        if (valueString.equals("true")) value = true;
+        if (nullValue.equals(answerString)) answerString = null;
+        Answer mockAnswer = mock(Answer.class);
+
+        when(mockAnswer.getAnswer()).thenReturn(answerString);
+        when(mockAnswer.getValue()).thenReturn(value);
+        when(mockQuestion.createAnswer(anyString(), anyBoolean())).thenReturn(mockAnswer);
+
+        try {
+            quizCreator.createAnswer(question, answerString, value);
+        } catch (IllegalArgumentException e) {
+            thrown = e;
+        }
+    }
+
+
+    @Then("^the answer should not should be added$")
+    public void the_answer_should_not_should_be_added() throws Throwable {
+        assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
+        verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
     }
 }
