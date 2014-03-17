@@ -5,13 +5,13 @@ import pij.ryan.durling.registry.Question;
 import pij.ryan.durling.registry.Quiz;
 
 public interface QuizCreator {
-    int create(String name);
-
-    Quiz getQuiz();
-
-    void save();
+    int createQuiz(String name);
 
     Question createQuestion(String question, int value);
 
     Answer createAnswer(Question question, String answer, boolean value);
+
+    Quiz getQuiz();
+
+    void save();
 }

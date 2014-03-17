@@ -47,7 +47,7 @@ public class QuizCreatorSteps {
         when(mockQuizServer.createQuiz(anyString())).thenReturn(mockQuiz);
 
         try {
-            quizId = quizCreator.create(name);
+            quizId = quizCreator.createQuiz(name);
         } catch (IllegalArgumentException e) {
             thrown = e;
         }

@@ -15,11 +15,22 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public int create(String name) throws IllegalArgumentException {
+    public int createQuiz(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException();
-
         quiz = quizServer.createQuiz(name);
         return quiz.getId();
+    }
+
+    @Override
+    public Question createQuestion(String question, int value) throws IllegalArgumentException {
+        if (inValid(question) || value < 1) throw new IllegalArgumentException();
+        return quiz.createQuestion(question, value);
+    }
+
+    @Override
+    public Answer createAnswer(Question question, String answer, boolean value) {
+        if (inValid(question) || inValid(answer)) throw new IllegalArgumentException();
+        return question.createAnswer(answer, value);
     }
 
     @Override
@@ -32,19 +43,6 @@ public class QuizCreatorImpl implements QuizCreator {
         if (quiz != null && quiz.isValid()) {
             quizServer.save(quiz);
         }
-    }
-
-    @Override
-    public Question createQuestion(String question, int value) throws IllegalArgumentException {
-        if (inValid(question) || value < 1) throw new IllegalArgumentException();
-
-        return quiz.createQuestion(question, value);
-    }
-
-    @Override
-    public Answer createAnswer(Question question, String answer, boolean value) {
-        if (inValid(question) ||  inValid(answer)) throw new IllegalArgumentException();
-        return question.createAnswer(answer, value);
     }
 
     private boolean inValid(Question question) {
