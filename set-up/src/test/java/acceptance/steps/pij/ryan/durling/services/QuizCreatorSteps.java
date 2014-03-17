@@ -152,4 +152,14 @@ public class QuizCreatorSteps {
         assertThat(thrown, is(instanceOf(IllegalArgumentException.class)));
         verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
     }
+
+    @And("^is a valid quiz$")
+    public void is_a_valid_quiz() throws Throwable {
+        when(mockQuiz.isValid()).thenReturn(true);
+    }
+
+    @And("^is an invalid quiz$")
+    public void is_an_invalid_quiz() throws Throwable {
+        when(mockQuiz.isValid()).thenReturn(false);
+    }
 }

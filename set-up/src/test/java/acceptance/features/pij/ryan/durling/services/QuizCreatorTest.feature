@@ -99,6 +99,7 @@ Feature: The ability to create quizzes
 
   Scenario Outline: should be able to save it to the server
     When a user creates a quiz named <name>
+    And is a valid quiz
     And a user saves the quiz
     Then the quiz should be saved
 
@@ -109,6 +110,7 @@ Feature: The ability to create quizzes
 
   Scenario Outline: should not be able to save an improperly named quiz
     When a user creates a quiz named <name>
+    And is a valid quiz
     Then the quiz should not be saved
 
   Examples:
@@ -116,3 +118,14 @@ Feature: The ability to create quizzes
     | ""     |
     | " "    |
     | "null" |
+
+  Scenario Outline: should not be able to save it to the server if the quiz is invalid
+    When a user creates a quiz named <name>
+    And is an invalid quiz
+    And a user saves the quiz
+    Then the quiz should not be saved
+
+  Examples:
+    | name  |
+    | "foo" |
+    | "bar" |

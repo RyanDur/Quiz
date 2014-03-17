@@ -6,4 +6,6 @@ public interface Quiz {
     int getId();
 
     Question createQuestion(String questionString, int value);
+
+    boolean isValid();
 }

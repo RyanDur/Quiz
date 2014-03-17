@@ -29,7 +29,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void save() {
-        if (quiz != null) {
+        if (quiz != null && quiz.isValid()) {
             quizServer.save(quiz);
         }
     }
