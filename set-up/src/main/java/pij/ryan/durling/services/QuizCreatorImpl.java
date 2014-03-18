@@ -48,7 +48,7 @@ public class QuizCreatorImpl implements QuizCreator {
     public void save() throws IllegalQuizCreationException, InvalidQuizException {
         Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
-        if (quiz.isInValid()) throw new InvalidQuizException();
+        if (!quiz.valid()) throw new InvalidQuizException();
         quizServer.save(getQuiz());
     }
 

@@ -7,7 +7,7 @@ public interface Quiz {
 
     Question createQuestion(String questionString, int value);
 
-    boolean isInValid();
+    boolean valid();
 
     boolean contains(Question question);
 }

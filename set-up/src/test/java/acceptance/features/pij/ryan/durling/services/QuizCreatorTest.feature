@@ -136,9 +136,9 @@ Feature: The ability to create quizzes
     Then the quiz should be saved
 
   Examples:
-    | name  | valid   |
-    | "foo" | "false" |
-    | "bar" | "false" |
+    | name  | valid  |
+    | "foo" | "true" |
+    | "bar" | "true" |
 
   Scenario Outline: should not be able to save an improperly named quiz
     When a user creates a quiz named <name>
@@ -148,10 +148,10 @@ Feature: The ability to create quizzes
     And throw an IllegalQuizCreationException
 
   Examples:
-    | name   | valid   |
-    | ""     | "false" |
-    | " "    | "false" |
-    | "null" | "false" |
+    | name   | valid  |
+    | ""     | "true" |
+    | " "    | "true" |
+    | "null" | "true" |
 
   Scenario Outline: should not be able to save it to the server if the quiz is invalid
     When a user creates a quiz named <name>
@@ -161,9 +161,9 @@ Feature: The ability to create quizzes
     And throw an InvalidQuizException
 
   Examples:
-    | name  | valid  |
-    | "foo" | "true" |
-    | "bar" | "true" |
+    | name  | valid   |
+    | "foo" | "false" |
+    | "bar" | "false" |
 
   Scenario: should not be able to save a quiz that does not exist
     When a user saves the quiz

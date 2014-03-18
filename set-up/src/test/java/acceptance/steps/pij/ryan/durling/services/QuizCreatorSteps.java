@@ -140,7 +140,7 @@ public class QuizCreatorSteps {
     @And("^the quiz is \"([^\"]*)\"$")
     public void the_quiz_is(String validString) throws Throwable {
         boolean valid = ifTrue(validString);
-        when(mockQuiz.isInValid()).thenReturn(valid);
+        when(mockQuiz.valid()).thenReturn(valid);
     }
 
     @And("^throw an IllegalArgumentException$")
