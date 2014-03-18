@@ -70,6 +70,8 @@ Feature: The ability to create quizzes
   Examples:
     | name  | question | value |
     | "foo" | "foo?"   | 0     |
+    | "foo" | "foo?"   | -1    |
+    | "foo" | "foo?"   | -2    |
 
   Scenario Outline: should be able to add an answer to a question
     When a user creates a quiz named <name>

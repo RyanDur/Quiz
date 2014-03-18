@@ -104,7 +104,7 @@ public class QuizCreatorSteps {
         verify(mockQuizServer).save(eq(mockQuiz));
     }
 
-    @When("^a user creates a question with \"([^\"]*)\" and (\\d+)$")
+    @When("^a user creates a question with \"([^\"]*)\" and (.*)$")
     public void a_user_creates_a_question_with_and(String questionString, int value) throws Throwable {
         questionString = ifNull(questionString);
 
