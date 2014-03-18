@@ -169,6 +169,11 @@ public class QuizCreatorSteps {
         verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
     }
 
+    @And("^have the message \"([^\"]*)\"$")
+    public void have_the_message(String message) throws Throwable {
+        assertThat(thrown.getMessage(), is(equalTo(message)));
+    }
+
     private String ifNull(String argument) {
         String nullValue = "null";
         if (nullValue.equals(argument)) argument = null;

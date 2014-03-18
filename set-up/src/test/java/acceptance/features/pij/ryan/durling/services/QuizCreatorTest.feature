@@ -22,6 +22,7 @@ Feature: The ability to create quizzes
     Then a quiz should not be created
     And not return the quiz ID
     And throw an IllegalArgumentException
+    And have the message "Must specify a name for the quiz"
 
   Examples:
     | name   |
@@ -44,6 +45,7 @@ Feature: The ability to create quizzes
     And a user creates a question with <question> and <value>
     Then the question should not be created
     And throw an IllegalArgumentException
+    And have the message "Must have a question"
 
   Examples:
     | name  | question | value |
@@ -55,17 +57,19 @@ Feature: The ability to create quizzes
     And a user creates a question with <question> and <value>
     Then the question should not be created
     And throw an IllegalQuizCreationException
+    And have the message "Need to create a quiz first."
 
   Examples:
     | question | value |
     | "foo?"   | 7     |
     | "bar?"   | 3     |
 
-  Scenario Outline: should not be able to add a question to a quiz with a value less than one
+  Scenario Outline: should not be able to add a question to a quiz with a score less than one
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>
     Then the question should not be created
     And throw an IllegalArgumentException
+    And have the message "Must have a score greater than zero"
 
   Examples:
     | name  | question | value |
@@ -90,6 +94,7 @@ Feature: The ability to create quizzes
     And a user adds <answer> and mark if its <correct>
     Then the answer should not be added
     And throw an IllegalArgumentException
+    And have the message "Must have an answer"
 
   Examples:
     | name  | question | value | answer | correct |
@@ -102,6 +107,7 @@ Feature: The ability to create quizzes
     And a user adds <answer> and mark if its <correct>
     Then the answer should not be added
     And throw an IllegalArgumentException
+    And have the message "Invalid question"
 
   Examples:
     | name  | answer | correct |
@@ -113,6 +119,7 @@ Feature: The ability to create quizzes
     And a user adds <answer> and mark if its <correct>
     Then the answer should not be added
     And throw an IllegalQuizCreationException
+    And have the message "Need to create a quiz first."
 
   Examples:
     | answer | correct |
@@ -125,6 +132,7 @@ Feature: The ability to create quizzes
     And a user adds <answer> and mark if its <correct>
     Then the answer should not be added
     And throw an IllegalArgumentException
+    And have the message "Invalid question"
 
   Examples:
     | name  | answer | correct |
@@ -148,6 +156,7 @@ Feature: The ability to create quizzes
     And a user saves the quiz
     Then the quiz should not be saved
     And throw an IllegalQuizCreationException
+    And have the message "Need to create a quiz first."
 
   Examples:
     | name   | valid  |
@@ -161,6 +170,7 @@ Feature: The ability to create quizzes
     And a user saves the quiz
     Then the quiz should not be saved
     And throw an InvalidQuizException
+    And have the message "Invalid Quiz"
 
   Examples:
     | name  | valid   |
@@ -171,3 +181,4 @@ Feature: The ability to create quizzes
     When a user saves the quiz
     Then the quiz should not be saved
     And throw an IllegalQuizCreationException
+    And have the message "Need to create a quiz first."

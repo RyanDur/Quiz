@@ -18,7 +18,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public int createQuiz(String name) throws IllegalArgumentException {
-        if (inValid(name)) throw new IllegalArgumentException();
+        if (inValid(name)) throw new IllegalArgumentException("Must specify a name for the quiz");
         quiz = quizServer.createQuiz(name);
         return quiz.getId();
     }
@@ -27,7 +27,8 @@ public class QuizCreatorImpl implements QuizCreator {
     public Question createQuestion(String question, int score) throws IllegalArgumentException, IllegalQuizCreationException {
         Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
-        if (inValid(question) || score < 1) throw new IllegalArgumentException();
+        if (score < 1) throw new IllegalArgumentException("Must have a score greater than zero");
+        if (inValid(question)) throw new IllegalArgumentException("Must have a question");
         return quiz.createQuestion(question, score);
     }
 
@@ -35,7 +36,8 @@ public class QuizCreatorImpl implements QuizCreator {
     public Answer createAnswer(Question question, String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
         Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
-        if (inValid(question) || inValid(answer)) throw new IllegalArgumentException();
+        if (inValid(question)) throw new IllegalArgumentException("Invalid question");
+        if (inValid(answer)) throw new IllegalArgumentException("Must have an answer");
         return question.createAnswer(answer, value);
     }
 
@@ -49,7 +51,7 @@ public class QuizCreatorImpl implements QuizCreator {
         Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
         if (!quiz.valid()) throw new InvalidQuizException();
-        quizServer.save(getQuiz());
+        quizServer.save(quiz);
     }
 
     private boolean inValid(Question question) {
