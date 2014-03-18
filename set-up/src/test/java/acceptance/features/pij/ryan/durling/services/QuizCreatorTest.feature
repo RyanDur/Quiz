@@ -86,7 +86,7 @@ Feature: The ability to create quizzes
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>
     And a user adds <answer> and mark if its <correct>
-    Then the answer should not should be added
+    Then the answer should not be added
     And throw an IllegalArgumentException
 
   Examples:
@@ -98,10 +98,23 @@ Feature: The ability to create quizzes
   Scenario Outline: should not be able to add an answer without a question
     When a user creates a quiz named <name>
     And a user adds <answer> and mark if its <correct>
-    Then the answer should not should be added
+    Then the answer should not be added
     And throw an IllegalArgumentException
 
   Examples:
+    | name  | answer | correct |
+    | "foo" | "bar"  | "true"  |
+    | "bar" | "baz"  | "true"  |
+
+  Scenario Outline: should not be able to add an answer to a question that is not in the quiz
+    When a user creates a quiz named "<name>"
+    And a user adds a question that is not apart of the quiz
+    And a user adds "<answer>" and mark if its "<correct>"
+    Then the answer should not be added
+    And throw an IllegalArgumentException
+
+  Examples:
+    | name  | answer | correct |
     | name  | answer | correct |
     | "foo" | "bar"  | "true"  |
     | "bar" | "baz"  | "true"  |

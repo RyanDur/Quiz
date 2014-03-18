@@ -33,7 +33,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public Answer createAnswer(Question question, String answer, boolean value) {
-        if (inValid(question) || inValid(answer)) throw new IllegalArgumentException();
+        if (inValid(question) || inValid(answer) || !quiz.contains(question)) throw new IllegalArgumentException();
         return question.createAnswer(answer, value);
     }
 

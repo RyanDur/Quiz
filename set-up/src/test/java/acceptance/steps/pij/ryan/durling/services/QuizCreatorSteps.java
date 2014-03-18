@@ -17,7 +17,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
@@ -40,10 +39,8 @@ public class QuizCreatorSteps {
     @When("^a user creates a quiz named \"([^\"]*)\"$")
     public void a_user_creates_a_quiz_named(String name) throws Throwable {
         name = ifNull(name);
-        int id = 3;
 
         when(mockQuiz.getName()).thenReturn(name);
-        when(mockQuiz.getId()).thenReturn(id);
         when(mockQuizServer.createQuiz(anyString())).thenReturn(mockQuiz);
 
         try {
@@ -58,7 +55,6 @@ public class QuizCreatorSteps {
         Quiz actual = quizCreator.getQuiz();
 
         assertThat(actual.getName(), is(equalTo(expected)));
-        assertThat(thrown, is(nullValue()));
         verify(mockQuizServer).createQuiz(anyString());
         verify(mockQuiz).getId();
     }
@@ -76,7 +72,6 @@ public class QuizCreatorSteps {
 
     @Then("^the question should be added$")
     public void the_question_should_be_added() throws Throwable {
-        assertThat(thrown, is(not(instanceOf(IllegalArgumentException.class))));
         verify(mockQuiz).createQuestion(anyString(), anyInt());
     }
 
@@ -126,7 +121,6 @@ public class QuizCreatorSteps {
 
     @Then("^the answer should be added$")
     public void the_answer_should_be_added() throws Throwable {
-        assertThat(thrown, is(not(instanceOf(IllegalArgumentException.class))));
         verify(mockQuestion).createAnswer(anyString(), anyBoolean());
     }
 
@@ -140,11 +134,6 @@ public class QuizCreatorSteps {
         } catch (IllegalArgumentException e) {
             thrown = e;
         }
-    }
-
-    @Then("^the answer should not should be added$")
-    public void the_answer_should_not_should_be_added() throws Throwable {
-        verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
     }
 
     @And("^the quiz is \"([^\"]*)\"$")
@@ -179,5 +168,16 @@ public class QuizCreatorSteps {
         String aTrueValue = "true";
         if (aTrueValue.equals(argument)) value = true;
         return value;
+    }
+
+    @And("^a user adds a question that is not apart of the quiz$")
+    public void a_user_adds_a_question_that_is_not_apart_of_the_quiz() throws Throwable {
+        question = mock(Question.class);
+        when(mockQuiz.contains(eq(question))).thenReturn(false);
+    }
+
+    @Then("^the answer should not be added$")
+    public void the_answer_should_not_be_added() throws Throwable {
+        verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
     }
 }
