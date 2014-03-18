@@ -132,7 +132,7 @@ public class QuizCreatorSteps {
 
         try {
             quizCreator.createAnswer(question, answer, value);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalQuizCreationException e) {
             thrown = e;
         }
     }

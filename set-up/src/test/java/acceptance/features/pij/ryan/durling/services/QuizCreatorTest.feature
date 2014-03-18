@@ -106,6 +106,17 @@ Feature: The ability to create quizzes
     | "foo" | "bar"  | "true"  |
     | "bar" | "baz"  | "true"  |
 
+  Scenario Outline: ahould not be able to add a question without a quiz
+    When a user adds a question that is not apart of the quiz
+    And a user adds <answer> and mark if its <correct>
+    Then the answer should not be added
+    And throw an IllegalQuizCreationException
+
+  Examples:
+    | answer | correct |
+    | "bar"  | "true"  |
+    | "baz"  | "true"  |
+
   Scenario Outline: should not be able to add an answer to a question that is not in the quiz
     When a user creates a quiz named <name>
     And a user adds a question that is not apart of the quiz

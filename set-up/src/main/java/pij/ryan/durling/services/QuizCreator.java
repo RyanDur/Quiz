@@ -11,7 +11,7 @@ public interface QuizCreator {
 
     Question createQuestion(String question, int value) throws IllegalQuizCreationException;
 
-    Answer createAnswer(Question question, String answer, boolean value);
+    Answer createAnswer(Question question, String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException;
 
     Quiz getQuiz();
 

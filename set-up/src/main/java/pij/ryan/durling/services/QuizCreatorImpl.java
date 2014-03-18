@@ -24,16 +24,18 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public Question createQuestion(String question, int value) throws IllegalArgumentException, IllegalQuizCreationException {
-        if (inValid(question) || value < 1) throw new IllegalArgumentException();
+    public Question createQuestion(String question, int score) throws IllegalArgumentException, IllegalQuizCreationException {
         Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
-        return quiz.createQuestion(question, value);
+        if (inValid(question) || score < 1) throw new IllegalArgumentException();
+        return quiz.createQuestion(question, score);
     }
 
     @Override
-    public Answer createAnswer(Question question, String answer, boolean value) {
-        if (inValid(question) || inValid(answer) || !quiz.contains(question)) throw new IllegalArgumentException();
+    public Answer createAnswer(Question question, String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
+        Quiz quiz = getQuiz();
+        if (quiz == null) throw new IllegalQuizCreationException();
+        if (inValid(question) || inValid(answer)) throw new IllegalArgumentException();
         return question.createAnswer(answer, value);
     }
 
@@ -51,7 +53,8 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     private boolean inValid(Question question) {
-        return question == null;
+        Quiz quiz = getQuiz();
+        return question == null || !quiz.contains(question);
     }
 
     private boolean inValid(String argument) {
