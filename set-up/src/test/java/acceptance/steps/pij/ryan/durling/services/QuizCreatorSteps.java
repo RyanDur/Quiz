@@ -114,6 +114,7 @@ public class QuizCreatorSteps {
 
         try {
             question = quizCreator.createQuestion(questionString, value);
+            when(mockQuiz.contains(eq(mockQuestion))).thenReturn(true);
         } catch (IllegalArgumentException | IllegalQuizCreationException e) {
             thrown = e;
         }
@@ -157,6 +158,17 @@ public class QuizCreatorSteps {
         assertThat(thrown, is(instanceOf(InvalidQuizException.class)));
     }
 
+    @And("^a user adds a question that is not apart of the quiz$")
+    public void a_user_adds_a_question_that_is_not_apart_of_the_quiz() throws Throwable {
+        question = mock(Question.class);
+        when(mockQuiz.contains(eq(question))).thenReturn(false);
+    }
+
+    @Then("^the answer should not be added$")
+    public void the_answer_should_not_be_added() throws Throwable {
+        verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
+    }
+
     private String ifNull(String argument) {
         String nullValue = "null";
         if (nullValue.equals(argument)) argument = null;
@@ -168,16 +180,5 @@ public class QuizCreatorSteps {
         String aTrueValue = "true";
         if (aTrueValue.equals(argument)) value = true;
         return value;
-    }
-
-    @And("^a user adds a question that is not apart of the quiz$")
-    public void a_user_adds_a_question_that_is_not_apart_of_the_quiz() throws Throwable {
-        question = mock(Question.class);
-        when(mockQuiz.contains(eq(question))).thenReturn(false);
-    }
-
-    @Then("^the answer should not be added$")
-    public void the_answer_should_not_be_added() throws Throwable {
-        verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
     }
 }
