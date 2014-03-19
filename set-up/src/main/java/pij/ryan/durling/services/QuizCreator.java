@@ -9,15 +9,15 @@ import pij.ryan.durling.registry.Quiz;
 public interface QuizCreator {
     int createQuiz(String name);
 
+    Quiz getQuiz();
+
     Question createQuestion(String question, int value) throws IllegalQuizCreationException;
 
     Answer createAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException;
 
-    Quiz getQuiz();
-
-    void save() throws IllegalQuizCreationException, InvalidQuizException;
-
     void addAnswer(Question question, Answer answer) throws IllegalArgumentException;
 
     void addQuestion(Question question) throws IllegalQuizCreationException, IllegalArgumentException;
+
+    void save() throws IllegalQuizCreationException, InvalidQuizException;
 }
