@@ -5,9 +5,9 @@ public interface Quiz {
 
     int getId();
 
-    Question createQuestion(String questionString, int value);
-
     boolean valid();
 
     boolean contains(Question question);
+
+    void add(Question question);
 }

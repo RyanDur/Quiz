@@ -33,12 +33,42 @@ Feature: The ability to create quizzes
   Scenario Outline: should be able to add a question to a quiz
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>
+    And a user adds a question to the quiz
     Then the question should be added
 
   Examples:
     | name  | question | value |
     | "foo" | "foo?"   | 7     |
     | "bar" | "bar?"   | 3     |
+
+
+  Scenario Outline: should not be able to add an invalid question to a quiz
+    When a user creates a quiz named <name>
+    And a user creates a question with <question> and <value>
+    And the question is <valid>
+    And a user adds a question to the quiz
+    Then the question should not be added
+    And throw an IllegalArgumentException
+    And have the message "Invalid Question"
+
+  Examples:
+    | name  | question | value | valid   |
+    | "foo" | "foo?"   | 7     | "false" |
+    | "bar" | "bar?"   | 3     | "false" |
+
+  Scenario: should not be able to add a null question to the quiz
+    When a user creates a quiz named "foo"
+    And a user adds a question to the quiz
+    Then the question should not be added
+    And throw an IllegalArgumentException
+    And have the message "Invalid Question"
+
+  Scenario: should not be able to add a question to a null quiz
+    When a user has a question
+    And a user adds a question to the quiz
+    Then the question should not be added
+    And throw an IllegalQuizCreationException
+    And have the message "Need to create a quiz first."
 
   Scenario Outline: should not be able to create an empty question
     When a user creates a quiz named <name>
@@ -54,7 +84,7 @@ Feature: The ability to create quizzes
     | "baz" | "null"   | 3     |
 
   Scenario Outline: should not be able to create a question without a quiz
-    And a user creates a question with <question> and <value>
+    When a user creates a question with <question> and <value>
     Then the question should not be created
     And throw an IllegalQuizCreationException
     And have the message "Need to create a quiz first."
@@ -80,7 +110,8 @@ Feature: The ability to create quizzes
   Scenario Outline: should be able to add an answer to a question
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <score>
-    And a user adds <answer> and mark if its <correct>
+    And a user creates an <answer> that is <correct>
+    And a user adds answer to the question
     Then the answer should be added
 
   Examples:
@@ -88,11 +119,11 @@ Feature: The ability to create quizzes
     | "foo" | "foo?"   | 7     | "baz"  | "true"  |
     | "bar" | "bar?"   | 3     | "foo"  | "false" |
 
-  Scenario Outline: should not be able to add an answer without an answer
+  Scenario Outline: should not be able to create an answer without an answer
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>
-    And a user adds <answer> and mark if its <correct>
-    Then the answer should not be added
+    And a user creates an <answer> that is <correct>
+    Then the answer should not be created
     And throw an IllegalArgumentException
     And have the message "Must have an answer"
 
@@ -104,35 +135,11 @@ Feature: The ability to create quizzes
 
   Scenario Outline: should not be able to add an answer without a question
     When a user creates a quiz named <name>
-    And a user adds <answer> and mark if its <correct>
+    And a user creates an <answer> that is <correct>
+    And a user adds answer to the question
     Then the answer should not be added
     And throw an IllegalArgumentException
-    And have the message "Invalid question"
-
-  Examples:
-    | name  | answer | correct |
-    | "foo" | "bar"  | "true"  |
-    | "bar" | "baz"  | "true"  |
-
-  Scenario Outline: ahould not be able to add a question without a quiz
-    When a user adds a question that is not apart of the quiz
-    And a user adds <answer> and mark if its <correct>
-    Then the answer should not be added
-    And throw an IllegalQuizCreationException
-    And have the message "Need to create a quiz first."
-
-  Examples:
-    | answer | correct |
-    | "bar"  | "true"  |
-    | "baz"  | "true"  |
-
-  Scenario Outline: should not be able to add an answer to a question that is not in the quiz
-    When a user creates a quiz named <name>
-    And a user adds a question that is not apart of the quiz
-    And a user adds <answer> and mark if its <correct>
-    Then the answer should not be added
-    And throw an IllegalArgumentException
-    And have the message "Invalid question"
+    And have the message "Invalid Question"
 
   Examples:
     | name  | answer | correct |

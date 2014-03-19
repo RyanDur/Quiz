@@ -17,6 +17,11 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    @Override
     public int createQuiz(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException("Must specify a name for the quiz");
         quiz = quizServer.createQuiz(name);
@@ -29,21 +34,29 @@ public class QuizCreatorImpl implements QuizCreator {
         if (quiz == null) throw new IllegalQuizCreationException();
         if (score < 1) throw new IllegalArgumentException("Must have a score greater than zero");
         if (inValid(question)) throw new IllegalArgumentException("Must have a question");
-        return quiz.createQuestion(question, score);
+        return quizServer.createQuestion(question, score);
     }
 
     @Override
-    public Answer createAnswer(Question question, String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
+    public Answer createAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
         Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
-        if (inValid(question)) throw new IllegalArgumentException("Invalid question");
         if (inValid(answer)) throw new IllegalArgumentException("Must have an answer");
-        return question.createAnswer(answer, value);
+        return quizServer.createAnswer(answer, value);
     }
 
     @Override
-    public Quiz getQuiz() {
-        return quiz;
+    public void addAnswer(Question question, Answer answer) throws IllegalArgumentException {
+        if (question == null) throw new IllegalArgumentException("Invalid Question");
+        question.add(answer);
+    }
+
+    @Override
+    public void addQuestion(Question question) throws IllegalQuizCreationException, IllegalArgumentException {
+        Quiz quiz = getQuiz();
+        if (quiz == null) throw new IllegalQuizCreationException();
+        if (inValid(question)) throw new IllegalArgumentException("Invalid Question");
+        quiz.add(question);
     }
 
     @Override
@@ -55,8 +68,7 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     private boolean inValid(Question question) {
-        Quiz quiz = getQuiz();
-        return question == null || !quiz.contains(question);
+        return question == null || !question.valid();
     }
 
     private boolean inValid(String argument) {
