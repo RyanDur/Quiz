@@ -12,5 +12,5 @@ public class HomePage extends Parent {
         });
         this.setId("homePage");
         this.getChildren().add(button);
-    }
+    } 
 }
