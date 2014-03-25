@@ -1,8 +1,8 @@
 package pij.ryan.durling.resources;
 
-import pij.ryan.durling.registry.Answer;
-import pij.ryan.durling.registry.Question;
-import pij.ryan.durling.registry.Quiz;
+import pij.ryan.durling.models.Answer;
+import pij.ryan.durling.models.Question;
+import pij.ryan.durling.models.Quiz;
 
 public interface QuizServer {
     Quiz createQuiz(String name);

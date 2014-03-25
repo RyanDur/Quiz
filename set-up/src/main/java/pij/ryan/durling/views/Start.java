@@ -3,6 +3,7 @@ package pij.ryan.durling.views;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pij.ryan.durling.views.pages.Home;
 
 public class Start extends Application {
 
@@ -17,8 +18,9 @@ public class Start extends Application {
     }
 
     public Scene getHomePage() {
-        HomePage homePage = new HomePage();
+        Home homePage = new Home();
 
-        return new Scene(homePage, 300, 250);
+        return new Scene(homePage.getPage(), 500, 250);
     }
+
 }

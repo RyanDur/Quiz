@@ -1,4 +1,4 @@
-package pij.ryan.durling.registry;
+package pij.ryan.durling.models;
 
 public interface Question {
     String getQuestion();
