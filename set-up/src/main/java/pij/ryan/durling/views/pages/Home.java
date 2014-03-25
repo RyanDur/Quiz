@@ -1,25 +1,16 @@
 package pij.ryan.durling.views.pages;
 
-import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-
-public class Home extends VBox {
-
-    private StackPane loader;
+public class Home extends StackPane {
 
     public Home() {
-        loader = null;
-        try {
-            loader = FXMLLoader.load(getClass().getResource("homepage.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public StackPane getPage() {
-        return loader;
+        Button button = new Button();
+        button.setText("Add Quiz");
+        button.setOnAction(actionEvent -> {
+            System.out.println("Hello world");
+        });
+        this.getChildren().add(button);
     }
 }

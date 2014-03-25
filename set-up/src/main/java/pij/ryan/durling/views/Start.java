@@ -20,7 +20,7 @@ public class Start extends Application {
     public Scene getHomePage() {
         Home homePage = new Home();
 
-        return new Scene(homePage.getPage(), 500, 250);
+        return new Scene(homePage, 500, 250);
     }
 
 }

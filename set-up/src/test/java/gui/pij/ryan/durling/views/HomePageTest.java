@@ -12,7 +12,7 @@ public class HomePageTest extends GuiTest {
 
     @Override
     protected Parent getRootNode() {
-        return new Home().getPage();
+        return new Home();
     }
 
     @Test
