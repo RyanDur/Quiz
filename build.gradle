@@ -52,7 +52,7 @@ subprojects {
             }
         }
     }
-    test.dependsOn cucumber
+    cucumber.shouldRunAfter testClasses
 }
 
 project(':set-up') {
