@@ -52,8 +52,8 @@ subprojects {
             }
         }
     }
-    check << {
-        cucumber.mustRunAfter test
+    check.doLast {
+        cucumber
     }
 }
 
@@ -61,4 +61,5 @@ project(':set-up') {
     dependencies {
         testCompile 'org.loadui:testFx:3.1.2'
     }
+
 }
