@@ -11,6 +11,10 @@ import static org.loadui.testfx.controls.Commons.hasText;
 public class HomePageTest extends GuiTest {
 
     private String text = "Add Quiz";
+    private String name = "Name";
+    private String textField = ".text-field";
+    private String createQuiz = "Create Quiz";
+    private String button = ".button";
 
     @Override
     protected Parent getRootNode() {
@@ -19,20 +23,31 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldHaveAButton() {
-        verifyThat(".button", hasText(text));
+
+        verifyThat(button, hasText(text));
     }
 
     @Test
     public void shouldAskToCreateAQuizAfterClickingButton() {
         click(text);
-        verifyThat(".button", hasText("Create Quiz"));
+        verifyThat(button, hasText(createQuiz));
     }
 
     @Test
     public  void shouldBeAbleToAddANameOfAQuiz() {
-        String name = "Name";
-        String textField = ".text-field";
         click(text).click(textField).type(name);
         verifyThat(textField, hasText(name));
+    }
+
+    @Test
+    public void shouldBeAbleToAddAQuestionAfterCreatingAQuiz() {
+        click(text)
+                .click(textField)
+                .type(name)
+                .click(createQuiz)
+                .click("#add-question")
+                .type("Hello");
+
+        verifyThat("#add-question", hasText("Hello"));
     }
 }
