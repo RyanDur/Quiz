@@ -52,7 +52,9 @@ subprojects {
             }
         }
     }
-    cucumber.shouldRunAfter check
+    check << {
+        cucumber.mustRunAfter test
+    }
 }
 
 project(':set-up') {
