@@ -52,8 +52,10 @@ subprojects {
             }
         }
     }
-    check.doLast {
-        cucumber
+    check {
+        doLast{
+            cucumber.execute()
+        }
     }
 }
 
