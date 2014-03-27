@@ -1,10 +1,8 @@
 package pij.ryan.durling.views.pages;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,6 +20,9 @@ public class Home extends BorderPane {
     private TextField textField;
     private Button createQuizButton;
     private TextArea questionArea;
+    private GridPane innerGrid;
+    private Question question;
+    private boolean answerValue;
 
     public Home(QuizCreator quizCreator) {
         this.quizCreator = quizCreator;
@@ -87,7 +88,8 @@ public class Home extends BorderPane {
     }
 
     private void addScoreArea() {
-        GridPane innerGrid = new GridPane();
+        innerGrid = new GridPane();
+        innerGrid.setAlignment(Pos.BASELINE_CENTER);
 
         TextField scoreArea = new TextField();
         scoreArea.setId("score");
@@ -95,25 +97,63 @@ public class Home extends BorderPane {
         scoreArea.setPrefSize(200, 10);
         scoreArea.setPromptText("Add Score");
         innerGrid.add(scoreArea, 1, 0);
+        innerGrid.setHgap(10);
+        innerGrid.setVgap(10);
 
         Button addQuestionButton = new Button("Add Question");
         addQuestionButton.setId("add-question-button");
-        addQuestionButton.setPrefSize(100, 20);
+        addQuestionButton.setPrefSize(105, 20);
+
         addQuestionButton.setOnAction(actionEvent -> {
             String userQuestion = questionArea.getText();
             int userScore = Integer.parseInt(scoreArea.getText());
-            Question question = null;
 
             try {
                 question = quizCreator.createQuestion(userQuestion, userScore);
                 quizCreator.addQuestion(question);
+                grid.getChildren().remove(questionArea);
+                innerGrid.getChildren().remove(scoreArea);
+                addAnswerCreator();
+                addRadioButtons();
             } catch (IllegalQuizCreationException e) {
                 e.printStackTrace();
             }
 
         });
-        innerGrid.add(addQuestionButton, 1, 1);
+        innerGrid.add(addQuestionButton, 2, 0);
 
         grid.add(innerGrid, 1, 1);
+    }
+
+    private void addRadioButtons() {
+        RadioButton correct = new RadioButton();
+        RadioButton incorrect = new RadioButton();
+        correct.setText("Correct");
+        incorrect.setText("Incorrect");
+
+        correct.setId("correct");
+        incorrect.setId("incorrect");
+
+        correct.setOnAction(actionEvent -> {
+            answerValue = true;
+        });
+
+        incorrect.setOnAction(actionEvent -> {
+            answerValue = false;
+        });
+
+        GridPane radios = new GridPane();
+        radios.add(correct, 1, 0);
+        radios.add(incorrect, 2, 0);
+        radios.setHgap(10);
+
+        innerGrid.add(radios, 1, 0);
+    }
+
+    private void addAnswerCreator() {
+        TextArea answerArea = new TextArea();
+        answerArea.setPromptText("Add Answer");
+        answerArea.setId("add-answer");
+        grid.add(answerArea, 1, 0);
     }
 }

@@ -14,9 +14,7 @@ import static org.loadui.testfx.controls.Commons.hasText;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class HomePageTest extends GuiTest {
 
@@ -29,6 +27,12 @@ public class HomePageTest extends GuiTest {
     private Quiz mockQuiz = mock(Quiz.class);
     private String addQuestionField = "#add-question";
     private String question = "pancakes";
+    private String addQuestion = "#add-question-button";
+    private String scoreField  = "#score";
+    private String score = "9";
+    private Question mockQuestion;
+    private String addAnswerField = "#add-answer";
+    private String answer = "of course";
 
     @Override
     protected Parent getRootNode() {
@@ -55,9 +59,7 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToSeeTheQuizNameAfterCreatingAQuiz() {
-        when(mockQuizCreator.getName()).thenReturn(quizName);
-        when(mockQuiz.getName()).thenReturn(quizName);
-
+        setup();
         click(text)
                 .click(textField)
                 .type(quizName)
@@ -68,9 +70,7 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddAQuestionAfterCreatingAQuiz() {
-        when(mockQuizCreator.getName()).thenReturn(quizName);
-        when(mockQuiz.getName()).thenReturn(quizName);
-
+        setup();
         click(text)
                 .click(textField)
                 .type(quizName)
@@ -83,12 +83,7 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddAScoreToAQuestion() {
-        when(mockQuizCreator.getName()).thenReturn(quizName);
-        when(mockQuiz.getName()).thenReturn(quizName);
-
-        String scoreField = "#score";
-        String score = "9";
-
+        setup();
         click(text)
                 .click(textField)
                 .type(quizName)
@@ -103,13 +98,23 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddAQuestionToAQuiz() throws IllegalQuizCreationException {
-        when(mockQuizCreator.getName()).thenReturn(quizName);
-        when(mockQuiz.getName()).thenReturn(quizName);
-        Question mockQuestion = mock(Question.class);
-        when(mockQuizCreator.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
+        setup();
+        click(text)
+                .click(textField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion);
 
-        String scoreField = "#score";
-        String score = "9";
+        verify(mockQuizCreator).addQuestion(eq(mockQuestion));
+    }
+
+    @Test
+    public void shouldBeAbleToWriteAnswersAfterCreatingAQuestion() {
+        setup();
 
         click(text)
                 .click(textField)
@@ -119,8 +124,41 @@ public class HomePageTest extends GuiTest {
                 .type(question)
                 .click(scoreField)
                 .type(score)
-                .click("#add-question-button");
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer);
 
-        verify(mockQuizCreator).addQuestion(eq(mockQuestion));
+        verifyThat(addAnswerField, hasText(answer));
+    }
+
+    @Test
+    public void shouldBeaAbleToMarkIfTheAnswerIsCorrect() {
+        setup();
+
+        String correctRadio = "#correct";
+        click(text)
+                .click(textField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(correctRadio);
+
+    }
+
+    private void setup() {
+        when(mockQuizCreator.getName()).thenReturn(quizName);
+        when(mockQuiz.getName()).thenReturn(quizName);
+        mockQuestion = mock(Question.class);
+        try {
+            when(mockQuizCreator.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
+        } catch (IllegalQuizCreationException e) {
+            e.printStackTrace();
+        }
     }
 }
