@@ -17,8 +17,8 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public Quiz getQuiz() {
-        return quiz;
+    public String getName() {
+        return quiz.getName();
     }
 
     @Override
@@ -30,7 +30,6 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public Question createQuestion(String question, int score) throws IllegalArgumentException, IllegalQuizCreationException {
-        Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
         if (score < 1) throw new IllegalArgumentException("Must have a score greater than zero");
         if (inValid(question)) throw new IllegalArgumentException("Must have a question");
@@ -39,7 +38,6 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public Answer createAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
-        Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
         if (inValid(answer)) throw new IllegalArgumentException("Must have an answer");
         return quizServer.createAnswer(answer, value);
@@ -53,7 +51,6 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void addQuestion(Question question) throws IllegalQuizCreationException, IllegalArgumentException {
-        Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
         if (inValid(question)) throw new IllegalArgumentException("Invalid Question");
         quiz.add(question);
@@ -61,7 +58,6 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void save() throws IllegalQuizCreationException, InvalidQuizException {
-        Quiz quiz = getQuiz();
         if (quiz == null) throw new IllegalQuizCreationException();
         if (!quiz.valid()) throw new InvalidQuizException();
         quizServer.save(quiz);

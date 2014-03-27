@@ -4,12 +4,11 @@ import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
-import pij.ryan.durling.models.Quiz;
 
 public interface QuizCreator {
     int createQuiz(String name);
 
-    Quiz getQuiz();
+    String getName();
 
     Question createQuestion(String question, int value) throws IllegalQuizCreationException;
 

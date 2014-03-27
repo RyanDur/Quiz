@@ -3,27 +3,41 @@ package gui.pij.ryan.durling.views;
 import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
+import pij.ryan.durling.controllers.QuizCreator;
+import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.models.Question;
+import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.views.pages.Home;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class HomePageTest extends GuiTest {
 
     private String text = "Add Quiz";
-    private String name = "Name";
+    private String quizName = "Name";
     private String textField = ".text-field";
     private String createQuiz = "Create Quiz";
     private String button = ".button";
+    private QuizCreator mockQuizCreator;
+    private Quiz mockQuiz = mock(Quiz.class);
+    private String addQuestionField = "#add-question";
+    private String question = "pancakes";
 
     @Override
     protected Parent getRootNode() {
-        return new Home();
+        mockQuizCreator = mock(QuizCreator.class);
+        return new Home(mockQuizCreator);
     }
 
     @Test
     public void shouldHaveAButton() {
-
         verifyThat(button, hasText(text));
     }
 
@@ -35,19 +49,78 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public  void shouldBeAbleToAddANameOfAQuiz() {
-        click(text).click(textField).type(name);
-        verifyThat(textField, hasText(name));
+        click(text).click(textField).type(quizName);
+        verifyThat(textField, hasText(quizName));
+    }
+
+    @Test
+    public void shouldBeAbleToSeeTheQuizNameAfterCreatingAQuiz() {
+        when(mockQuizCreator.getName()).thenReturn(quizName);
+        when(mockQuiz.getName()).thenReturn(quizName);
+
+        click(text)
+                .click(textField)
+                .type(quizName)
+                .click(createQuiz);
+
+        verifyThat("#header #title", hasText(quizName));
     }
 
     @Test
     public void shouldBeAbleToAddAQuestionAfterCreatingAQuiz() {
+        when(mockQuizCreator.getName()).thenReturn(quizName);
+        when(mockQuiz.getName()).thenReturn(quizName);
+
         click(text)
                 .click(textField)
-                .type(name)
+                .type(quizName)
                 .click(createQuiz)
-                .click("#add-question")
-                .type("Hello");
+                .click(addQuestionField)
+                .type(question);
 
-        verifyThat("#add-question", hasText("Hello"));
+        verifyThat(addQuestionField, hasText(question));
+    }
+
+    @Test
+    public void shouldBeAbleToAddAScoreToAQuestion() {
+        when(mockQuizCreator.getName()).thenReturn(quizName);
+        when(mockQuiz.getName()).thenReturn(quizName);
+
+        String scoreField = "#score";
+        String score = "9";
+
+        click(text)
+                .click(textField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score);
+
+        verifyThat(scoreField, hasText(score));
+    }
+
+    @Test
+    public void shouldBeAbleToAddAQuestionToAQuiz() throws IllegalQuizCreationException {
+        when(mockQuizCreator.getName()).thenReturn(quizName);
+        when(mockQuiz.getName()).thenReturn(quizName);
+        Question mockQuestion = mock(Question.class);
+        when(mockQuizCreator.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
+
+        String scoreField = "#score";
+        String score = "9";
+
+        click(text)
+                .click(textField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click("#add-question-button");
+
+        verify(mockQuizCreator).addQuestion(eq(mockQuestion));
     }
 }

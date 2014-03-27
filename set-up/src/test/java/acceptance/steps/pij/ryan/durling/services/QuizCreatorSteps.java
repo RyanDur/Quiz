@@ -54,9 +54,9 @@ public class QuizCreatorSteps {
 
     @Then("^they should have a quiz with the name \"([^\"]*)\"$")
     public void they_should_have_a_quiz_with_the_name(String expected) throws Throwable {
-        Quiz actual = quizCreator.getQuiz();
+        String actual = quizCreator.getName();
 
-        assertThat(actual.getName(), is(equalTo(expected)));
+        assertThat(actual, is(equalTo(expected)));
         verify(mockQuizServer).createQuiz(anyString());
         verify(mockQuiz).getId();
     }
