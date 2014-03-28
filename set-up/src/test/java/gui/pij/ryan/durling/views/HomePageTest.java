@@ -25,7 +25,7 @@ public class HomePageTest extends GuiTest {
     private String createQuiz = "Create Quiz";
     private String button = ".button";
     private QuizCreator mockQuizCreator;
-    private Quiz mockQuiz = mock(Quiz.class);
+    private Quiz mockQuiz;
     private String addQuestionField = "#add-question";
     private String question = "pancakes";
     private String addQuestion = "#add-question-button";
@@ -41,6 +41,7 @@ public class HomePageTest extends GuiTest {
 
     @Override
     protected Parent getRootNode() {
+        mockQuiz = mock(Quiz.class);
         mockQuizCreator = mock(QuizCreator.class);
         return new Home(mockQuizCreator);
     }
@@ -206,6 +207,35 @@ public class HomePageTest extends GuiTest {
 
         verify(mockQuizCreator, times(2)).addAnswer(mockQuestion, mockAnswer);
         verifyThat(addAnswerField, hasText(""));
+    }
+
+    @Test
+    public void shouldBeAbleToAddMultipleQuestionsToAQuiz() {
+        setup();
+
+        String never = "never";
+        String addAnotherQuestionButton = "#add-another-question";
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(correctRadio)
+                .click(addAnswer)
+                .click(addAnswerField)
+                .type(never)
+                .click(incorrectRadio)
+                .click(addAnswer)
+                .click(addAnotherQuestionButton);
+
+        verify(mockQuizCreator, times(2)).addAnswer(mockQuestion, mockAnswer);
+        verifyThat(addQuestionField, hasText(""));
     }
 
     private void setup() {
