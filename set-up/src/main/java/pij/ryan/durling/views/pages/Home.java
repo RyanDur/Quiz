@@ -136,7 +136,6 @@ public class Home extends BorderPane {
     }
 
     private void removeAddAnswerView() {
-        body.getChildren().remove(question);
         body.getChildren().remove(answerArea);
         innerGrid.getChildren().remove(radios);
         innerGrid.getChildren().remove(addAnotherQuestionButton);
@@ -241,9 +240,10 @@ public class Home extends BorderPane {
         Button addAnotherQuestionButton = getButton("Another Question", "add-another-question", 130, 20);
 
         addAnotherQuestionButton.setOnAction(actionEvent -> {
-            if (quizCreator.validQuiz()) {
+            if (!footer.getChildren().contains(save) && quizCreator.validQuiz()) {
                 addSaveBar();
             }
+            body.getChildren().remove(question);
             removeAddAnswerView();
             addQuestionView();
         });
@@ -252,20 +252,18 @@ public class Home extends BorderPane {
     }
 
     private void addSaveBar() {
-        if (!footer.getChildren().contains(save)) {
-            save = getButton("Save", "save", 1000, 40);
+        save = getButton("Save", "save", 1000, 40);
 
-            save.setOnAction(e -> {
-                try {
-                    quizCreator.save();
-                } catch (IllegalQuizCreationException | InvalidQuizException e1) {
-                    e1.printStackTrace();
-                }
-            });
+        save.setOnAction(e -> {
+            try {
+                quizCreator.save();
+            } catch (IllegalQuizCreationException | InvalidQuizException e1) {
+                e1.printStackTrace();
+            }
+        });
 
-            footer.getChildren().add(save);
-            setMargin(save, new Insets(10));
-        }
+        footer.getChildren().add(save);
+        setMargin(save, new Insets(10));
     }
 
     private GridPane addRadioButtons() {
