@@ -13,4 +13,6 @@ public interface QuizCreator {
     void addAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException;
 
     void save() throws IllegalQuizCreationException, InvalidQuizException;
+
+    boolean validQuiz();
 }

@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.exceptions.InvalidQuizException;
 
 
 public class Home extends BorderPane {
@@ -28,6 +29,7 @@ public class Home extends BorderPane {
     private Button addAnswerButton;
     private Button addQuizButton;
     private TextField scoreArea;
+    private HBox footer;
 
     public Home(QuizCreator quizCreator) {
         this.quizCreator = quizCreator;
@@ -41,6 +43,8 @@ public class Home extends BorderPane {
         this.setTop(header);
         body = addGrid();
         this.setCenter(body);
+        footer = getFooter();
+        this.setBottom(footer);
     }
 
     private GridPane addGrid() {
@@ -54,6 +58,15 @@ public class Home extends BorderPane {
     private HBox getHeader() {
         HBox hBox = new HBox();
         hBox.setId("header");
+        hBox.setPadding(new Insets(15, 12, 15, 12));
+        hBox.setSpacing(10);
+        hBox.setStyle("-fx-background-color: #889499;");
+        return hBox;
+    }
+
+    private HBox getFooter() {
+        HBox hBox = new HBox();
+        hBox.setId("footer");
         hBox.setPadding(new Insets(15, 12, 15, 12));
         hBox.setSpacing(10);
         hBox.setStyle("-fx-background-color: #889499;");
@@ -226,7 +239,30 @@ public class Home extends BorderPane {
             addQuestionView();
         });
 
+        if (quizCreator.validQuiz()) {
+            addSaveBar();
+        }
+
         return addAnotherQuestionButton;
+    }
+
+    private void addSaveBar() {
+        Button save = new Button("Save");
+        save.setId("save");
+        save.setPrefSize(1000, 20);
+        save.setPadding(new Insets(10));
+
+        save.setOnAction(e -> {
+            try {
+                quizCreator.save();
+            } catch (IllegalQuizCreationException | InvalidQuizException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        footer.getChildren().add(save);
+
+        setMargin(save, new Insets(10));
     }
 
     private GridPane addRadioButtons() {

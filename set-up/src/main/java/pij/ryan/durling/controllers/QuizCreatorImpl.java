@@ -53,6 +53,11 @@ public class QuizCreatorImpl implements QuizCreator {
         quizServer.save(quiz);
     }
 
+    @Override
+    public boolean validQuiz() {
+        return quiz.valid();
+    }
+
     private boolean inValid(String argument) {
         return argument == null || argument.trim().isEmpty();
     }

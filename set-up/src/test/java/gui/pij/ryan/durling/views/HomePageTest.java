@@ -217,6 +217,7 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToSaveAQuiz() throws InvalidQuizException, IllegalQuizCreationException {
+        when(mockQuizCreator.validQuiz()).thenReturn(true);
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
