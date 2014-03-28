@@ -8,7 +8,6 @@ import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.controllers.QuizCreatorImpl;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
-import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.resources.QuizServer;
@@ -30,8 +29,6 @@ public class QuizCreatorSteps {
     private Question mockQuestion = mock(Question.class);
     private Integer quizId;
     private Throwable thrown;
-    private Question question;
-    private Answer answer;
 
     @Given("^a user has a quiz creator$")
     public void a_user_has_a_quiz_creator() throws Throwable {
@@ -115,7 +112,7 @@ public class QuizCreatorSteps {
         when(mockQuizServer.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
 
         try {
-            question = quizCreator.createQuestion(questionString, value);
+            quizCreator.addQuestion(questionString, value);
         } catch (IllegalArgumentException | IllegalQuizCreationException e) {
             thrown = e;
         }
@@ -132,7 +129,7 @@ public class QuizCreatorSteps {
         answerString = ifNull(answerString);
 
         try {
-            answer = quizCreator.createAnswer(answerString, value);
+            quizCreator.addAnswer(answerString, value);
         } catch (IllegalArgumentException | IllegalQuizCreationException e) {
             thrown = e;
         }
@@ -169,28 +166,10 @@ public class QuizCreatorSteps {
         assertThat(thrown.getMessage(), is(equalTo(message)));
     }
 
-    @And("^a user adds answer to the question$")
-    public void a_user_adds_answer_to_the_question() throws Throwable {
-        try {
-            quizCreator.addAnswer(question, answer);
-        } catch (IllegalArgumentException e) {
-            thrown = e;
-        }
-    }
-
-    @And("^a user adds a question to the quiz$")
-    public void a_user_adds_a_question_to_the_quiz() throws Throwable {
-        try {
-            quizCreator.addQuestion(question);
-        } catch (IllegalArgumentException | IllegalQuizCreationException e) {
-            thrown = e;
-        }
-    }
-
     @And("^the question is \"([^\"]*)\"$")
     public void the_question_is(String validString) throws Throwable {
         boolean value = ifTrue(validString);
-        when(question.valid()).thenReturn(value);
+        when(mockQuestion.valid()).thenReturn(value);
     }
 
     @Then("^the question should not be added$")
@@ -202,12 +181,6 @@ public class QuizCreatorSteps {
     public void the_answer_should_not_be_created() throws Throwable {
         verify(mockQuizServer, never()).createAnswer(anyString(), anyBoolean());
     }
-
-    @When("^a user has a question$")
-    public void a_user_has_a_question() throws Throwable {
-        question = mock(Question.class);
-    }
-
 
     private String ifNull(String argument) {
         String nullValue = "null";

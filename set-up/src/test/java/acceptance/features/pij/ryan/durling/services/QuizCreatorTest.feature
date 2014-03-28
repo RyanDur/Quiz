@@ -33,7 +33,6 @@ Feature: The ability to create quizzes
   Scenario Outline: should be able to add a question to a quiz
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <value>
-    And a user adds a question to the quiz
     Then the question should be added
 
   Examples:
@@ -41,31 +40,8 @@ Feature: The ability to create quizzes
     | "foo" | "foo?"   | 7     |
     | "bar" | "bar?"   | 3     |
 
-
-  Scenario Outline: should not be able to add an invalid question to a quiz
-    When a user creates a quiz named <name>
-    And a user creates a question with <question> and <value>
-    And the question is <valid>
-    And a user adds a question to the quiz
-    Then the question should not be added
-    And throw an IllegalArgumentException
-    And have the message "Invalid Question"
-
-  Examples:
-    | name  | question | value | valid   |
-    | "foo" | "foo?"   | 7     | "false" |
-    | "bar" | "bar?"   | 3     | "false" |
-
-  Scenario: should not be able to add a null question to the quiz
-    When a user creates a quiz named "foo"
-    And a user adds a question to the quiz
-    Then the question should not be added
-    And throw an IllegalArgumentException
-    And have the message "Invalid Question"
-
   Scenario: should not be able to add a question to a null quiz
-    When a user has a question
-    And a user adds a question to the quiz
+    When a user creates a question with "foo?" and 7
     Then the question should not be added
     And throw an IllegalQuizCreationException
     And have the message "Need to create a quiz first."
@@ -111,7 +87,6 @@ Feature: The ability to create quizzes
     When a user creates a quiz named <name>
     And a user creates a question with <question> and <score>
     And a user creates an <answer> that is <correct>
-    And a user adds answer to the question
     Then the answer should be added
 
   Examples:
@@ -132,19 +107,6 @@ Feature: The ability to create quizzes
     | "foo" | "foo?"   | 7     | ""     | "true"  |
     | "bar" | "baz?"   | 3     | " "    | "false" |
     | "baz" | "bar?"   | 3     | "null" | "false" |
-
-  Scenario Outline: should not be able to add an answer without a question
-    When a user creates a quiz named <name>
-    And a user creates an <answer> that is <correct>
-    And a user adds answer to the question
-    Then the answer should not be added
-    And throw an IllegalArgumentException
-    And have the message "Invalid Question"
-
-  Examples:
-    | name  | answer | correct |
-    | "foo" | "bar"  | "true"  |
-    | "bar" | "baz"  | "true"  |
 
   Scenario Outline: should be able to save it to the server
     When a user creates a quiz named <name>

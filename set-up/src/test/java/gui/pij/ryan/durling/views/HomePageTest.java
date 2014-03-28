@@ -5,16 +5,11 @@ import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
-import pij.ryan.durling.models.Answer;
-import pij.ryan.durling.models.Question;
-import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.views.pages.Home;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 public class HomePageTest extends GuiTest {
@@ -25,23 +20,19 @@ public class HomePageTest extends GuiTest {
     private String createQuiz = "Create Quiz";
     private String button = ".button";
     private QuizCreator mockQuizCreator;
-    private Quiz mockQuiz;
     private String addQuestionField = "#add-question";
     private String question = "pancakes";
     private String addQuestion = "#add-question-button";
     private String scoreField  = "#score";
     private String score = "9";
-    private Question mockQuestion;
     private String addAnswerField = "#add-answer";
     private String answer = "of course";
-    private Answer mockAnswer;
     private String addAnswer = "#add-answer-button";
     private String incorrectRadio = "#incorrect";
     private String correctRadio = "#correct";
 
     @Override
     protected Parent getRootNode() {
-        mockQuiz = mock(Quiz.class);
         mockQuizCreator = mock(QuizCreator.class);
         return new Home(mockQuizCreator);
     }
@@ -116,7 +107,7 @@ public class HomePageTest extends GuiTest {
                 .type(score)
                 .click(addQuestion);
 
-        verify(mockQuizCreator).addQuestion(eq(mockQuestion));
+        verify(mockQuizCreator).addQuestion(question, Integer.parseInt(score));
     }
 
     @Test
@@ -156,8 +147,7 @@ public class HomePageTest extends GuiTest {
                 .click(correctRadio)
                 .click(addAnswer);
 
-        verify(mockQuizCreator).createAnswer(answer, true);
-        verify(mockQuizCreator).addAnswer(mockQuestion, mockAnswer);
+        verify(mockQuizCreator).addAnswer(answer, true);
     }
 
     @Test
@@ -178,8 +168,7 @@ public class HomePageTest extends GuiTest {
                 .click(incorrectRadio)
                 .click(addAnswer);
 
-        verify(mockQuizCreator).createAnswer(answer, false);
-        verify(mockQuizCreator).addAnswer(mockQuestion, mockAnswer);
+        verify(mockQuizCreator).addAnswer(answer, false);
     }
 
     @Test
@@ -205,12 +194,12 @@ public class HomePageTest extends GuiTest {
                 .click(incorrectRadio)
                 .click(addAnswer);
 
-        verify(mockQuizCreator, times(2)).addAnswer(mockQuestion, mockAnswer);
+        verify(mockQuizCreator, times(2)).addAnswer(anyString(), anyBoolean());
         verifyThat(addAnswerField, hasText(""));
     }
 
     @Test
-    public void shouldBeAbleToAddMultipleQuestionsToAQuiz() {
+    public void shouldBeAbleToAddMultipleQuestionsToAQuiz() throws IllegalQuizCreationException {
         setup();
 
         String never = "never";
@@ -234,20 +223,11 @@ public class HomePageTest extends GuiTest {
                 .click(addAnswer)
                 .click(addAnotherQuestionButton);
 
-        verify(mockQuizCreator, times(2)).addAnswer(mockQuestion, mockAnswer);
+        verify(mockQuizCreator, times(2)).addAnswer(anyString(), anyBoolean());
         verifyThat(addQuestionField, hasText(""));
     }
 
     private void setup() {
         when(mockQuizCreator.getName()).thenReturn(quizName);
-        when(mockQuiz.getName()).thenReturn(quizName);
-        mockQuestion = mock(Question.class);
-        mockAnswer = mock(Answer.class);
-        try {
-            when(mockQuizCreator.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
-            when(mockQuizCreator.createAnswer(anyString(), anyBoolean())).thenReturn(mockAnswer);
-        } catch (IllegalQuizCreationException e) {
-            e.printStackTrace();
-        }
     }
 }

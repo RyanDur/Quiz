@@ -2,21 +2,15 @@ package pij.ryan.durling.controllers;
 
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
-import pij.ryan.durling.models.Answer;
-import pij.ryan.durling.models.Question;
 
 public interface QuizCreator {
     int createQuiz(String name);
 
     String getName();
 
-    Question createQuestion(String question, int value) throws IllegalQuizCreationException;
+    void addQuestion(String question, int value) throws IllegalQuizCreationException;
 
-    Answer createAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException;
-
-    void addAnswer(Question question, Answer answer) throws IllegalArgumentException;
-
-    void addQuestion(Question question) throws IllegalQuizCreationException, IllegalArgumentException;
+    void addAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException;
 
     void save() throws IllegalQuizCreationException, InvalidQuizException;
 }

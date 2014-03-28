@@ -8,8 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
-import pij.ryan.durling.models.Answer;
-import pij.ryan.durling.models.Question;
 
 
 public class Home extends BorderPane {
@@ -20,7 +18,6 @@ public class Home extends BorderPane {
     private TextField createQuiz;
     private TextArea questionArea;
     private GridPane innerGrid;
-    private Question question;
     private boolean answerValue;
     private TextArea answerArea;
     private Button addQuestionButton;
@@ -70,17 +67,29 @@ public class Home extends BorderPane {
 
     private void createNewQuizView() {
         Button createQuizButton = createQuizButton();
-        addQuizField();
-        createQuizButton();
+        createQuiz = addQuizField();
+
         header.getChildren().remove(addQuizButton);
+        header.getChildren().add(createQuiz);
         header.getChildren().add(createQuizButton);
     }
 
     private void addQuestionView() {
-        addQuestionArea();
-        addScoreArea();
-        addQuestionButton = addQuestionButton();
+        innerGrid = new GridPane();
+        innerGrid.setAlignment(Pos.BASELINE_CENTER);
+
+        questionArea = addQuestionArea();
+        scoreArea = addScoreArea();
+
+        innerGrid.add(scoreArea, 1, 0);
+        innerGrid.setHgap(10);
+        innerGrid.setVgap(10);
+
+        addQuestionButton = addQuestionButton(questionArea, scoreArea);
+
+        body.add(innerGrid, 1, 1);
         innerGrid.add(addQuestionButton, 2, 0);
+        body.add(questionArea, 1, 0);
     }
 
     private void removeAddQuestionView() {
@@ -90,14 +99,16 @@ public class Home extends BorderPane {
     }
 
     private void addAnswerView() {
-        addAnswerArea();
+        answerArea = addAnswerArea();
+
         radios = addRadioButtons();
-        addAnswerButton = addAnswerButton();
+        addAnswerButton = addAnswerButton(answerArea);
         addAnotherQuestionButton = addAnotherQuestionButton();
 
         innerGrid.add(addAnswerButton, 2, 0);
         innerGrid.add(addAnotherQuestionButton, 3, 0);
         innerGrid.add(radios, 1, 0);
+        body.add(answerArea, 1, 0);
     }
 
     private void resetAddAnswerView() {
@@ -113,81 +124,72 @@ public class Home extends BorderPane {
         innerGrid.getChildren().remove(addAnswerButton);
     }
 
-    private void addQuizField() {
-        createQuiz = new TextField();
-        createQuiz.setId("create-quiz");
+    private TextField addQuizField() {
+        TextField addQuizField = new TextField();
+        addQuizField.setId("create-quiz");
 
-        header.getChildren().add(createQuiz);
+        return addQuizField;
     }
 
-    private void addQuestionArea() {
-        questionArea = new TextArea();
+    private TextArea addQuestionArea() {
+        TextArea questionArea = new TextArea();
 
         questionArea.setPromptText("Add Question");
         questionArea.setId("add-question");
-        body.add(questionArea, 1, 0);
+
+        return questionArea;
     }
 
-    private void addScoreArea() {
-        innerGrid = new GridPane();
-        innerGrid.setAlignment(Pos.BASELINE_CENTER);
-
-        scoreArea = new TextField();
+    private TextField addScoreArea() {
+        TextField scoreArea = new TextField();
         scoreArea.setId("score");
 
         scoreArea.setPrefSize(200, 10);
         scoreArea.setPromptText("Add Score");
-        innerGrid.add(scoreArea, 1, 0);
-        innerGrid.setHgap(10);
-        innerGrid.setVgap(10);
 
-        body.add(innerGrid, 1, 1);
+        return scoreArea;
     }
 
-    private void addAnswerArea() {
-        answerArea = new TextArea();
+    private TextArea addAnswerArea() {
+        TextArea answerArea = new TextArea();
         answerArea.setPromptText("Add Answer");
         answerArea.setId("add-answer");
-        body.add(answerArea, 1, 0);
+        return answerArea;
     }
 
     private Button addQuizButton() {
-        Button addQuizButton = new Button();
-        addQuizButton.setText("Add Quiz");
-        addQuizButton.setPrefSize(100, 20);
+        Button addQuizButton = getButton("Add Quiz", "add-quiz-button", 100, 20);
         addQuizButton.setOnAction(actionEvent -> createNewQuizView());
         return addQuizButton;
     }
 
     private Button createQuizButton() {
-        Button createQuizButton = new Button();
-        createQuizButton.setText("Create Quiz");
-        createQuizButton.setPrefSize(100, 20);
+        Button createQuizButton = getButton("Create Quiz", "create-quiz-button", 100, 20);
 
         createQuizButton.setOnAction(actionEvent -> {
             quizCreator.createQuiz(createQuiz.getText());
-            Label title = new Label(quizCreator.getName());
-            title.setId("title");
             header.getChildren().removeAll(createQuiz, createQuizButton);
-            header.getChildren().add(title);
+            setTitle();
             addQuestionView();
         });
 
         return createQuizButton;
     }
 
-    private Button addAnswerButton() {
-        Button addAnswerButton = new Button("Add Answer");
-        addAnswerButton.setId("add-answer-button");
-        addAnswerButton.setPrefSize(105, 20);
+    private void setTitle() {
+        Label title = new Label(quizCreator.getName());
+        title.setId("title");
+        header.getChildren().add(title);
+    }
+
+    private Button addAnswerButton(TextArea answerArea) {
+        Button addAnswerButton = getButton("Add Answer", "add-answer-button", 105, 20);
 
         addAnswerButton.setOnAction(actionEvent -> {
             String userAnswer = answerArea.getText();
-            boolean value = answerValue;
 
             try {
-                Answer answer = quizCreator.createAnswer(userAnswer, value);
-                quizCreator.addAnswer(question, answer);
+                quizCreator.addAnswer(userAnswer, answerValue);
                 resetAddAnswerView();
             } catch (IllegalQuizCreationException e) {
                 e.printStackTrace();
@@ -197,18 +199,15 @@ public class Home extends BorderPane {
         return addAnswerButton;
     }
 
-    private Button addQuestionButton() {
-        Button addQuestionButton = new Button("Add Question");
-        addQuestionButton.setId("add-question-button");
-        addQuestionButton.setPrefSize(105, 20);
+    private Button addQuestionButton(TextArea questionArea, TextField scoreArea) {
+        Button addQuestionButton = getButton("Add Question", "add-question-button", 105, 20);
 
         addQuestionButton.setOnAction(actionEvent -> {
             String userQuestion = questionArea.getText();
             int userScore = Integer.parseInt(scoreArea.getText());
 
             try {
-                question = quizCreator.createQuestion(userQuestion, userScore);
-                quizCreator.addQuestion(question);
+                quizCreator.addQuestion(userQuestion, userScore);
                 removeAddQuestionView();
                 addAnswerView();
             } catch (IllegalQuizCreationException e) {
@@ -220,9 +219,7 @@ public class Home extends BorderPane {
     }
 
     private Button addAnotherQuestionButton() {
-        addAnotherQuestionButton = new Button("Another Question");
-        addAnotherQuestionButton.setId("add-another-question");
-        addAnotherQuestionButton.setPrefSize(130, 20);
+        Button addAnotherQuestionButton = getButton("Another Question", "add-another-question", 130, 20);
 
         addAnotherQuestionButton.setOnAction(actionEvent -> {
             removeAddAnswerView();
@@ -233,21 +230,12 @@ public class Home extends BorderPane {
     }
 
     private GridPane addRadioButtons() {
-        correct = new RadioButton();
-        incorrect = new RadioButton();
-        correct.setText("Correct");
-        incorrect.setText("Incorrect");
+        ToggleGroup group = new ToggleGroup();
+        correct = getRadioButton("Correct", "correct", true);
+        incorrect = getRadioButton("Incorrect", "incorrect", false);
 
-        correct.setId("correct");
-        incorrect.setId("incorrect");
-
-        correct.setOnAction(actionEvent -> {
-            answerValue = true;
-        });
-
-        incorrect.setOnAction(actionEvent -> {
-            answerValue = false;
-        });
+        correct.setToggleGroup(group);
+        incorrect.setToggleGroup(group);
 
         GridPane radios = new GridPane();
         radios.add(correct, 1, 0);
@@ -255,5 +243,21 @@ public class Home extends BorderPane {
         radios.setHgap(10);
 
         return radios;
+    }
+
+    private RadioButton getRadioButton(String title, String id, boolean value) {
+        RadioButton radioButton = new RadioButton(title);
+        radioButton.setId(id);
+        radioButton.setOnAction(e -> {
+            answerValue = value;
+        });
+        return radioButton;
+    }
+
+    private Button getButton(String label, String id, int x, int y) {
+        Button addAnswerButton = new Button(label);
+        addAnswerButton.setId(id);
+        addAnswerButton.setPrefSize(x, y);
+        return addAnswerButton;
     }
 }
