@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.views.pages.Home;
 
 import static org.loadui.testfx.Assertions.verifyThat;
@@ -30,6 +31,8 @@ public class HomePageTest extends GuiTest {
     private String addAnswer = "#add-answer-button";
     private String incorrectRadio = "#incorrect";
     private String correctRadio = "#correct";
+    private String never = "never";
+    private String addAnotherQuestionButton = "#add-another-question";
 
     @Override
     protected Parent getRootNode() {
@@ -189,8 +192,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddMultipleQuestionsToAQuiz() throws IllegalQuizCreationException {
-        String never = "never";
-        String addAnotherQuestionButton = "#add-another-question";
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -212,5 +213,30 @@ public class HomePageTest extends GuiTest {
 
         verify(mockQuizCreator, times(2)).addAnswer(anyString(), anyBoolean());
         verifyThat(addQuestionField, hasText(""));
+    }
+
+    @Test
+    public void shouldBeAbleToSaveAQuiz() throws InvalidQuizException, IllegalQuizCreationException {
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(correctRadio)
+                .click(addAnswer)
+                .click(addAnswerField)
+                .type(never)
+                .click(incorrectRadio)
+                .click(addAnswer)
+                .click(addAnotherQuestionButton)
+                .click("#save");
+
+        verify(mockQuizCreator).save();
     }
 }

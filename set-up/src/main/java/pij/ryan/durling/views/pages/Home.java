@@ -230,12 +230,8 @@ public class Home extends BorderPane {
     }
 
     private GridPane addRadioButtons() {
-        ToggleGroup group = new ToggleGroup();
         correct = getRadioButton("Correct", "correct", true);
         incorrect = getRadioButton("Incorrect", "incorrect", false);
-
-        correct.setToggleGroup(group);
-        incorrect.setToggleGroup(group);
 
         GridPane radios = new GridPane();
         radios.add(correct, 1, 0);
