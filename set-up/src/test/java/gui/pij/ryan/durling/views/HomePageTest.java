@@ -34,6 +34,7 @@ public class HomePageTest extends GuiTest {
     @Override
     protected Parent getRootNode() {
         mockQuizCreator = mock(QuizCreator.class);
+        when(mockQuizCreator.getName()).thenReturn(quizName);
         return new Home(mockQuizCreator);
     }
 
@@ -56,7 +57,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToSeeTheQuizNameAfterCreatingAQuiz() {
-        setup();
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -68,7 +68,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddAQuestionAfterCreatingAQuiz() {
-        setup();
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -81,7 +80,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddAScoreToAQuestion() {
-        setup();
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -96,7 +94,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddAQuestionToAQuiz() throws IllegalQuizCreationException {
-        setup();
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -112,8 +109,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToWriteAnswersAfterCreatingAQuestion() {
-        setup();
-
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -131,8 +126,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeaAbleAddACorrectAnswerToAQuestion() throws IllegalQuizCreationException {
-        setup();
-
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -152,8 +145,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeaAbleAddAnIncorrectAnswerToAQuestion() throws IllegalQuizCreationException {
-        setup();
-
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -173,8 +164,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddMultipleAnswersToAQuestion() throws IllegalQuizCreationException {
-        setup();
-
         String never = "never";
         click(addQuiz)
                 .click(addQuizField)
@@ -200,8 +189,6 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddMultipleQuestionsToAQuiz() throws IllegalQuizCreationException {
-        setup();
-
         String never = "never";
         String addAnotherQuestionButton = "#add-another-question";
         click(addQuiz)
@@ -225,9 +212,5 @@ public class HomePageTest extends GuiTest {
 
         verify(mockQuizCreator, times(2)).addAnswer(anyString(), anyBoolean());
         verifyThat(addQuestionField, hasText(""));
-    }
-
-    private void setup() {
-        when(mockQuizCreator.getName()).thenReturn(quizName);
     }
 }
