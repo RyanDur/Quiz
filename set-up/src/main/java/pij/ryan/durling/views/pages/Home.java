@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 
 
@@ -23,6 +24,7 @@ public class Home extends BorderPane {
     private GridPane innerGrid;
     private Question question;
     private boolean answerValue;
+    private TextArea answerArea;
 
     public Home(QuizCreator quizCreator) {
         this.quizCreator = quizCreator;
@@ -57,6 +59,7 @@ public class Home extends BorderPane {
         createQuizButton.setPrefSize(100, 20);
 
         createQuizButton.setOnAction(actionEvent -> {
+            quizCreator.createQuiz(textField.getText());
             hBox.getChildren().removeAll(textField, createQuizButton);
             Label title = new Label(quizCreator.getName());
             title.setId("title");
@@ -113,8 +116,10 @@ public class Home extends BorderPane {
                 quizCreator.addQuestion(question);
                 grid.getChildren().remove(questionArea);
                 innerGrid.getChildren().remove(scoreArea);
+                innerGrid.getChildren().remove(addQuestionButton);
                 addAnswerCreator();
                 addRadioButtons();
+                addAddAnswerButton();
             } catch (IllegalQuizCreationException e) {
                 e.printStackTrace();
             }
@@ -123,6 +128,26 @@ public class Home extends BorderPane {
         innerGrid.add(addQuestionButton, 2, 0);
 
         grid.add(innerGrid, 1, 1);
+    }
+
+    private void addAddAnswerButton() {
+        Button addAnswerButton = new Button("Add Answer");
+        addAnswerButton.setId("add-answer-button");
+        addAnswerButton.setPrefSize(105, 20);
+
+        addAnswerButton.setOnAction(actionEvent -> {
+            String userAnswer = answerArea.getText();
+            boolean value = answerValue;
+
+            try {
+                Answer answer = quizCreator.createAnswer(userAnswer, value);
+                quizCreator.addAnswer(question, answer);
+            } catch (IllegalQuizCreationException e) {
+                e.printStackTrace();
+            }
+        });
+
+        innerGrid.add(addAnswerButton, 2, 0);
     }
 
     private void addRadioButtons() {
@@ -151,7 +176,7 @@ public class Home extends BorderPane {
     }
 
     private void addAnswerCreator() {
-        TextArea answerArea = new TextArea();
+        answerArea = new TextArea();
         answerArea.setPromptText("Add Answer");
         answerArea.setId("add-answer");
         grid.add(answerArea, 1, 0);

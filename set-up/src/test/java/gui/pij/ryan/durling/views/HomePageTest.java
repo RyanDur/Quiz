@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.views.pages.Home;
@@ -33,6 +34,7 @@ public class HomePageTest extends GuiTest {
     private Question mockQuestion;
     private String addAnswerField = "#add-answer";
     private String answer = "of course";
+    private Answer mockAnswer;
 
     @Override
     protected Parent getRootNode() {
@@ -66,6 +68,7 @@ public class HomePageTest extends GuiTest {
                 .click(createQuiz);
 
         verifyThat("#header #title", hasText(quizName));
+        verify(mockQuizCreator).createQuiz(quizName);
     }
 
     @Test
@@ -132,10 +135,11 @@ public class HomePageTest extends GuiTest {
     }
 
     @Test
-    public void shouldBeaAbleToMarkIfTheAnswerIsCorrect() {
+    public void shouldBeaAbleAddACorrectTheAnswerToAQuestion() throws IllegalQuizCreationException {
         setup();
 
         String correctRadio = "#correct";
+        String addAnswer = "#add-answer-button";
         click(text)
                 .click(textField)
                 .type(quizName)
@@ -147,16 +151,20 @@ public class HomePageTest extends GuiTest {
                 .click(addQuestion)
                 .click(addAnswerField)
                 .type(answer)
-                .click(correctRadio);
+                .click(correctRadio).click(addAnswer);
 
+        verify(mockQuizCreator).createAnswer(answer, true);
+        verify(mockQuizCreator).addAnswer(mockQuestion, mockAnswer);
     }
 
     private void setup() {
         when(mockQuizCreator.getName()).thenReturn(quizName);
         when(mockQuiz.getName()).thenReturn(quizName);
         mockQuestion = mock(Question.class);
+        mockAnswer = mock(Answer.class);
         try {
             when(mockQuizCreator.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
+            when(mockQuizCreator.createAnswer(anyString(), anyBoolean())).thenReturn(mockAnswer);
         } catch (IllegalQuizCreationException e) {
             e.printStackTrace();
         }
