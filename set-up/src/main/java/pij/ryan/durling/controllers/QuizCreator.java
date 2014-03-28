@@ -15,4 +15,6 @@ public interface QuizCreator {
     void save() throws IllegalQuizCreationException, InvalidQuizException;
 
     boolean validQuiz();
+
+    String getQuestion();
 }

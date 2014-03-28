@@ -58,6 +58,11 @@ public class QuizCreatorImpl implements QuizCreator {
         return quiz.valid();
     }
 
+    @Override
+    public String getQuestion() {
+        return null;
+    }
+
     private boolean inValid(String argument) {
         return argument == null || argument.trim().isEmpty();
     }

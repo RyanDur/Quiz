@@ -30,6 +30,8 @@ public class Home extends BorderPane {
     private Button addQuizButton;
     private TextField scoreArea;
     private HBox footer;
+    private Label question;
+    private Button save;
 
     public Home(QuizCreator quizCreator) {
         this.quizCreator = quizCreator;
@@ -100,9 +102,9 @@ public class Home extends BorderPane {
 
         addQuestionButton = addQuestionButton(questionArea, scoreArea);
 
-        body.add(innerGrid, 1, 1);
+        body.add(innerGrid, 1, 2);
         innerGrid.add(addQuestionButton, 2, 0);
-        body.add(questionArea, 1, 0);
+        body.add(questionArea, 1, 1);
     }
 
     private void removeAddQuestionView() {
@@ -113,6 +115,7 @@ public class Home extends BorderPane {
 
     private void addAnswerView() {
         answerArea = addAnswerArea();
+        question = new Label(quizCreator.getQuestion());
 
         radios = addRadioButtons();
         addAnswerButton = addAnswerButton(answerArea);
@@ -121,7 +124,9 @@ public class Home extends BorderPane {
         innerGrid.add(addAnswerButton, 2, 0);
         innerGrid.add(addAnotherQuestionButton, 3, 0);
         innerGrid.add(radios, 1, 0);
-        body.add(answerArea, 1, 0);
+
+        body.add(question, 1, 0);
+        body.add(answerArea, 1, 1);
     }
 
     private void resetAddAnswerView() {
@@ -131,6 +136,7 @@ public class Home extends BorderPane {
     }
 
     private void removeAddAnswerView() {
+        body.getChildren().remove(question);
         body.getChildren().remove(answerArea);
         innerGrid.getChildren().remove(radios);
         innerGrid.getChildren().remove(addAnotherQuestionButton);
@@ -235,34 +241,31 @@ public class Home extends BorderPane {
         Button addAnotherQuestionButton = getButton("Another Question", "add-another-question", 130, 20);
 
         addAnotherQuestionButton.setOnAction(actionEvent -> {
+            if (quizCreator.validQuiz()) {
+                addSaveBar();
+            }
             removeAddAnswerView();
             addQuestionView();
         });
-
-        if (quizCreator.validQuiz()) {
-            addSaveBar();
-        }
 
         return addAnotherQuestionButton;
     }
 
     private void addSaveBar() {
-        Button save = new Button("Save");
-        save.setId("save");
-        save.setPrefSize(1000, 20);
-        save.setPadding(new Insets(10));
+        if (!footer.getChildren().contains(save)) {
+            save = getButton("Save", "save", 1000, 40);
 
-        save.setOnAction(e -> {
-            try {
-                quizCreator.save();
-            } catch (IllegalQuizCreationException | InvalidQuizException e1) {
-                e1.printStackTrace();
-            }
-        });
+            save.setOnAction(e -> {
+                try {
+                    quizCreator.save();
+                } catch (IllegalQuizCreationException | InvalidQuizException e1) {
+                    e1.printStackTrace();
+                }
+            });
 
-        footer.getChildren().add(save);
-
-        setMargin(save, new Insets(10));
+            footer.getChildren().add(save);
+            setMargin(save, new Insets(10));
+        }
     }
 
     private GridPane addRadioButtons() {
@@ -287,9 +290,9 @@ public class Home extends BorderPane {
     }
 
     private Button getButton(String label, String id, int x, int y) {
-        Button addAnswerButton = new Button(label);
-        addAnswerButton.setId(id);
-        addAnswerButton.setPrefSize(x, y);
-        return addAnswerButton;
+        Button button = new Button(label);
+        button.setId(id);
+        button.setPrefSize(x, y);
+        return button;
     }
 }

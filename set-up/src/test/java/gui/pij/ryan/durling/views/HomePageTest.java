@@ -33,10 +33,12 @@ public class HomePageTest extends GuiTest {
     private String correctRadio = "#correct";
     private String never = "never";
     private String addAnotherQuestionButton = "#add-another-question";
+    private String foobar = "Bacon";
 
     @Override
     protected Parent getRootNode() {
         mockQuizCreator = mock(QuizCreator.class);
+        when(mockQuizCreator.getQuestion()).thenReturn(question, foobar);
         when(mockQuizCreator.getName()).thenReturn(quizName);
         return new Home(mockQuizCreator);
     }
@@ -236,6 +238,19 @@ public class HomePageTest extends GuiTest {
                 .click(incorrectRadio)
                 .click(addAnswer)
                 .click(addAnotherQuestionButton)
+                .click(addQuestionField)
+                .type(foobar)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(correctRadio)
+                .click(addAnswer)
+                .click(addAnswerField)
+                .type(never)
+                .click(incorrectRadio)
+                .click(addAnswer)
                 .click("#save");
 
         verify(mockQuizCreator).save();
