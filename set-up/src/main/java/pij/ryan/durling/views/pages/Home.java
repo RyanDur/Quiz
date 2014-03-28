@@ -54,6 +54,7 @@ public class Home extends BorderPane {
 
     private void addTextField() {
         textField = new TextField();
+        textField.setId("create-quiz");
         createQuizButton = new Button();
         createQuizButton.setText("Create Quiz");
         createQuizButton.setPrefSize(100, 20);

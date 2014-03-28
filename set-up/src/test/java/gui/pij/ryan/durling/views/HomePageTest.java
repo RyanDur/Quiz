@@ -19,9 +19,9 @@ import static org.mockito.Mockito.*;
 
 public class HomePageTest extends GuiTest {
 
-    private String text = "Add Quiz";
+    private String addQuiz = "Add Quiz";
     private String quizName = "Name";
-    private String textField = ".text-field";
+    private String addQuizField = "#create-quiz";
     private String createQuiz = "Create Quiz";
     private String button = ".button";
     private QuizCreator mockQuizCreator;
@@ -35,6 +35,7 @@ public class HomePageTest extends GuiTest {
     private String addAnswerField = "#add-answer";
     private String answer = "of course";
     private Answer mockAnswer;
+    private String addAnswer = "#add-answer-button";
 
     @Override
     protected Parent getRootNode() {
@@ -44,26 +45,26 @@ public class HomePageTest extends GuiTest {
 
     @Test
     public void shouldHaveAButton() {
-        verifyThat(button, hasText(text));
+        verifyThat(button, hasText(addQuiz));
     }
 
     @Test
     public void shouldAskToCreateAQuizAfterClickingButton() {
-        click(text);
+        click(addQuiz);
         verifyThat(button, hasText(createQuiz));
     }
 
     @Test
     public  void shouldBeAbleToAddANameOfAQuiz() {
-        click(text).click(textField).type(quizName);
-        verifyThat(textField, hasText(quizName));
+        click(addQuiz).click(addQuizField).type(quizName);
+        verifyThat(addQuizField, hasText(quizName));
     }
 
     @Test
     public void shouldBeAbleToSeeTheQuizNameAfterCreatingAQuiz() {
         setup();
-        click(text)
-                .click(textField)
+        click(addQuiz)
+                .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz);
 
@@ -74,8 +75,8 @@ public class HomePageTest extends GuiTest {
     @Test
     public void shouldBeAbleToAddAQuestionAfterCreatingAQuiz() {
         setup();
-        click(text)
-                .click(textField)
+        click(addQuiz)
+                .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz)
                 .click(addQuestionField)
@@ -87,8 +88,8 @@ public class HomePageTest extends GuiTest {
     @Test
     public void shouldBeAbleToAddAScoreToAQuestion() {
         setup();
-        click(text)
-                .click(textField)
+        click(addQuiz)
+                .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz)
                 .click(addQuestionField)
@@ -102,8 +103,8 @@ public class HomePageTest extends GuiTest {
     @Test
     public void shouldBeAbleToAddAQuestionToAQuiz() throws IllegalQuizCreationException {
         setup();
-        click(text)
-                .click(textField)
+        click(addQuiz)
+                .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz)
                 .click(addQuestionField)
@@ -119,8 +120,8 @@ public class HomePageTest extends GuiTest {
     public void shouldBeAbleToWriteAnswersAfterCreatingAQuestion() {
         setup();
 
-        click(text)
-                .click(textField)
+        click(addQuiz)
+                .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz)
                 .click(addQuestionField)
@@ -135,13 +136,12 @@ public class HomePageTest extends GuiTest {
     }
 
     @Test
-    public void shouldBeaAbleAddACorrectTheAnswerToAQuestion() throws IllegalQuizCreationException {
+    public void shouldBeaAbleAddACorrectAnswerToAQuestion() throws IllegalQuizCreationException {
         setup();
 
         String correctRadio = "#correct";
-        String addAnswer = "#add-answer-button";
-        click(text)
-                .click(textField)
+        click(addQuiz)
+                .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz)
                 .click(addQuestionField)
@@ -151,9 +151,33 @@ public class HomePageTest extends GuiTest {
                 .click(addQuestion)
                 .click(addAnswerField)
                 .type(answer)
-                .click(correctRadio).click(addAnswer);
+                .click(correctRadio)
+                .click(addAnswer);
 
         verify(mockQuizCreator).createAnswer(answer, true);
+        verify(mockQuizCreator).addAnswer(mockQuestion, mockAnswer);
+    }
+
+    @Test
+    public void shouldBeaAbleAddAnIncorrectAnswerToAQuestion() throws IllegalQuizCreationException {
+        setup();
+
+        String incorrectRadio = "#incorrect";
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(incorrectRadio)
+                .click(addAnswer);
+
+        verify(mockQuizCreator).createAnswer(answer, false);
         verify(mockQuizCreator).addAnswer(mockQuestion, mockAnswer);
     }
 
