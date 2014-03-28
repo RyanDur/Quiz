@@ -36,6 +36,8 @@ public class HomePageTest extends GuiTest {
     private String answer = "of course";
     private Answer mockAnswer;
     private String addAnswer = "#add-answer-button";
+    private String incorrectRadio = "#incorrect";
+    private String correctRadio = "#correct";
 
     @Override
     protected Parent getRootNode() {
@@ -139,7 +141,6 @@ public class HomePageTest extends GuiTest {
     public void shouldBeaAbleAddACorrectAnswerToAQuestion() throws IllegalQuizCreationException {
         setup();
 
-        String correctRadio = "#correct";
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -162,7 +163,6 @@ public class HomePageTest extends GuiTest {
     public void shouldBeaAbleAddAnIncorrectAnswerToAQuestion() throws IllegalQuizCreationException {
         setup();
 
-        String incorrectRadio = "#incorrect";
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -179,6 +179,33 @@ public class HomePageTest extends GuiTest {
 
         verify(mockQuizCreator).createAnswer(answer, false);
         verify(mockQuizCreator).addAnswer(mockQuestion, mockAnswer);
+    }
+
+    @Test
+    public void shouldBeAbleToAddMultipleAnswersToAQuestion() throws IllegalQuizCreationException {
+        setup();
+
+        String never = "never";
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(correctRadio)
+                .click(addAnswer)
+                .click(addAnswerField)
+                .type(never)
+                .click(incorrectRadio)
+                .click(addAnswer);
+
+        verify(mockQuizCreator, times(2)).addAnswer(mockQuestion, mockAnswer);
+        verifyThat(addAnswerField, hasText(""));
     }
 
     private void setup() {

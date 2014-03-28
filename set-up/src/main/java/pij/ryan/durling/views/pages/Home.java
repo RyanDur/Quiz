@@ -18,13 +18,16 @@ public class Home extends BorderPane {
     private HBox hBox;
     private Button addQuizButton;
     private GridPane grid;
-    private TextField textField;
+    private TextField createQuiz;
     private Button createQuizButton;
     private TextArea questionArea;
     private GridPane innerGrid;
     private Question question;
     private boolean answerValue;
     private TextArea answerArea;
+    private Button addQuestionButton;
+    private RadioButton correct;
+    private RadioButton incorrect;
 
     public Home(QuizCreator quizCreator) {
         this.quizCreator = quizCreator;
@@ -53,15 +56,15 @@ public class Home extends BorderPane {
     }
 
     private void addTextField() {
-        textField = new TextField();
-        textField.setId("create-quiz");
+        createQuiz = new TextField();
+        createQuiz.setId("create-quiz");
         createQuizButton = new Button();
         createQuizButton.setText("Create Quiz");
         createQuizButton.setPrefSize(100, 20);
 
         createQuizButton.setOnAction(actionEvent -> {
-            quizCreator.createQuiz(textField.getText());
-            hBox.getChildren().removeAll(textField, createQuizButton);
+            quizCreator.createQuiz(createQuiz.getText());
+            hBox.getChildren().removeAll(createQuiz, createQuizButton);
             Label title = new Label(quizCreator.getName());
             title.setId("title");
             hBox.getChildren().add(title);
@@ -71,7 +74,7 @@ public class Home extends BorderPane {
 
         hBox.getChildren().remove(addQuizButton);
         hBox.getChildren().add(createQuizButton);
-        hBox.getChildren().add(textField);
+        hBox.getChildren().add(createQuiz);
     }
 
     private GridPane addGrid() {
@@ -104,7 +107,7 @@ public class Home extends BorderPane {
         innerGrid.setHgap(10);
         innerGrid.setVgap(10);
 
-        Button addQuestionButton = new Button("Add Question");
+        addQuestionButton = new Button("Add Question");
         addQuestionButton.setId("add-question-button");
         addQuestionButton.setPrefSize(105, 20);
 
@@ -143,17 +146,21 @@ public class Home extends BorderPane {
             try {
                 Answer answer = quizCreator.createAnswer(userAnswer, value);
                 quizCreator.addAnswer(question, answer);
+                answerArea.clear();
+                incorrect.setSelected(false);
+                correct.setSelected(false);
             } catch (IllegalQuizCreationException e) {
                 e.printStackTrace();
             }
         });
 
         innerGrid.add(addAnswerButton, 2, 0);
+        innerGrid.add(addQuestionButton, 3, 0);
     }
 
     private void addRadioButtons() {
-        RadioButton correct = new RadioButton();
-        RadioButton incorrect = new RadioButton();
+        correct = new RadioButton();
+        incorrect = new RadioButton();
         correct.setText("Correct");
         incorrect.setText("Incorrect");
 
