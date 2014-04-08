@@ -1,6 +1,5 @@
 package pij.ryan.durling.views.pages;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -34,8 +33,9 @@ public class Home extends BorderPane {
     private Button save;
 
     public Home(QuizCreator quizCreator) {
+        this.getStylesheets().add("pij/ryan/durling/views/styles/home.css");
         this.quizCreator = quizCreator;
-        this.setPrefSize(600, 400);
+        this.setId("quizCreator");
         buildQuizEditor();
         addNewQuizView();
     }
@@ -43,35 +43,27 @@ public class Home extends BorderPane {
     private void buildQuizEditor() {
         header = getHeader();
         this.setTop(header);
-        body = addGrid();
+        body = addBody();
         this.setCenter(body);
         footer = getFooter();
         this.setBottom(footer);
     }
 
-    private GridPane addGrid() {
+    private GridPane addBody() {
         GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(10, 12, 50, 12));
+        grid.setId("body");
         return grid;
     }
 
     private HBox getHeader() {
         HBox hBox = new HBox();
         hBox.setId("header");
-        hBox.setPadding(new Insets(15, 12, 15, 12));
-        hBox.setSpacing(10);
-        hBox.setStyle("-fx-background-color: #889499;");
         return hBox;
     }
 
     private HBox getFooter() {
         HBox hBox = new HBox();
         hBox.setId("footer");
-        hBox.setPadding(new Insets(15, 12, 15, 12));
-        hBox.setSpacing(10);
-        hBox.setStyle("-fx-background-color: #889499;");
         return hBox;
     }
 
@@ -91,14 +83,13 @@ public class Home extends BorderPane {
 
     private void addQuestionView() {
         innerGrid = new GridPane();
+        innerGrid.setId("innerGrid");
         innerGrid.setAlignment(Pos.BASELINE_CENTER);
 
         questionArea = addQuestionArea();
         scoreArea = addScoreArea();
 
         innerGrid.add(scoreArea, 1, 0);
-        innerGrid.setHgap(10);
-        innerGrid.setVgap(10);
 
         addQuestionButton = addQuestionButton(questionArea, scoreArea);
 
@@ -162,7 +153,6 @@ public class Home extends BorderPane {
         TextField scoreArea = new TextField();
         scoreArea.setId("score");
 
-        scoreArea.setPrefSize(200, 10);
         scoreArea.setPromptText("Add Score");
 
         return scoreArea;
@@ -176,13 +166,13 @@ public class Home extends BorderPane {
     }
 
     private Button addQuizButton() {
-        Button addQuizButton = getButton("Add Quiz", "add-quiz-button", 100, 20);
+        Button addQuizButton = getButton("Add Quiz", "add-quiz-button");
         addQuizButton.setOnAction(actionEvent -> createNewQuizView());
         return addQuizButton;
     }
 
     private Button createQuizButton() {
-        Button createQuizButton = getButton("Create Quiz", "create-quiz-button", 100, 20);
+        Button createQuizButton = getButton("Create Quiz", "create-quiz-button");
 
         createQuizButton.setOnAction(actionEvent -> {
             quizCreator.createQuiz(createQuiz.getText());
@@ -201,7 +191,7 @@ public class Home extends BorderPane {
     }
 
     private Button addAnswerButton(TextArea answerArea) {
-        Button addAnswerButton = getButton("Add Answer", "add-answer-button", 105, 20);
+        Button addAnswerButton = getButton("Add Answer", "add-answer-button");
 
         addAnswerButton.setOnAction(actionEvent -> {
             String userAnswer = answerArea.getText();
@@ -218,7 +208,7 @@ public class Home extends BorderPane {
     }
 
     private Button addQuestionButton(TextArea questionArea, TextField scoreArea) {
-        Button addQuestionButton = getButton("Add Question", "add-question-button", 105, 20);
+        Button addQuestionButton = getButton("Add Question", "add-question-button");
 
         addQuestionButton.setOnAction(actionEvent -> {
             String userQuestion = questionArea.getText();
@@ -237,7 +227,7 @@ public class Home extends BorderPane {
     }
 
     private Button addAnotherQuestionButton() {
-        Button addAnotherQuestionButton = getButton("Another Question", "add-another-question", 130, 20);
+        Button addAnotherQuestionButton = getButton("Another Question", "add-another-question");
 
         addAnotherQuestionButton.setOnAction(actionEvent -> {
             if (!footer.getChildren().contains(save) && quizCreator.validQuiz()) {
@@ -252,7 +242,7 @@ public class Home extends BorderPane {
     }
 
     private void addSaveBar() {
-        save = getButton("Save", "save", 1000, 40);
+        save = getButton("Save", "save");
 
         save.setOnAction(e -> {
             try {
@@ -263,7 +253,6 @@ public class Home extends BorderPane {
         });
 
         footer.getChildren().add(save);
-        setMargin(save, new Insets(10));
     }
 
     private GridPane addRadioButtons() {
@@ -287,10 +276,9 @@ public class Home extends BorderPane {
         return radioButton;
     }
 
-    private Button getButton(String label, String id, int x, int y) {
+    private Button getButton(String label, String id) {
         Button button = new Button(label);
         button.setId(id);
-        button.setPrefSize(x, y);
         return button;
     }
 }
