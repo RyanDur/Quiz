@@ -31,10 +31,9 @@ public class Home extends BorderPane {
     private HBox footer;
     private Label question;
     private Button save;
-    
 
     public Home(QuizCreator quizCreator) {
-        this.getStylesheets().add("pij/ryan/durling/views/styles/home.css");
+        this.getStylesheets().add("styles/home.css");
         this.quizCreator = quizCreator;
         this.setId("quizCreator");
         buildQuizEditor();

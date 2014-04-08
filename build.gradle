@@ -64,5 +64,4 @@ project(':set-up') {
     dependencies {
         testCompile 'org.loadui:testFx:3.1.2'
     }
-
 }
