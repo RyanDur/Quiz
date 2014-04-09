@@ -15,21 +15,9 @@ public class Home extends BorderPane {
     private QuizCreator quizCreator;
     private HBox header;
     private GridPane body;
-    private TextField createQuiz;
-    private TextArea questionArea;
-    private GridPane innerGrid;
     private boolean answerValue;
-    private TextArea answerArea;
-    private Button addQuestionButton;
-    private RadioButton correct;
-    private RadioButton incorrect;
-    private Button addAnotherQuestionButton;
-    private GridPane radios;
-    private Button addAnswerButton;
     private Button addQuizButton;
-    private TextField scoreArea;
     private HBox footer;
-    private Label question;
     private Button save;
 
     public Home(QuizCreator quizCreator) {
@@ -37,7 +25,7 @@ public class Home extends BorderPane {
         this.quizCreator = quizCreator;
         this.setId("quizCreator");
         buildQuizEditor();
-        addNewQuizView();
+        addNewQuizView(body, header, quizCreator, footer, save);
     }
 
     private void buildQuizEditor() {
@@ -67,50 +55,50 @@ public class Home extends BorderPane {
         return hBox;
     }
 
-    private void addNewQuizView() {
-        addQuizButton = addQuizButton();
+    private void addNewQuizView(GridPane body, HBox header, QuizCreator quizCreator, HBox footer, Button save) {
+        addQuizButton = addQuizButton(body, header, quizCreator, footer, save);
         header.getChildren().add(addQuizButton);
     }
 
-    private void createNewQuizView() {
-        Button createQuizButton = createQuizButton();
-        createQuiz = addQuizField();
+    private void createNewQuizView(GridPane body, HBox header, QuizCreator quizCreator, HBox footer, Button save) {
+        TextField createQuiz = addQuizField();
+        Button createQuizButton = createQuizButton(body, header, quizCreator, createQuiz, footer, save);
 
         header.getChildren().remove(addQuizButton);
         header.getChildren().add(createQuiz);
         header.getChildren().add(createQuizButton);
     }
 
-    private void addQuestionView() {
-        innerGrid = new GridPane();
+    private void addQuestionView(GridPane body, QuizCreator quizCreator, HBox footer, Button save) {
+        GridPane innerGrid = new GridPane();
         innerGrid.setId("innerGrid");
         innerGrid.setAlignment(Pos.BASELINE_CENTER);
 
-        questionArea = addQuestionArea();
-        scoreArea = addScoreArea();
+        TextArea questionArea = addQuestionArea();
+        TextField scoreArea = addScoreArea();
 
         innerGrid.add(scoreArea, 1, 0);
 
-        addQuestionButton = addQuestionButton(questionArea, scoreArea);
+        Button addQuestionButton = addQuestionButton(questionArea, scoreArea, body, innerGrid, quizCreator, footer, save);
 
         body.add(innerGrid, 1, 2);
         innerGrid.add(addQuestionButton, 2, 0);
         body.add(questionArea, 1, 1);
     }
 
-    private void removeAddQuestionView() {
+    private void removeAddQuestionView(GridPane body, GridPane innerGrid, TextArea questionArea, TextField scoreArea, Button addQuestionButton) {
         body.getChildren().remove(questionArea);
         innerGrid.getChildren().remove(scoreArea);
         innerGrid.getChildren().remove(addQuestionButton);
     }
 
-    private void addAnswerView() {
-        answerArea = addAnswerArea();
-        question = new Label(quizCreator.getQuestion());
+    private void addAnswerView(GridPane body, GridPane innerGrid, QuizCreator quizCreator, HBox footer, Button save) {
+        TextArea answerArea = addAnswerArea();
+        Label question = new Label(quizCreator.getQuestion());
 
-        radios = addRadioButtons();
-        addAnswerButton = addAnswerButton(answerArea);
-        addAnotherQuestionButton = addAnotherQuestionButton();
+        GridPane radios = addRadioButtons();
+        Button addAnswerButton = addAnswerButton(answerArea, quizCreator, radios);
+        Button addAnotherQuestionButton = addAnotherQuestionButton(body, innerGrid, question, footer, save, quizCreator, answerArea, radios, addAnswerButton);
 
         innerGrid.add(addAnswerButton, 2, 0);
         innerGrid.add(addAnotherQuestionButton, 3, 0);
@@ -120,13 +108,15 @@ public class Home extends BorderPane {
         body.add(answerArea, 1, 1);
     }
 
-    private void resetAddAnswerView() {
+    private void resetAddAnswerView(TextArea answerArea, GridPane radios) {
         answerArea.clear();
-        incorrect.setSelected(false);
-        correct.setSelected(false);
+        RadioButton radioButton = (RadioButton) radios.getChildren().get(0);
+        RadioButton radioButton1 = (RadioButton) radios.getChildren().get(1);
+        radioButton.setSelected(false);
+        radioButton1.setSelected(false);
     }
 
-    private void removeAddAnswerView() {
+    private void removeAddAnswerView(GridPane body, GridPane innerGrid, TextArea answerArea, GridPane radios, Button addAnotherQuestionButton, Button addAnswerButton) {
         body.getChildren().remove(answerArea);
         innerGrid.getChildren().remove(radios);
         innerGrid.getChildren().remove(addAnotherQuestionButton);
@@ -165,32 +155,32 @@ public class Home extends BorderPane {
         return answerArea;
     }
 
-    private Button addQuizButton() {
+    private Button addQuizButton(GridPane body, HBox header, QuizCreator quizCreator, HBox footer, Button save) {
         Button addQuizButton = getButton("Add Quiz", "add-quiz-button");
-        addQuizButton.setOnAction(actionEvent -> createNewQuizView());
+        addQuizButton.setOnAction(actionEvent -> createNewQuizView(body, header, quizCreator, footer, save));
         return addQuizButton;
     }
 
-    private Button createQuizButton() {
+    private Button createQuizButton(GridPane body, HBox header, QuizCreator quizCreator, TextField createQuiz, HBox footer, Button save) {
         Button createQuizButton = getButton("Create Quiz", "create-quiz-button");
 
         createQuizButton.setOnAction(actionEvent -> {
             quizCreator.createQuiz(createQuiz.getText());
             header.getChildren().removeAll(createQuiz, createQuizButton);
-            setTitle();
-            addQuestionView();
+            setTitle(header, quizCreator);
+            addQuestionView(body, quizCreator, footer, save);
         });
 
         return createQuizButton;
     }
 
-    private void setTitle() {
+    private void setTitle(HBox header, QuizCreator quizCreator) {
         Label title = new Label(quizCreator.getName());
         title.setId("title");
         header.getChildren().add(title);
     }
 
-    private Button addAnswerButton(TextArea answerArea) {
+    private Button addAnswerButton(TextArea answerArea, QuizCreator quizCreator, GridPane radios) {
         Button addAnswerButton = getButton("Add Answer", "add-answer-button");
 
         addAnswerButton.setOnAction(actionEvent -> {
@@ -198,7 +188,7 @@ public class Home extends BorderPane {
 
             try {
                 quizCreator.addAnswer(userAnswer, answerValue);
-                resetAddAnswerView();
+                resetAddAnswerView(answerArea, radios);
             } catch (IllegalQuizCreationException e) {
                 e.printStackTrace();
             }
@@ -207,7 +197,7 @@ public class Home extends BorderPane {
         return addAnswerButton;
     }
 
-    private Button addQuestionButton(TextArea questionArea, TextField scoreArea) {
+    private Button addQuestionButton(TextArea questionArea, TextField scoreArea, GridPane body, GridPane innerGrid, QuizCreator quizCreator, HBox footer, Button save) {
         Button addQuestionButton = getButton("Add Question", "add-question-button");
 
         addQuestionButton.setOnAction(actionEvent -> {
@@ -216,8 +206,8 @@ public class Home extends BorderPane {
 
             try {
                 quizCreator.addQuestion(userQuestion, userScore);
-                removeAddQuestionView();
-                addAnswerView();
+                removeAddQuestionView(body, innerGrid, questionArea, scoreArea, addQuestionButton);
+                addAnswerView(body, innerGrid, quizCreator, footer, save);
             } catch (IllegalQuizCreationException e) {
                 e.printStackTrace();
             }
@@ -226,7 +216,7 @@ public class Home extends BorderPane {
         return addQuestionButton;
     }
 
-    private Button addAnotherQuestionButton() {
+    private Button addAnotherQuestionButton(GridPane body, GridPane innerGrid, Label question, HBox footer, Button save, QuizCreator quizCreator, TextArea answerArea, GridPane radios, Button addAnswerButton) {
         Button addAnotherQuestionButton = getButton("Another Question", "add-another-question");
 
         addAnotherQuestionButton.setOnAction(actionEvent -> {
@@ -234,8 +224,8 @@ public class Home extends BorderPane {
                 addSaveBar();
             }
             body.getChildren().remove(question);
-            removeAddAnswerView();
-            addQuestionView();
+            removeAddAnswerView(body, innerGrid, answerArea, radios, addAnotherQuestionButton, addAnswerButton);
+            addQuestionView(body, quizCreator, footer, save);
         });
 
         return addAnotherQuestionButton;
@@ -256,8 +246,8 @@ public class Home extends BorderPane {
     }
 
     private GridPane addRadioButtons() {
-        correct = getRadioButton("Correct", "correct", true);
-        incorrect = getRadioButton("Incorrect", "incorrect", false);
+        RadioButton correct = getRadioButton("Correct", "correct", true);
+        RadioButton incorrect = getRadioButton("Incorrect", "incorrect", false);
 
         GridPane radios = new GridPane();
         radios.add(correct, 1, 0);
@@ -270,9 +260,7 @@ public class Home extends BorderPane {
     private RadioButton getRadioButton(String title, String id, boolean value) {
         RadioButton radioButton = new RadioButton(title);
         radioButton.setId(id);
-        radioButton.setOnAction(e -> {
-            answerValue = value;
-        });
+        radioButton.setOnAction(e -> setAnswerValue(value));
         return radioButton;
     }
 
@@ -280,5 +268,9 @@ public class Home extends BorderPane {
         Button button = new Button(label);
         button.setId(id);
         return button;
+    }
+
+    private void setAnswerValue(boolean value) {
+        answerValue = value;
     }
 }

@@ -62,3 +62,7 @@
     -fx-end-margin: 10;
     -fx-start-margin: 10;
 }
+
+#radios {
+    -fx-hgap: 10;
+}
