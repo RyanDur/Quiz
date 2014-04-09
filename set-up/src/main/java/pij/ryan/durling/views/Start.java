@@ -5,7 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pij.ryan.durling.controllers.QuizCreator;
-import pij.ryan.durling.views.pages.Home;
+import pij.ryan.durling.views.pages.Editor;
 
 public class Start extends Application {
 
@@ -26,7 +26,7 @@ public class Start extends Application {
     }
 
     public Scene getHomePage() {
-        Home homePage = new Home(quizCreator);
+        Editor homePage = new Editor(quizCreator);
 
         return new Scene(homePage, 500, 250);
     }
