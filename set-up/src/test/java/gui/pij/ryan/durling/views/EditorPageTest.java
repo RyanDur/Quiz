@@ -72,6 +72,18 @@ public class EditorPageTest extends GuiTest {
     }
 
     @Test
+    public void shouldBeAbleToLockAQuizYouAreWorkingOn() {
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click("#lock");
+
+        verify(mockQuizCreator).lockQuiz(anyInt());
+        verifyThat("#lock", hasText("Quiz Locked"));
+    }
+
+    @Test
     public void shouldBeAbleToAddAQuestionAfterCreatingAQuiz() {
         click(addQuiz)
                 .click(addQuizField)

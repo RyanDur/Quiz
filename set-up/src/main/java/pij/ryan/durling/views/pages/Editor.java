@@ -19,9 +19,11 @@ public class Editor extends BorderPane {
     private Button addQuizButton;
     private HBox footer;
     private Button save;
+    private int quizId;
+    private Button lockQuizButton;
 
     public Editor(QuizCreator quizCreator) {
-        this.getStylesheets().add("styles/home.css");
+        this.getStylesheets().add("styles/editor.css");
         this.quizCreator = quizCreator;
         this.setId("quizCreator");
         buildQuizEditor();
@@ -53,6 +55,15 @@ public class Editor extends BorderPane {
         HBox hBox = new HBox();
         hBox.setId("footer");
         return hBox;
+    }
+
+    private Button lockQuiz() {
+        Button lockQuizButton = getButton("Lock Quiz", "lock");
+        lockQuizButton.setOnAction(e -> {
+            lockQuizButton.setText("Quiz Locked");
+            quizCreator.lockQuiz(quizId);
+        });
+        return lockQuizButton;
     }
 
     private void addNewQuizView(GridPane body, HBox header, QuizCreator quizCreator, HBox footer, Button save) {
@@ -165,8 +176,10 @@ public class Editor extends BorderPane {
         Button createQuizButton = getButton("Create Quiz", "create-quiz-button");
 
         createQuizButton.setOnAction(actionEvent -> {
-            quizCreator.createQuiz(createQuiz.getText());
+            lockQuizButton = lockQuiz();
+            quizId = quizCreator.createQuiz(createQuiz.getText());
             header.getChildren().removeAll(createQuiz, createQuizButton);
+            body.add(lockQuizButton, 2, 0);
             setTitle(header, quizCreator);
             addQuestionView(body, quizCreator, footer, save);
         });
@@ -237,6 +250,7 @@ public class Editor extends BorderPane {
         save.setOnAction(e -> {
             try {
                 quizCreator.save();
+                body.getChildren().remove(lockQuizButton);
             } catch (IllegalQuizCreationException | InvalidQuizException e1) {
                 e1.printStackTrace();
             }

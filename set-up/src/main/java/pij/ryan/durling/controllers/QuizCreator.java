@@ -17,4 +17,6 @@ public interface QuizCreator {
     boolean validQuiz();
 
     String getQuestion();
+
+    void lockQuiz(int id);
 }

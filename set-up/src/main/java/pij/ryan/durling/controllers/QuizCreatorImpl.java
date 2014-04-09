@@ -63,6 +63,11 @@ public class QuizCreatorImpl implements QuizCreator {
         return null;
     }
 
+    @Override
+    public void lockQuiz(int id) {
+
+    }
+
     private boolean inValid(String argument) {
         return argument == null || argument.trim().isEmpty();
     }
