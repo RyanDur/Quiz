@@ -6,14 +6,14 @@ import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
-import pij.ryan.durling.views.pages.Home;
+import pij.ryan.durling.views.pages.Editor;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
-public class HomePageTest extends GuiTest {
+public class EditorPageTest extends GuiTest {
 
     private String addQuiz = "Add Quiz";
     private String quizName = "Name";
@@ -40,7 +40,7 @@ public class HomePageTest extends GuiTest {
         mockQuizCreator = mock(QuizCreator.class);
         when(mockQuizCreator.getQuestion()).thenReturn(question, foobar);
         when(mockQuizCreator.getName()).thenReturn(quizName);
-        return new Home(mockQuizCreator);
+        return new Editor(mockQuizCreator);
     }
 
     @Test
