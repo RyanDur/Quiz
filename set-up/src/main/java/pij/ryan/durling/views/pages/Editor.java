@@ -250,9 +250,9 @@ public class Editor extends BorderPane {
         RadioButton incorrect = getRadioButton("Incorrect", "incorrect", false);
 
         GridPane radios = new GridPane();
+        radios.setId("radios");
         radios.add(correct, 1, 0);
         radios.add(incorrect, 2, 0);
-        radios.setHgap(10);
 
         return radios;
     }
