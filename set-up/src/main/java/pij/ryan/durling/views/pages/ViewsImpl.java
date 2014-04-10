@@ -11,4 +11,9 @@ public class ViewsImpl implements Views {
     public  AnswerView getAnswerView() {
         return new AnswerViewImpl();
     }
+
+    @Override
+    public QuizView getQuizView() {
+        return new QuizViewImpl();
+    }
 }

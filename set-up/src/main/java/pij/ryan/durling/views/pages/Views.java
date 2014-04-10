@@ -4,4 +4,6 @@ public interface Views {
     QuestionView getQuestionView();
 
     AnswerView getAnswerView();
+
+    QuizView getQuizView();
 }

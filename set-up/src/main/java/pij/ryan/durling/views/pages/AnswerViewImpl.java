@@ -1,10 +1,7 @@
 package pij.ryan.durling.views.pages;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 public class AnswerViewImpl extends GridPane implements AnswerView {
@@ -13,6 +10,7 @@ public class AnswerViewImpl extends GridPane implements AnswerView {
     private final Button addAnswerButton;
     private final Button addAnotherQuestionButton;
     private final TextArea answerArea;
+
 
     public AnswerViewImpl() {
         this.getStylesheets().add("styles/answerView.css");

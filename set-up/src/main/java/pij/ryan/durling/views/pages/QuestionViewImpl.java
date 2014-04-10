@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 public class QuestionViewImpl extends GridPane implements QuestionView {
     private TextArea questionArea;
     private TextField scoreArea;
-    private final Button addQuestionButton;
+    private Button addQuestionButton;
 
     public QuestionViewImpl() {
         this.getStylesheets().add("styles/questionView.css");
@@ -18,10 +18,7 @@ public class QuestionViewImpl extends GridPane implements QuestionView {
 
         questionArea = getQuestionArea();
         this.add(questionArea, 1, 0);
-        scoreArea = getScoreArea();
-        this.add(scoreArea, 1, 1);
-        addQuestionButton = addQuestionButton();
-        this.add(addQuestionButton, 2, 1);
+        this.add(getUserInputArea(), 1, 1);
     }
 
     @Override
@@ -37,6 +34,15 @@ public class QuestionViewImpl extends GridPane implements QuestionView {
     @Override
     public Button getAddQuestionButton() {
         return addQuestionButton;
+    }
+
+    private GridPane getUserInputArea() {
+        GridPane gridPane = new GridPane();
+        scoreArea = getScoreArea();
+        addQuestionButton = addQuestionButton();
+        gridPane.add(scoreArea, 0, 0);
+        gridPane.add(addQuestionButton, 1, 0);
+        return gridPane;
     }
 
     private Button addQuestionButton() {
