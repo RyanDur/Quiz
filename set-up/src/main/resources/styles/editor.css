@@ -21,7 +21,9 @@
     -fx-hgap: 10;
 }
 
-#innerGrid {
+#questionView {
+    -fx-pref-width: 200;
+    -fx-pref-height: 100;
     -fx-vgap: 10;
     -fx-hgap: 10;
 }

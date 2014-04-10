@@ -1,0 +1,16 @@
+#questionView {
+    -fx-pref-width: 500;
+    -fx-pref-height: 300;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+#add-question {
+    -fx-pref-width: 300;
+    -fx-pref-height: 200;
+}
+
+#score {
+    -fx-pref-width: 200;
+    -fx-pref-height: 10;
+}

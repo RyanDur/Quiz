@@ -1,0 +1,18 @@
+#add-answer-button {
+    -fx-pref-width: 105;
+    -fx-pref-height: 20;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+#add-another-question {
+    -fx-pref-width: 130;
+    -fx-pref-height: 20;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+#radios {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}

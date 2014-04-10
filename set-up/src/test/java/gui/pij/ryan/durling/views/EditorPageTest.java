@@ -7,6 +7,8 @@ import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.views.pages.Editor;
+import pij.ryan.durling.views.pages.Views;
+import pij.ryan.durling.views.pages.ViewsImpl;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
@@ -37,10 +39,11 @@ public class EditorPageTest extends GuiTest {
 
     @Override
     protected Parent getRootNode() {
+        Views views = new ViewsImpl();
         mockQuizCreator = mock(QuizCreator.class);
         when(mockQuizCreator.getQuestion()).thenReturn(question, foobar);
         when(mockQuizCreator.getName()).thenReturn(quizName);
-        return new Editor(mockQuizCreator);
+        return new Editor(mockQuizCreator, views);
     }
 
     @Test
