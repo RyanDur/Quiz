@@ -25,7 +25,7 @@ public class QuestionViewTest extends GuiTest {
     }
 
     @Test
-    public void should() throws IllegalQuizCreationException {
+    public void shouldBeAbleToAddAQuestion() throws IllegalQuizCreationException {
         questionView.getAddQuestionButton().setOnAction(e -> {
             try {
                 quizCreator.addQuestion(anyString(), anyInt());
