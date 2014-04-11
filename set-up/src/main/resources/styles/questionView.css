@@ -1,16 +1,33 @@
-#questionView {
+#question-view {
     -fx-pref-width: 500;
     -fx-pref-height: 300;
     -fx-vgap: 10;
     -fx-hgap: 10;
 }
 
-#add-question {
-    -fx-pref-width: 300;
+#add-question-area {
+    -fx-pref-width: 500;
     -fx-pref-height: 200;
+    -fx-padding: 10;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
 }
 
 #score {
     -fx-pref-width: 200;
     -fx-pref-height: 10;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+#add-question-button {
+    -fx-pref-width: 200;
+    -fx-pref-height: 10;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+#user-input-area {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
 }

@@ -1,3 +1,18 @@
+#answer-view {
+    -fx-pref-width: 500;
+    -fx-pref-height: 300;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+#add-answer-area {
+    -fx-pref-width: 500;
+    -fx-pref-height: 200;
+    -fx-padding: 10;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
 #add-answer-button {
     -fx-pref-width: 105;
     -fx-pref-height: 20;
@@ -15,4 +30,9 @@
 #radios {
     -fx-vgap: 10;
     -fx-hgap: 10;
+}
+
+#user-controls {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
 }

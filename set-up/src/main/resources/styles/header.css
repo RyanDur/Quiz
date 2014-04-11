@@ -5,3 +5,17 @@
     -fx-pref-width: 600;
     -fx-pref-height: 75;
 }
+
+.label {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#lock {
+    -fx-pref-width: 105;
+    -fx-pref-height: 20;
+    -fx-spacing: 10;
+    -fx-hgap: 10;
+}

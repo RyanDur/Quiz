@@ -1,61 +1,23 @@
-#quizCreator {
-    -fx-pref-width: 600;
+#editor {
+    -fx-pref-width: 625;
     -fx-pref-height: 400;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
 }
 
 #header {
     -fx-background-color: #889499;
     -fx-padding: 15, 12, 15, 12;
     -fx-spacing: 10;
+    -fx-hgap: 10;
 }
 
 #footer {
     -fx-background-color: #889499;
     -fx-padding: 15, 12, 15, 12;
     -fx-spacing: 10;
-}
-
-#body {
-    -fx-padding: 10, 12, 50, 12;
-    -fx-vgap: 10;
-    -fx-hgap: 10;
-}
-
-#questionView {
-    -fx-pref-width: 200;
-    -fx-pref-height: 100;
-    -fx-vgap: 10;
-    -fx-hgap: 10;
-}
-
-#score {
-    -fx-pref-width: 200;
-    -fx-pref-height: 10;
-}
-
-#add-quiz-button {
-    -fx-pref-width: 100;
-    -fx-pref-height: 20;
-}
-
-#create-quiz-button {
-    -fx-pref-width: 100;
-    -fx-pref-height: 20;
-}
-
-#add-answer-button {
-    -fx-pref-width: 105;
-    -fx-pref-height: 20;
-}
-
-#add-question-button {
-    -fx-pref-width: 105;
-    -fx-pref-height: 20;
-}
-
-#add-another-question {
-    -fx-pref-width: 130;
-    -fx-pref-height: 20;
 }
 
 #save {
@@ -65,6 +27,3 @@
     -fx-start-margin: 10;
 }
 
-#radios {
-    -fx-hgap: 10;
-}

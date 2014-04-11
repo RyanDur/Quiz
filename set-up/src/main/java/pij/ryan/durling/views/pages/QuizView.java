@@ -1,17 +1,17 @@
 package pij.ryan.durling.views.pages;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
 public interface QuizView {
 
-    Button getAddQuizButton();
-
     Button getCreateQuizButton();
 
-    void setTitle(String name);
+    void setLockQuiz();
 
-    TextField getQuizTitleField();
+    Button getLockQuizButton();
 
-    String getTitle();
+    void toggleLock();
+
+    void remove(Node node);
 }

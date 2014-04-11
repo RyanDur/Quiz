@@ -1,6 +1,5 @@
 package pij.ryan.durling.views.pages;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -13,12 +12,16 @@ public class QuestionViewImpl extends GridPane implements QuestionView {
 
     public QuestionViewImpl() {
         this.getStylesheets().add("styles/questionView.css");
-        this.setId("questionView");
-        this.setAlignment(Pos.BASELINE_CENTER);
+        this.setId("question-view");
 
         questionArea = getQuestionArea();
-        this.add(questionArea, 1, 0);
-        this.add(getUserInputArea(), 1, 1);
+        this.add(questionArea, 1, 1);
+        this.add(getUserInputArea(), 1, 2);
+    }
+
+    @Override
+    public Button getAddQuestionButton() {
+        return addQuestionButton;
     }
 
     @Override
@@ -31,29 +34,29 @@ public class QuestionViewImpl extends GridPane implements QuestionView {
         return Integer.parseInt(scoreArea.getText());
     }
 
-    @Override
-    public Button getAddQuestionButton() {
-        return addQuestionButton;
-    }
 
     private GridPane getUserInputArea() {
         GridPane gridPane = new GridPane();
+        gridPane.setId("user-input-area");
+
         scoreArea = getScoreArea();
-        addQuestionButton = addQuestionButton();
+        addQuestionButton = questionButton();
+
         gridPane.add(scoreArea, 0, 0);
         gridPane.add(addQuestionButton, 1, 0);
         return gridPane;
     }
 
-    private Button addQuestionButton() {
-        return getButton("Add Question", "add-question-button");
+    private Button questionButton() {
+        addQuestionButton = getButton("Add Question", "add-question-button");
+        return addQuestionButton;
     }
 
     private TextArea getQuestionArea() {
         TextArea questionArea = new TextArea();
 
         questionArea.setPromptText("Add Question");
-        questionArea.setId("add-question");
+        questionArea.setId("add-question-area");
 
         return questionArea;
     }

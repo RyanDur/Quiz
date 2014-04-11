@@ -23,12 +23,12 @@ public class EditorPageTest extends GuiTest {
     private String createQuiz = "Create Quiz";
     private String button = ".button";
     private QuizCreator mockQuizCreator;
-    private String addQuestionField = "#add-question";
+    private String addQuestionField = "#add-question-area";
     private String question = "pancakes";
     private String addQuestion = "#add-question-button";
     private String scoreField  = "#score";
     private String score = "9";
-    private String addAnswerField = "#add-answer";
+    private String addAnswerField = "#add-answer-area";
     private String answer = "of course";
     private String addAnswer = "#add-answer-button";
     private String incorrectRadio = "#incorrect";
@@ -43,6 +43,7 @@ public class EditorPageTest extends GuiTest {
         mockQuizCreator = mock(QuizCreator.class);
         when(mockQuizCreator.getQuestion()).thenReturn(question, foobar);
         when(mockQuizCreator.getName()).thenReturn(quizName);
+
         return new Editor(mockQuizCreator, views);
     }
 
@@ -184,7 +185,6 @@ public class EditorPageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddMultipleAnswersToAQuestion() throws IllegalQuizCreationException {
-        String never = "never";
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
