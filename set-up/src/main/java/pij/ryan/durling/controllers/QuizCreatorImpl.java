@@ -64,7 +64,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void lockQuiz(int id) {
-
+        quizServer.lock(id);
     }
 
     @Override

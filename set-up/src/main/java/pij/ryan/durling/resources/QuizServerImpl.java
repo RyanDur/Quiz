@@ -24,4 +24,9 @@ public class QuizServerImpl implements QuizServer {
     public Answer createAnswer(String answer, boolean value) {
         return null;
     }
+
+    @Override
+    public void lock(int quizId) {
+
+    }
 }

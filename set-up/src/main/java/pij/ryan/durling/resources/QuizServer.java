@@ -12,4 +12,6 @@ public interface QuizServer {
     void save(Quiz quiz);
 
     Answer createAnswer(String answer, boolean value);
+
+    void lock(int i);
 }

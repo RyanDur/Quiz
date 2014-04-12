@@ -161,3 +161,12 @@ Feature: The ability to create quizzes
     | name  | question | value |
     | "foo" | " ello"  | 3     |
     | "foo" | " ello"  | 3     |
+
+  Scenario Outline: should be able to lock the current quiz
+    When a user creates a quiz named <name>
+    Then a user should be able to lock a quiz
+
+  Examples:
+    | name  |
+    | "foo" |
+    | "foo" |
