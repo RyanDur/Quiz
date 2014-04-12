@@ -1,7 +1,5 @@
 package pij.ryan.durling.views.pages;
 
-import pij.ryan.durling.controllers.QuizCreator;
-
 public class ViewsImpl implements Views {
 
     @Override
@@ -15,7 +13,7 @@ public class ViewsImpl implements Views {
     }
 
     @Override
-    public QuizView getQuizView(QuizCreator quizCreator) {
-        return new QuizViewImpl(quizCreator);
+    public QuizView getQuizView() {
+        return new QuizViewImpl();
     }
 }

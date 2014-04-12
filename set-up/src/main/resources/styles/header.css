@@ -1,7 +1,6 @@
 #header {
     -fx-background-color: #889499;
     -fx-padding: 15, 12, 15, 12;
-    -fx-spacing: 10;
     -fx-pref-width: 600;
     -fx-pref-height: 75;
 }
@@ -14,8 +13,14 @@
 }
 
 #lock {
-    -fx-pref-width: 105;
+    -fx-pref-width: 100;
     -fx-pref-height: 20;
-    -fx-spacing: 10;
     -fx-hgap: 10;
+}
+
+#grid {
+    -fx-padding: 15, 12, 15, 12;
+    -fx-pref-width: 600;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
 }

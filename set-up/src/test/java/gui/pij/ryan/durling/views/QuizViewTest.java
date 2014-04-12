@@ -28,7 +28,15 @@ public class QuizViewTest extends GuiTest {
         mockViews = mock(Views.class);
         when(mockQuizCreator.getName()).thenReturn(title);
 
-        quizView = new QuizViewImpl(mockQuizCreator);
+        quizView = new QuizViewImpl();
+        quizView.getCreateQuizButton().setOnMousePressed(e -> {
+            mockViews.getQuestionView();
+            quizView.setLockQuiz();
+            mockQuizCreator.createQuiz(quizView.getTitle());
+            quizView.setTitle(mockQuizCreator.getName());
+        });
+        quizView.getLockQuizButton().setOnAction(e -> quizView.toggleLock());
+
         return (Parent) quizView;
     }
 
@@ -45,10 +53,6 @@ public class QuizViewTest extends GuiTest {
 
     @Test
     public void shouldGetAQuestionViewWhenCreatingANewQuiz() {
-        quizView.getCreateQuizButton().setOnMousePressed(e -> {
-            mockViews.getQuestionView();
-        });
-
         click(addQuizButton)
                 .click(quizTitleField)
                 .type(title)
@@ -59,7 +63,6 @@ public class QuizViewTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToLockAQuizAfterCreation() {
-        quizView.getCreateQuizButton().setOnMousePressed(e -> quizView.setLockQuiz());
 
         click(addQuizButton)
                 .click(quizTitleField)
@@ -71,9 +74,6 @@ public class QuizViewTest extends GuiTest {
 
     @Test
     public void shouldKnowWhenTheQuizIsLocked() {
-        quizView.getCreateQuizButton().setOnMousePressed(e -> quizView.setLockQuiz());
-        quizView.getLockQuizButton().setOnAction(e -> quizView.toggleLock());
-
         click(addQuizButton)
                 .click(quizTitleField)
                 .type(title)

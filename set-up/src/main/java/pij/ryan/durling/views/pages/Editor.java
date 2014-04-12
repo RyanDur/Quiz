@@ -23,7 +23,7 @@ public class Editor extends BorderPane {
     }
 
     private void addNewQuizView() {
-        QuizView quizView = views.getQuizView(quizCreator);
+        QuizView quizView = views.getQuizView();
         quizView.getCreateQuizButton().setOnMousePressed(e -> {
             //setLockQuiz();
             addQuestionView();

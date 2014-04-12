@@ -4,24 +4,22 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import pij.ryan.durling.controllers.QuizCreator;
 
 public class QuizViewImpl extends HBox implements QuizView {
 
     private Button createQuizButton;
     private Button addQuizButton;
     private TextField addQuizField;
-    private QuizCreator quizCreator;
     private Button lockQuizButton;
     private String lockQuiz = "Lock Quiz";
-    private final GridPane innerGrid;
+    private BorderPane innerGrid;
 
-    public QuizViewImpl(QuizCreator quizCreator) {
-        innerGrid = new GridPane();
+    public QuizViewImpl() {
+        innerGrid = new BorderPane();
+        innerGrid.setId("grid");
         this.getChildren().add(innerGrid);
-        this.quizCreator = quizCreator;
         this.getStylesheets().add("styles/header.css");
         this.setId("header");
         lockQuizButton = getButton(lockQuiz, "lock");
@@ -39,9 +37,9 @@ public class QuizViewImpl extends HBox implements QuizView {
 
     @Override
     public void setLockQuiz() {
-        remove(createQuizButton);
-        remove(addQuizField);
-        innerGrid.add(lockQuizButton, 3, 0);
+        innerGrid.getChildren().remove(createQuizButton);
+        innerGrid.getChildren().remove(addQuizField);
+        innerGrid.setRight(lockQuizButton);
     }
 
     @Override
@@ -58,6 +56,24 @@ public class QuizViewImpl extends HBox implements QuizView {
         }
     }
 
+    @Override
+    public void remove(Node node) {
+        innerGrid.getChildren().removeAll(node);
+    }
+
+    @Override
+    public String getTitle() {
+        return addQuizField.getText();
+    }
+
+    @Override
+    public void setTitle(String name) {
+        innerGrid.getChildren().removeAll(addQuizField, createQuizButton);
+        Label title = new Label(name);
+        title.setId("title");
+        innerGrid.setLeft(title);
+    }
+
     public void addQuizButton() {
         addQuizButton = getButton("Add Quiz", "add-quiz-button");
         addQuizButton.setOnAction(e -> {
@@ -65,38 +81,18 @@ public class QuizViewImpl extends HBox implements QuizView {
             addQuizTitleField();
             addCreateQuizButton();
         });
-        innerGrid.add(addQuizButton, 0, 0);
-    }
-
-    @Override
-    public void remove(Node node) {
-        innerGrid.getChildren().remove(node);
+        innerGrid.setLeft(addQuizButton);
     }
 
     private void addCreateQuizButton() {
-        createQuizButton.setOnAction(event -> {
-            quizCreator.createQuiz(getTitle());
-            setTitle(quizCreator.getName());
-        });
-        this.getChildren().add(createQuizButton);
-    }
-
-    private void setTitle(String name) {
-        innerGrid.getChildren().removeAll(addQuizField, createQuizButton);
-        Label title = new Label(name);
-        title.setId("title");
-        innerGrid.add(title, 0, 0);
+        innerGrid.setLeft(createQuizButton);
     }
 
     private TextField addQuizTitleField() {
         addQuizField = new TextField();
         addQuizField.setId("create-quiz");
-        innerGrid.add(addQuizField, 1, 0);
+        innerGrid.setCenter(addQuizField);
         return addQuizField;
-    }
-
-    private String getTitle() {
-        return addQuizField.getText();
     }
 
 

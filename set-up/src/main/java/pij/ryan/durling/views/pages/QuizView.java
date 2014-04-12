@@ -14,4 +14,8 @@ public interface QuizView {
     void toggleLock();
 
     void remove(Node node);
+
+    String getTitle();
+
+    void setTitle(String name);
 }
