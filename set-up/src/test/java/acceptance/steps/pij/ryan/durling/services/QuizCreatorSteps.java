@@ -40,10 +40,12 @@ public class QuizCreatorSteps {
         name = ifNull(name);
 
         when(mockQuiz.getName()).thenReturn(name);
+        when(mockQuiz.getId()).thenReturn(5);
         when(mockQuizServer.createQuiz(anyString())).thenReturn(mockQuiz);
 
         try {
-            quizId = quizCreator.createQuiz(name);
+            quizCreator.createQuiz(name);
+            quizId = quizCreator.getQuizId();
         } catch (IllegalArgumentException e) {
             thrown = e;
         }
@@ -180,6 +182,12 @@ public class QuizCreatorSteps {
     @Then("^the answer should not be created$")
     public void the_answer_should_not_be_created() throws Throwable {
         verify(mockQuizServer, never()).createAnswer(anyString(), anyBoolean());
+    }
+
+    @Then("^a user should be able to get the \"([^\"]*)\"$")
+    public void a_user_should_be_able_to_get_the(String question) throws Throwable {
+        when(mockQuestion.getQuestion()).thenReturn(question);
+        assertThat(quizCreator.getQuestion(), is(equalTo(question)));
     }
 
     private String ifNull(String argument) {

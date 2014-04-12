@@ -151,3 +151,13 @@ Feature: The ability to create quizzes
     Then the quiz should not be saved
     And throw an IllegalQuizCreationException
     And have the message "Need to create a quiz first."
+
+  Scenario Outline: should be able to get the current question
+    When a user creates a quiz named <name>
+    And a user creates a question with <question> and <value>
+    Then a user should be able to get the <question>
+
+  Examples:
+    | name  | question | value |
+    | "foo" | " ello"  | 3     |
+    | "foo" | " ello"  | 3     |

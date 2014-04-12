@@ -1,8 +1,5 @@
 package pij.ryan.durling.views.pages;
 
-import gui.pij.ryan.durling.views.Footer;
-import gui.pij.ryan.durling.views.FooterImpl;
-
 public class ViewsImpl implements Views {
 
     @Override

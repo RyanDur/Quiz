@@ -6,7 +6,7 @@ import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
-import pij.ryan.durling.views.pages.Editor;
+import pij.ryan.durling.views.pages.EditorImpl;
 import pij.ryan.durling.views.pages.Views;
 import pij.ryan.durling.views.pages.ViewsImpl;
 
@@ -44,7 +44,7 @@ public class EditorPageTest extends GuiTest {
         when(mockQuizCreator.getQuestion()).thenReturn(question, foobar);
         when(mockQuizCreator.getName()).thenReturn(quizName);
 
-        return new Editor(mockQuizCreator, views);
+        return new EditorImpl(mockQuizCreator, views);
     }
 
     @Test

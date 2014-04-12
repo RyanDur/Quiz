@@ -23,10 +23,9 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public int createQuiz(String name) throws IllegalArgumentException {
+    public void createQuiz(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException("Must specify a name for the quiz");
         quiz = quizServer.createQuiz(name);
-        return quiz.getId();
     }
 
     @Override
@@ -60,7 +59,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public String getQuestion() {
-        return null;
+        return question.getQuestion();
     }
 
     @Override
@@ -70,7 +69,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public int getQuizId() {
-        return 0;
+        return quiz.getId();
     }
 
     private boolean inValid(String argument) {

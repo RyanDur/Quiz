@@ -3,7 +3,6 @@ package gui.pij.ryan.durling.views;
 import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
-import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.views.pages.QuestionView;
 import pij.ryan.durling.views.pages.QuestionViewImpl;
@@ -13,13 +12,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class QuestionViewTest extends GuiTest {
-    private QuizCreator quizCreator;
     private QuestionView questionView;
     private Views views;
 
     @Override
     protected Parent getRootNode() {
-        quizCreator = mock(QuizCreator.class);
         views = mock(Views.class);
         questionView = new QuestionViewImpl();
 

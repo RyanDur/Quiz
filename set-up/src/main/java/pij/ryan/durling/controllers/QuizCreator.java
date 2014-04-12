@@ -4,7 +4,7 @@ import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 
 public interface QuizCreator {
-    int createQuiz(String name);
+    void createQuiz(String name);
 
     String getName();
 

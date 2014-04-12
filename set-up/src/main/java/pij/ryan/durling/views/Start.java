@@ -1,17 +1,23 @@
 package pij.ryan.durling.views;
 
 
+import com.google.inject.Inject;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pij.ryan.durling.controllers.QuizCreator;
+import pij.ryan.durling.views.pages.EditorImpl;
+import pij.ryan.durling.views.pages.Views;
 
 public class Start extends Application {
 
     private final QuizCreator quizCreator;
+    private Views views;
 
-    public Start(QuizCreator quizCreator) {
+    @Inject
+    public Start(QuizCreator quizCreator, Views views) {
         this.quizCreator = quizCreator;
+        this.views = views;
     }
 
     public static void main(String[] args) {
@@ -25,10 +31,9 @@ public class Start extends Application {
     }
 
     public Scene getHomePage() {
-//        Editor homePage = new Editor(quizCreator);
-//
-//        return new Scene(homePage, 500, 250);
-        return null;
+        EditorImpl homePage = new EditorImpl(quizCreator, views);
+
+        return new Scene(homePage, 500, 250);
     }
 
 }

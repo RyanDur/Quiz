@@ -6,6 +6,8 @@ import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
+import pij.ryan.durling.views.pages.Footer;
+import pij.ryan.durling.views.pages.FooterImpl;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
