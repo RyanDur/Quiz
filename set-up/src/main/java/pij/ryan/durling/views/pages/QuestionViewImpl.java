@@ -1,5 +1,6 @@
 package pij.ryan.durling.views.pages;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -13,7 +14,7 @@ public class QuestionViewImpl extends GridPane implements QuestionView {
     public QuestionViewImpl() {
         this.getStylesheets().add("styles/questionView.css");
         this.setId("question-view");
-
+        this.setAlignment(Pos.CENTER);
         questionArea = getQuestionArea();
         this.add(questionArea, 1, 1);
         this.add(getUserInputArea(), 1, 2);
@@ -44,6 +45,7 @@ public class QuestionViewImpl extends GridPane implements QuestionView {
 
         gridPane.add(scoreArea, 0, 0);
         gridPane.add(addQuestionButton, 1, 0);
+        gridPane.setAlignment(Pos.CENTER);
         return gridPane;
     }
 

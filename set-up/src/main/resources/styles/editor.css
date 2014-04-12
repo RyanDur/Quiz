@@ -1,6 +1,6 @@
 #editor {
     -fx-pref-width: 625;
-    -fx-pref-height: 400;
+    -fx-pref-height: 500;
     -fx-padding: 10;
     -fx-spacing: 10;
     -fx-hgap: 10;
@@ -12,18 +12,5 @@
     -fx-padding: 15, 12, 15, 12;
     -fx-spacing: 10;
     -fx-hgap: 10;
-}
-
-#footer {
-    -fx-background-color: #889499;
-    -fx-padding: 15, 12, 15, 12;
-    -fx-spacing: 10;
-}
-
-#save {
-    -fx-pref-width: 1000;
-    -fx-pref-height: 40;
-    -fx-end-margin: 10;
-    -fx-start-margin: 10;
 }
 

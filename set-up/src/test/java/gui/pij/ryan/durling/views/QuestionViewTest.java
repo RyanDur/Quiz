@@ -37,7 +37,7 @@ public class QuestionViewTest extends GuiTest {
         String bacon = "Bacon";
         String text = "9";
         String addQuestion = "#add-question-button";
-        String addQuestionArea = "#add-question";
+        String addQuestionArea = "#add-question-area";
         String scoreField = "#score";
 
         click(addQuestionArea)

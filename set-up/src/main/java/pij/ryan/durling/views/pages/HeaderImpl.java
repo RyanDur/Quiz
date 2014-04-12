@@ -95,7 +95,6 @@ public class HeaderImpl extends HBox implements Header {
         return addQuizField;
     }
 
-
     private Button getButton(String label, String id) {
         Button button = new Button(label);
         button.setId(id);

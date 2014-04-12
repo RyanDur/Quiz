@@ -1,9 +1,11 @@
 package pij.ryan.durling.views.pages;
 
+import gui.pij.ryan.durling.views.Footer;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.exceptions.InvalidQuizException;
 
 
 public class Editor extends BorderPane {
@@ -12,16 +14,30 @@ public class Editor extends BorderPane {
     private QuizCreator quizCreator;
     private AnswerView answerView;
     private QuestionView questionView;
+    private Footer footer;
 
     public Editor(QuizCreator quizCreator, Views views) {
         this.getStylesheets().add("styles/editor.css");
         this.setId("editor");
         this.views = views;
         this.quizCreator = quizCreator;
-        addNewQuizView();
+        addHeader();
+        addFooter();
     }
 
-    private void addNewQuizView() {
+    private void addFooter() {
+        footer = views.getFooter();
+        footer.getSaveButton().setOnAction(e -> {
+            try {
+                quizCreator.save();
+            } catch (IllegalQuizCreationException | InvalidQuizException e1) {
+                e1.printStackTrace();
+            }
+        });
+        this.setBottom((Node) footer);
+    }
+
+    private void addHeader() {
         Header header = views.getHeader();
         header.getCreateQuizButton().setOnMousePressed(e -> {
             addLockQuizButton(header);
@@ -66,6 +82,9 @@ public class Editor extends BorderPane {
         answerView.getAddAnotherQuestionButton().setOnMousePressed(e -> {
             remove((Node) answerView);
             addQuestionView();
+            if (quizCreator.validQuiz()) {
+                footer.addSaveButton();
+            }
         });
     }
 

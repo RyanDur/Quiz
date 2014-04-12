@@ -1,0 +1,13 @@
+#footer {
+    -fx-background-color: #889499;
+    -fx-padding: 15, 12, 15, 12;
+    -fx-pref-width: 600;
+    -fx-pref-height: 75;
+}
+
+#save {
+    -fx-pref-width: 1000;
+    -fx-pref-height: 40;
+    -fx-end-margin: 10;
+    -fx-start-margin: 10;
+}
