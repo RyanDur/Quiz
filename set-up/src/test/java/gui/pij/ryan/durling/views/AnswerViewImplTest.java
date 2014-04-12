@@ -16,7 +16,7 @@ public class AnswerViewImplTest extends GuiTest {
 
     private QuizCreator mockQuizCreator;
     private AnswerView answerView;
-    private String answerArea = "#add-answer";
+    private String answerArea = "#add-answer-area";
     private String answer = "answer";
     private String correct = "#correct";
     private String addAnswer = "#add-answer-button";
@@ -42,24 +42,6 @@ public class AnswerViewImplTest extends GuiTest {
                 .click(correct)
                 .click(addAnswer);
 
-        verify(mockQuizCreator).addAnswer(answer, true);
-        verify(views).getAnswerView();
-    }
-
-    @Test
-    public void shouldBeAbleToAddAnIncorrectAnswerAndGetNewView() throws InterruptedException, IllegalQuizCreationException {
-        answerView.getAddAnswerButton().setOnMousePressed(e -> {
-            views.getAnswerView();
-        });
-
-        String incorrect = "#incorrect";
-
-        click(answerArea)
-                .type(answer)
-                .click(incorrect)
-                .click(addAnswer);
-
-        verify(mockQuizCreator).addAnswer(answer, false);
         verify(views).getAnswerView();
     }
 

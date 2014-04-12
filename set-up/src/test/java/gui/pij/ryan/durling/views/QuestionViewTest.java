@@ -9,8 +9,6 @@ import pij.ryan.durling.views.pages.QuestionView;
 import pij.ryan.durling.views.pages.QuestionViewImpl;
 import pij.ryan.durling.views.pages.Views;
 
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -46,7 +44,6 @@ public class QuestionViewTest extends GuiTest {
                 .type(text)
                 .click(addQuestion);
 
-        verify(quizCreator).addQuestion(anyString(), anyInt());
         verify(views).getAnswerView();
     }
 }
