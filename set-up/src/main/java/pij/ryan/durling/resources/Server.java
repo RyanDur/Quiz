@@ -4,10 +4,10 @@ import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 
-public interface QuizServer {
-    Quiz createQuiz(String name);
+public interface Server {
+    Quiz createQuiz(String s);
 
-    Question createQuestion(String s, int score);
+    Question createQuestion(String question, int score);
 
     void save(Quiz quiz);
 
