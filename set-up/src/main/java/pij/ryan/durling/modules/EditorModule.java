@@ -6,7 +6,8 @@ import pij.ryan.durling.controllers.QuizCreatorImpl;
 import pij.ryan.durling.views.pages.Views;
 import pij.ryan.durling.views.pages.ViewsImpl;
 
-public class StartModule extends AbstractModule {
+public class EditorModule extends AbstractModule {
+
     @Override
     protected void configure() {
         install(new QuizCreatorModule());

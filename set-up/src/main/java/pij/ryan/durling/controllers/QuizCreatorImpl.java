@@ -1,5 +1,6 @@
 package pij.ryan.durling.controllers;
 
+import com.google.inject.Inject;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.models.Answer;
@@ -13,6 +14,7 @@ public class QuizCreatorImpl implements QuizCreator {
     private Quiz quiz;
     private Question question;
 
+    @Inject
     public QuizCreatorImpl(QuizServer quizServer) {
         this.quizServer = quizServer;
     }

@@ -1,5 +1,6 @@
 package pij.ryan.durling.views.pages;
 
+import com.google.inject.Inject;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import pij.ryan.durling.controllers.QuizCreator;
@@ -15,6 +16,7 @@ public class EditorImpl extends BorderPane implements Editor {
     private QuestionView questionView;
     private Footer footer;
 
+    @Inject
     public EditorImpl(QuizCreator quizCreator, Views views) {
         this.getStylesheets().add("styles/editor.css");
         this.setId("editor");

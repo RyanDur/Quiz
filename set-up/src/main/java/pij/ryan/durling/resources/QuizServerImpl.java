@@ -1,14 +1,19 @@
 package pij.ryan.durling.resources;
 
+import com.google.inject.Inject;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class QuizServerImpl implements QuizServer {
 
     private final Server server;
 
-    public QuizServerImpl(ServerLink serverLink) {
+    @Inject
+    public QuizServerImpl(ServerLink serverLink) throws RemoteException, NotBoundException {
         server = serverLink.getServer();
     }
 
