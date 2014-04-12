@@ -3,7 +3,7 @@ package pij.ryan.durling.views.pages;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 
-public interface QuizView {
+public interface Header {
 
     Button getCreateQuizButton();
 

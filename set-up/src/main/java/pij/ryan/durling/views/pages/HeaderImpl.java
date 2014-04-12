@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-public class QuizViewImpl extends HBox implements QuizView {
+public class HeaderImpl extends HBox implements Header {
 
     private Button createQuizButton;
     private Button addQuizButton;
@@ -16,7 +16,7 @@ public class QuizViewImpl extends HBox implements QuizView {
     private String lockQuiz = "Lock Quiz";
     private BorderPane innerGrid;
 
-    public QuizViewImpl() {
+    public HeaderImpl() {
         innerGrid = new BorderPane();
         innerGrid.setId("grid");
         this.getChildren().add(innerGrid);

@@ -13,7 +13,7 @@ public class ViewsImpl implements Views {
     }
 
     @Override
-    public QuizView getQuizView() {
-        return new QuizViewImpl();
+    public Header getHeader() {
+        return new HeaderImpl();
     }
 }

@@ -1,7 +1,6 @@
 package pij.ryan.durling.views.pages;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
@@ -23,12 +22,22 @@ public class Editor extends BorderPane {
     }
 
     private void addNewQuizView() {
-        QuizView quizView = views.getQuizView();
-        quizView.getCreateQuizButton().setOnMousePressed(e -> {
-            //setLockQuiz();
+        Header header = views.getHeader();
+        header.getCreateQuizButton().setOnMousePressed(e -> {
+            addLockQuizButton(header);
+            quizCreator.createQuiz(header.getTitle());
+            header.setTitle(quizCreator.getName());
             addQuestionView();
         });
-        this.setTop((Node) quizView);
+        this.setTop((Node) header);
+    }
+
+    private void addLockQuizButton(Header quizView) {
+        quizView.getLockQuizButton().setOnAction(event -> {
+            quizCreator.lockQuiz(quizCreator.getQuizId());
+            quizView.toggleLock();
+        });
+        quizView.setLockQuiz();
     }
 
     private void addQuestionView() {
@@ -74,11 +83,5 @@ public class Editor extends BorderPane {
 
     private void remove(Node node) {
         this.getChildren().remove(node);
-    }
-
-    private Button getButton(String label, String id) {
-        Button button = new Button(label);
-        button.setId(id);
-        return button;
     }
 }

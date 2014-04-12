@@ -4,23 +4,24 @@ import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
-import pij.ryan.durling.views.pages.QuizView;
-import pij.ryan.durling.views.pages.QuizViewImpl;
+import pij.ryan.durling.views.pages.Header;
+import pij.ryan.durling.views.pages.HeaderImpl;
 import pij.ryan.durling.views.pages.Views;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
 import static org.mockito.Mockito.*;
 
-public class QuizViewTest extends GuiTest {
+public class HeaderTest extends GuiTest {
 
-    private QuizView quizView;
+    private Header quizView;
     private QuizCreator mockQuizCreator;
     private String title = "Poo";
     private String addQuizButton = "#add-quiz-button";
     private String quizTitleField = "#create-quiz";
     private String createQuizButton = "#create-quiz-button";
     private Views mockViews;
+    private String lock = "#lock";
 
     @Override
     protected Parent getRootNode() {
@@ -28,14 +29,17 @@ public class QuizViewTest extends GuiTest {
         mockViews = mock(Views.class);
         when(mockQuizCreator.getName()).thenReturn(title);
 
-        quizView = new QuizViewImpl();
+        quizView = new HeaderImpl();
         quizView.getCreateQuizButton().setOnMousePressed(e -> {
-            mockViews.getQuestionView();
+            quizView.getLockQuizButton().setOnAction(event -> {
+                mockQuizCreator.lockQuiz(0);
+                quizView.toggleLock();
+            });
             quizView.setLockQuiz();
+            mockViews.getQuestionView();
             mockQuizCreator.createQuiz(quizView.getTitle());
             quizView.setTitle(mockQuizCreator.getName());
         });
-        quizView.getLockQuizButton().setOnAction(e -> quizView.toggleLock());
 
         return (Parent) quizView;
     }
@@ -69,7 +73,7 @@ public class QuizViewTest extends GuiTest {
                 .type(title)
                 .click(createQuizButton);
 
-        verifyThat("#lock", hasText("Lock Quiz"));
+        verifyThat(lock, hasText("Lock Quiz"));
     }
 
     @Test
@@ -78,8 +82,9 @@ public class QuizViewTest extends GuiTest {
                 .click(quizTitleField)
                 .type(title)
                 .click(createQuizButton)
-                .click("#lock");
+                .click(lock);
 
-        verifyThat("#lock", hasText("Quiz Locked"));
+        verifyThat(lock, hasText("Quiz Locked"));
+        verify(mockQuizCreator).lockQuiz(anyInt());
     }
 }

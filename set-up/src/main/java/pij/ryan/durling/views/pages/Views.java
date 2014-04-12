@@ -5,5 +5,5 @@ public interface Views {
 
     AnswerView getAnswerView();
 
-    QuizView getQuizView();
+    Header getHeader();
 }
