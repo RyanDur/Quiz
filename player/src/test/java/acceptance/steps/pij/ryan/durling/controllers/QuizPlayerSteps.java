@@ -2,8 +2,8 @@ package acceptance.steps.pij.ryan.durling.controllers;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import pij.ryan.durling.controllers.QuizMenu;
-import pij.ryan.durling.controllers.QuizMenuImpl;
+import pij.ryan.durling.controllers.QuizPlayer;
+import pij.ryan.durling.controllers.QuizPlayerImpl;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.resources.QuizServer;
 
@@ -16,11 +16,11 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class QuizMenuSteps {
+public class QuizPlayerSteps {
     private List<Quiz> quizzes;
     private Quiz quiz;
     private QuizServer mockQuizServer;
-    private QuizMenu quizMenu;
+    private QuizPlayer quizPlayer;
     private Quiz quiz1;
     private Quiz quiz2;
     private Quiz quiz3;
@@ -33,17 +33,17 @@ public class QuizMenuSteps {
     @cucumber.api.java.en.Given("^there is a menu of quizzes$")
     public void there_is_a_menu_of_quizzes() throws Throwable {
         mockQuizServer = mock(QuizServer.class);
-        quizMenu = new QuizMenuImpl(mockQuizServer);
+        quizPlayer = new QuizPlayerImpl(mockQuizServer);
         List<Quiz> quizList = getQuizzes();
         when(mockQuizServer.getQuizList()).thenReturn(quizList);
 
-        quizzes = quizMenu.getQuizList();
+        quizzes = quizPlayer.getQuizList();
     }
 
     @When("^a player chooses quiz (\\d+)$")
     public void a_player_chooses_quiz(int quizIndex) throws Throwable {
         userChoice = quizIndex - 1;
-        quiz = quizMenu.getQuiz(quizIndex);
+        quiz = quizPlayer.getQuiz(quizIndex);
     }
 
     @Then("^a player should get to play the quiz$")
