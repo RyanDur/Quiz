@@ -40,6 +40,7 @@ public class EditorPageTest extends GuiTest {
     private String foobar = "Bacon";
     private QuizCreator mockQuizCreator;
     private String save = "#" + ViewMessages.SAVE_BUTTON_ID;
+    private String errorLabel = "#" + ViewMessages.ERROR_LABEL_ID;
 
     @Override
     protected Parent getRootNode() {
@@ -82,6 +83,18 @@ public class EditorPageTest extends GuiTest {
     }
 
     @Test
+    public void shouldGetAHelpfulMessageIfCreateQuizThrowsIllegalArgumentException() {
+        doThrow(new IllegalArgumentException("Helpful Message")).when(mockQuizCreator).createQuiz(anyString());
+
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz);
+
+        verifyThat(errorLabel, hasText("Helpful Message"));
+    }
+
+    @Test
     public void shouldBeAbleToLockAQuizYouAreWorkingOn() {
         String lockedQuiz = ViewMessages.LOCKED_QUIZ_BUTTON;
 
@@ -120,6 +133,23 @@ public class EditorPageTest extends GuiTest {
                 .type(question);
 
         verifyThat(addQuestionField, hasText(question));
+    }
+
+    @Test
+    public void shouldGetAHelpfulMessageAfterAddingAnEmptyQuestion() throws IllegalQuizCreationException {
+        doThrow(new IllegalArgumentException("Helpful Message")).when(mockQuizCreator).addQuestion(anyString(), anyInt());
+
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type("")
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion);
+
+        verifyThat(errorLabel, hasText("Helpful Message"));
     }
 
     @Test

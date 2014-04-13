@@ -1,16 +1,18 @@
 package pij.ryan.durling.views.pages;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import pij.ryan.durling.messages.ViewMessages;
 
-public class ErrorBoxImpl extends BorderPane implements ErrorBox {
+public class ViewBoxImpl extends BorderPane implements ViewBox {
 
     private final Label label;
+    private Node node;
 
-    public ErrorBoxImpl() {
+    public ViewBoxImpl() {
         this.getStylesheets().add(ViewMessages.ERROR_VIEW_STYLE_SHEET);
         HBox errors = new HBox();
         errors.setId(ViewMessages.ERROR_BOX_ID);
@@ -30,5 +32,16 @@ public class ErrorBoxImpl extends BorderPane implements ErrorBox {
     @Override
     public void removeMessage() {
         label.setText("");
+    }
+
+    @Override
+    public void setView(Node node) {
+        this.node = node;
+        this.setCenter(node);
+    }
+
+    @Override
+    public void removeView() {
+        this.getChildren().remove(node);
     }
 }

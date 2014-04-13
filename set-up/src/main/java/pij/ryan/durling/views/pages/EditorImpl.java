@@ -17,6 +17,7 @@ public class EditorImpl extends BorderPane implements Editor {
     private QuestionView questionView;
     private Footer footer;
     private Header header;
+    private ViewBox viewBox;
 
     @Inject
     public EditorImpl(QuizCreator quizCreator, Views views) {
@@ -24,8 +25,26 @@ public class EditorImpl extends BorderPane implements Editor {
         this.setId(ViewMessages.EDITOR_VIEW_ID);
         this.views = views;
         this.quizCreator = quizCreator;
+        viewBox = views.getErrorBox();
         addHeader();
+        this.setCenter((Node) viewBox);
         addFooter();
+    }
+
+    private void addHeader() {
+        header = views.getHeader();
+        header.getCreateQuizButton().setOnMousePressed(e -> {
+            try {
+                quizCreator.createQuiz(header.getTitle());
+                viewBox.removeMessage();
+                addLockQuizButton(header);
+                header.setTitle(quizCreator.getName());
+                addQuestionView();
+            } catch (IllegalArgumentException e1) {
+                viewBox.setMessage(e1.getMessage());
+            }
+        });
+        this.setTop((Node) header);
     }
 
     private void addFooter() {
@@ -34,25 +53,62 @@ public class EditorImpl extends BorderPane implements Editor {
             try {
                 quizCreator.save();
                 quizCreator.unlockQuiz(quizCreator.getQuizId());
+                viewBox.removeMessage();
                 resetEditor();
             } catch (IllegalQuizCreationException | InvalidQuizException e1) {
-                e1.printStackTrace();
+                viewBox.setMessage(e1.getMessage());
             }
         });
         this.setBottom((Node) footer);
     }
 
-    private void addHeader() {
-        header = views.getHeader();
-        header.getCreateQuizButton().setOnMousePressed(e -> {
-            addLockQuizButton(header);
-            quizCreator.createQuiz(header.getTitle());
-            header.setTitle(quizCreator.getName());
-            addQuestionView();
+
+    private void addQuestionView() {
+        questionView = views.getQuestionView();
+        questionView.getAddQuestionButton().setOnAction(e -> {
+            try {
+                quizCreator.addQuestion(questionView.getQuestion(), questionView.getScore());
+                viewBox.removeMessage();
+                viewBox.removeView();
+                addAnswerView();
+            } catch (IllegalQuizCreationException | IllegalArgumentException e1) {
+                viewBox.setMessage(e1.getMessage());
+            }
         });
-        this.setTop((Node) header);
+        viewBox.setView((Node) questionView);
     }
 
+    private void addAnswerView() {
+        answerView = views.getAnswerView();
+        answerView.setQuestionLabel(questionView.getQuestion());
+        viewBox.setView((Node) answerView);
+        addAnswer();
+        addAnotherQuestion();
+
+    }
+
+    private void addAnotherQuestion() {
+        answerView.getAddAnotherQuestionButton().setOnMousePressed(e -> {
+            viewBox.removeView();
+            addQuestionView();
+            if (quizCreator.validQuiz()) {
+                footer.addSaveButton();
+            }
+        });
+    }
+
+    private void addAnswer() {
+        answerView.getAddAnswerButton().setOnAction(e -> {
+            try {
+                quizCreator.addAnswer(answerView.getAnswer(), answerView.getAnswerValue());
+                viewBox.removeMessage();
+                viewBox.removeView();
+                addAnswerView();
+            } catch (IllegalQuizCreationException | IllegalArgumentException e1) {
+                viewBox.setMessage(e1.getMessage());
+            }
+        });
+    }
 
     private void addLockQuizButton(Header quizView) {
         quizView.getLockQuizButton().setOnAction(event -> {
@@ -67,55 +123,9 @@ public class EditorImpl extends BorderPane implements Editor {
         quizView.setLockQuiz();
     }
 
-    private void addQuestionView() {
-        questionView = views.getQuestionView();
-        questionView.getAddQuestionButton().setOnAction(e -> {
-            try {
-                quizCreator.addQuestion(questionView.getQuestion(), questionView.getScore());
-                remove((Node) questionView);
-                addAnswerView();
-            } catch (IllegalQuizCreationException e1) {
-                e1.printStackTrace();
-            }
-        });
-        this.setCenter((Node) questionView);
-    }
-
-    private void addAnswerView() {
-        answerView = views.getAnswerView();
-        answerView.setQuestionLabel(questionView.getQuestion());
-        addAnswer();
-        addAnotherQuestion();
-        this.setCenter((Node) answerView);
-    }
-
-    private void addAnotherQuestion() {
-        answerView.getAddAnotherQuestionButton().setOnMousePressed(e -> {
-            remove((Node) answerView);
-            addQuestionView();
-            if (quizCreator.validQuiz()) {
-                footer.addSaveButton();
-            }
-        });
-    }
-
-    private void addAnswer() {
-        answerView.getAddAnswerButton().setOnAction(e -> {
-            try {
-                quizCreator.addAnswer(answerView.getAnswer(), answerView.getAnswerValue());
-                remove((Node) answerView);
-                addAnswerView();
-            } catch (IllegalQuizCreationException e1) {
-                e1.printStackTrace();
-            }
-        });
-    }
-
     private void resetEditor() {
-        remove((Node) questionView);
-        remove((Node) answerView);
-        remove((Node) header);
-        remove((Node) footer);
+        viewBox.removeMessage();
+        viewBox.removeView();
         addHeader();
         addFooter();
     }
