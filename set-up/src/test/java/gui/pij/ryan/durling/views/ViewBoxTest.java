@@ -29,9 +29,10 @@ public class ViewBoxTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToSetAMessage() {
-        Platform.runLater(() -> viewBox.setMessage(expected));
-        verifyThat(errorLabel, hasText(expected));
-
+        Platform.runLater(() -> {
+            viewBox.setMessage(expected);
+            verifyThat(errorLabel, hasText(expected));
+        });
     }
 
     @Test
@@ -39,8 +40,8 @@ public class ViewBoxTest extends GuiTest {
         Platform.runLater(() -> {
             viewBox.setMessage(expected);
             viewBox.removeMessage();
+            verifyThat(errorLabel, hasText(""));
         });
-        verifyThat(errorLabel, hasText(""));
     }
 
     @Test

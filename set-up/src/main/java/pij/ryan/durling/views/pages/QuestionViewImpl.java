@@ -15,7 +15,7 @@ public class QuestionViewImpl extends GridPane implements QuestionView {
     public QuestionViewImpl() {
         this.getStylesheets().add(ViewMessages.QUESTION_VIEW_STYLE_SHEET);
         this.setId(ViewMessages.QUESTION_VIEW_ID);
-        this.setAlignment(Pos.CENTER);
+        this.setAlignment(Pos.TOP_CENTER);
         questionArea = getQuestionArea();
         this.add(questionArea, 1, 1);
         this.add(getUserInputArea(), 1, 2);

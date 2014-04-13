@@ -18,7 +18,7 @@ public class AnswerViewImpl extends GridPane implements AnswerView {
     public AnswerViewImpl() {
         this.getStylesheets().add(ViewMessages.ANSWER_VIEW_STYLE_SHEET);
         this.setId(ViewMessages.ANSWER_VIEW_ID);
-        this.setAlignment(Pos.CENTER);
+        this.setAlignment(Pos.TOP_CENTER);
         addAnotherQuestionButton = getButton(ViewMessages.ANOTHER_QUESTION_BUTTON, ViewMessages.ANOTHER_QUESTION_BUTTON_ID);
         addAnswerButton = getButton(ViewMessages.ANSWER_BUTTON, ViewMessages.ANSWER_BUTTON_ID);
 
