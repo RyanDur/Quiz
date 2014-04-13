@@ -11,6 +11,7 @@ import pij.ryan.durling.views.pages.EditorImpl;
 import pij.ryan.durling.views.pages.Views;
 import pij.ryan.durling.views.pages.ViewsImpl;
 
+import static org.loadui.testfx.Assertions.assertNodeExists;
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
 import static org.mockito.Matchers.anyString;
@@ -19,24 +20,24 @@ import static org.mockito.Mockito.*;
 public class EditorPageTest extends GuiTest {
 
     private String addQuiz = ViewMessages.ADD_QUIZ_BUTTON;
-    private String quizName = "Name";
     private String addQuizField = "#" + ViewMessages.CREATE_QUIZ_TITLE_FIELD_ID;
     private String createQuiz = ViewMessages.CREATE_QUIZ_BUTTON;
-    private String button = ".button";
-    private QuizCreator mockQuizCreator;
     private String addQuestionField = "#" + ViewMessages.QUESTION_INPUT_AREA_ID;
-    private String question = "pancakes";
     private String addQuestion = "#" + ViewMessages.ADD_QUESTION_BUTTON_ID;
     private String scoreField  = "#" + ViewMessages.SCORE_ID;
-    private String score = "9";
     private String addAnswerField = "#" + ViewMessages.ANSWER_AREA_ID;
-    private String answer = "of course";
     private String addAnswer = "#" + ViewMessages.ANSWER_BUTTON_ID;
     private String incorrectRadio = "#" + ViewMessages.INCORRECT_ID;
     private String correctRadio = "#" + ViewMessages.CORRECT_ID;
-    private String never = "never";
     private String addAnotherQuestionButton = "#" + ViewMessages.ANOTHER_QUESTION_BUTTON_ID;
+    private String quizName = "Name";
+    private String button = ".button";
+    private String question = "pancakes";
+    private String score = "9";
+    private String answer = "of course";
+    private String never = "never";
     private String foobar = "Bacon";
+    private QuizCreator mockQuizCreator;
 
     @Override
     protected Parent getRootNode() {
@@ -67,25 +68,30 @@ public class EditorPageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToSeeTheQuizNameAfterCreatingAQuiz() {
+        String titleId = "#" + ViewMessages.TITLE_ID;
+
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz);
 
-        verifyThat("#" + ViewMessages.TITLE_ID, hasText(quizName));
+        verifyThat(titleId, hasText(quizName));
         verify(mockQuizCreator).createQuiz(quizName);
     }
 
     @Test
     public void shouldBeAbleToLockAQuizYouAreWorkingOn() {
+        String lockedQuiz = ViewMessages.LOCKED_QUIZ_BUTTON;
+        String lock = "#" + ViewMessages.LOCK_QUIZ_BUTTON_ID;
+
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz)
-                .click("#" + ViewMessages.LOCK_QUIZ_BUTTON_ID);
+                .click(lock);
 
         verify(mockQuizCreator).lockQuiz(anyInt());
-        verifyThat("#" + ViewMessages.LOCK_QUIZ_BUTTON_ID, hasText(ViewMessages.LOCKED_QUIZ_BUTTON));
+        verifyThat(lock, hasText(lockedQuiz));
     }
 
     @Test
@@ -236,6 +242,8 @@ public class EditorPageTest extends GuiTest {
     @Test
     public void shouldBeAbleToSaveAQuiz() throws InvalidQuizException, IllegalQuizCreationException {
         when(mockQuizCreator.validQuiz()).thenReturn(true);
+        String save = "#" + ViewMessages.SAVE_BUTTON_ID;
+
         click(addQuiz)
                 .click(addQuizField)
                 .type(quizName)
@@ -267,8 +275,55 @@ public class EditorPageTest extends GuiTest {
                 .type(never)
                 .click(incorrectRadio)
                 .click(addAnswer)
-                .click("#" + ViewMessages.SAVE_BUTTON_ID);
+                .click(save);
 
         verify(mockQuizCreator).save();
+    }
+
+    @Test
+    public void shouldBeAbleToAddANewQuizAfterSaving() throws InvalidQuizException, IllegalQuizCreationException {
+        String addQuizId = "#" + ViewMessages.ADD_QUIZ_BUTTON_ID;
+        String footer = "#" + ViewMessages.FOOTER_VIEW_ID;
+        when(mockQuizCreator.validQuiz()).thenReturn(true);
+        String save = "#" + ViewMessages.SAVE_BUTTON_ID;
+        String header = "#" + ViewMessages.HEADER_VIEW_ID;
+
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(addQuestionField)
+                .type(question)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(correctRadio)
+                .click(addAnswer)
+                .click(addAnswerField)
+                .type(never)
+                .click(incorrectRadio)
+                .click(addAnswer)
+                .click(addAnotherQuestionButton)
+                .click(addQuestionField)
+                .type(foobar)
+                .click(scoreField)
+                .type(score)
+                .click(addQuestion)
+                .click(addAnswerField)
+                .type(answer)
+                .click(correctRadio)
+                .click(addAnswer)
+                .click(addAnswerField)
+                .type(never)
+                .click(incorrectRadio)
+                .click(addAnswer)
+                .click(save);
+
+        verify(mockQuizCreator).save();
+        assertNodeExists(header);
+        assertNodeExists(addQuizId);
+        assertNodeExists(footer);
     }
 }

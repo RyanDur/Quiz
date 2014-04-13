@@ -16,6 +16,7 @@ public class EditorImpl extends BorderPane implements Editor {
     private AnswerView answerView;
     private QuestionView questionView;
     private Footer footer;
+    private Header header;
 
     @Inject
     public EditorImpl(QuizCreator quizCreator, Views views) {
@@ -32,6 +33,12 @@ public class EditorImpl extends BorderPane implements Editor {
         footer.getSaveButton().setOnAction(e -> {
             try {
                 quizCreator.save();
+                remove((Node) questionView);
+                remove((Node) answerView);
+                remove((Node) header);
+                remove((Node) footer);
+                addHeader();
+                addFooter();
             } catch (IllegalQuizCreationException | InvalidQuizException e1) {
                 e1.printStackTrace();
             }
@@ -40,7 +47,7 @@ public class EditorImpl extends BorderPane implements Editor {
     }
 
     private void addHeader() {
-        Header header = views.getHeader();
+        header = views.getHeader();
         header.getCreateQuizButton().setOnMousePressed(e -> {
             addLockQuizButton(header);
             quizCreator.createQuiz(header.getTitle());
