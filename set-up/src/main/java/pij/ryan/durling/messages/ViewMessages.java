@@ -54,4 +54,9 @@ public class ViewMessages {
     public static final String QUESTION_INPUT_AREA_ID = "add-question-area";
     public static final String SCORE_ID = "score";
     public static final String ADD_SCORE = "Add Score";
+
+    //Error View
+    public static final String ERROR_VIEW_STYLE_SHEET = "styles/errorBox.css";
+    public static final String ERROR_BOX_ID = "error";
+    public static final String ERROR_LABEL_ID = "error-label";
 }

@@ -1,0 +1,13 @@
+#error {
+    -fx-pref-width: 625;
+    -fx-pref-height: 30;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+#error-label {
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial Red";
+}
