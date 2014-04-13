@@ -6,6 +6,7 @@ import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
+import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.views.pages.EditorImpl;
 import pij.ryan.durling.views.pages.Views;
 import pij.ryan.durling.views.pages.ViewsImpl;
@@ -17,24 +18,24 @@ import static org.mockito.Mockito.*;
 
 public class EditorPageTest extends GuiTest {
 
-    private String addQuiz = "Add Quiz";
+    private String addQuiz = ViewMessages.ADD_QUIZ_BUTTON;
     private String quizName = "Name";
-    private String addQuizField = "#create-quiz";
-    private String createQuiz = "Create Quiz";
+    private String addQuizField = "#" + ViewMessages.CREATE_QUIZ_TITLE_FIELD_ID;
+    private String createQuiz = ViewMessages.CREATE_QUIZ_BUTTON;
     private String button = ".button";
     private QuizCreator mockQuizCreator;
-    private String addQuestionField = "#add-question-area";
+    private String addQuestionField = "#" + ViewMessages.QUESTION_INPUT_AREA_ID;
     private String question = "pancakes";
-    private String addQuestion = "#add-question-button";
-    private String scoreField  = "#score";
+    private String addQuestion = "#" + ViewMessages.ADD_QUESTION_BUTTON_ID;
+    private String scoreField  = "#" + ViewMessages.SCORE_ID;
     private String score = "9";
-    private String addAnswerField = "#add-answer-area";
+    private String addAnswerField = "#" + ViewMessages.ANSWER_AREA_ID;
     private String answer = "of course";
-    private String addAnswer = "#add-answer-button";
-    private String incorrectRadio = "#incorrect";
-    private String correctRadio = "#correct";
+    private String addAnswer = "#" + ViewMessages.ANSWER_BUTTON_ID;
+    private String incorrectRadio = "#" + ViewMessages.INCORRECT_ID;
+    private String correctRadio = "#" + ViewMessages.CORRECT_ID;
     private String never = "never";
-    private String addAnotherQuestionButton = "#add-another-question";
+    private String addAnotherQuestionButton = "#" + ViewMessages.ANOTHER_QUESTION_BUTTON_ID;
     private String foobar = "Bacon";
 
     @Override
@@ -71,7 +72,7 @@ public class EditorPageTest extends GuiTest {
                 .type(quizName)
                 .click(createQuiz);
 
-        verifyThat("#header #title", hasText(quizName));
+        verifyThat("#" + ViewMessages.TITLE_ID, hasText(quizName));
         verify(mockQuizCreator).createQuiz(quizName);
     }
 
@@ -81,10 +82,10 @@ public class EditorPageTest extends GuiTest {
                 .click(addQuizField)
                 .type(quizName)
                 .click(createQuiz)
-                .click("#lock");
+                .click("#" + ViewMessages.LOCK_QUIZ_BUTTON_ID);
 
         verify(mockQuizCreator).lockQuiz(anyInt());
-        verifyThat("#lock", hasText("Quiz Locked"));
+        verifyThat("#" + ViewMessages.LOCK_QUIZ_BUTTON_ID, hasText(ViewMessages.LOCKED_QUIZ_BUTTON));
     }
 
     @Test
@@ -266,7 +267,7 @@ public class EditorPageTest extends GuiTest {
                 .type(never)
                 .click(incorrectRadio)
                 .click(addAnswer)
-                .click("#save");
+                .click("#" + ViewMessages.SAVE_BUTTON_ID);
 
         verify(mockQuizCreator).save();
     }

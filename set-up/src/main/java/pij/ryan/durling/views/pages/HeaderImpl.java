@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import pij.ryan.durling.messages.ViewMessages;
 
 public class HeaderImpl extends HBox implements Header {
 
@@ -13,16 +14,16 @@ public class HeaderImpl extends HBox implements Header {
     private Button addQuizButton;
     private TextField addQuizField;
     private Button lockQuizButton;
-    private String lockQuiz = "Lock Quiz";
+    private String lockQuiz = ViewMessages.LOCK_QUIZ_BUTTON;
     private BorderPane innerGrid;
 
     public HeaderImpl() {
+        this.getStylesheets().add(ViewMessages.HEADER_VIEW_STYLE_SHEET);
+        this.setId(ViewMessages.HEADER_VIEW_ID);
         innerGrid = new BorderPane();
-        innerGrid.setId("grid");
+        innerGrid.setId(ViewMessages.INNER_HEADER_VIEW_ID);
         this.getChildren().add(innerGrid);
-        this.getStylesheets().add("styles/header.css");
-        this.setId("header");
-        lockQuizButton = getButton(lockQuiz, "lock");
+        lockQuizButton = getButton(lockQuiz, ViewMessages.LOCK_QUIZ_BUTTON_ID);
         createQuizButton = getCreateQuizButton();
         addQuizButton();
     }
@@ -30,7 +31,7 @@ public class HeaderImpl extends HBox implements Header {
     @Override
     public Button getCreateQuizButton() {
         if (createQuizButton == null) {
-            createQuizButton = getButton("Create Quiz", "create-quiz-button");
+            createQuizButton = getButton(ViewMessages.CREATE_QUIZ_BUTTON, ViewMessages.CREATE_QUIZ_BUTTON_ID);
         }
         return createQuizButton;
     }
@@ -50,7 +51,7 @@ public class HeaderImpl extends HBox implements Header {
     @Override
     public void toggleLock() {
         if (lockQuizButton.getText().equals(lockQuiz)) {
-            lockQuizButton.setText("Quiz Locked");
+            lockQuizButton.setText(ViewMessages.LOCKED_QUIZ_BUTTON);
         } else {
             lockQuizButton.setText(lockQuiz);
         }
@@ -70,12 +71,12 @@ public class HeaderImpl extends HBox implements Header {
     public void setTitle(String name) {
         innerGrid.getChildren().removeAll(addQuizField, createQuizButton);
         Label title = new Label(name);
-        title.setId("title");
+        title.setId(ViewMessages.TITLE_ID);
         innerGrid.setLeft(title);
     }
 
     public void addQuizButton() {
-        addQuizButton = getButton("Add Quiz", "add-quiz-button");
+        addQuizButton = getButton(ViewMessages.ADD_QUIZ_BUTTON, ViewMessages.ADD_QUIZ_BUTTON_ID);
         addQuizButton.setOnAction(e -> {
             remove(addQuizButton);
             addQuizTitleField();
@@ -90,7 +91,7 @@ public class HeaderImpl extends HBox implements Header {
 
     private TextField addQuizTitleField() {
         addQuizField = new TextField();
-        addQuizField.setId("create-quiz");
+        addQuizField.setId(ViewMessages.CREATE_QUIZ_TITLE_FIELD_ID);
         innerGrid.setCenter(addQuizField);
         return addQuizField;
     }

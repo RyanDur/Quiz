@@ -1,7 +1,9 @@
 package pij.ryan.durling.exceptions;
 
+import pij.ryan.durling.messages.CustomExceptionMessages;
+
 public class IllegalQuizCreationException extends Exception {
     public IllegalQuizCreationException() {
-        super("Need to create a quiz first.");
+        super(CustomExceptionMessages.ILLEGAL_QUIZ);
     }
 }

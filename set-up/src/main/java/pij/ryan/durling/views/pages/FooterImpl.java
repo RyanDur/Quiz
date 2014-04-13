@@ -2,15 +2,16 @@ package pij.ryan.durling.views.pages;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import pij.ryan.durling.messages.ViewMessages;
 
 public class FooterImpl extends HBox implements Footer {
 
     private final Button saveButton;
 
     public FooterImpl() {
-        this.setId("footer");
-        this.getStylesheets().add("styles/footer.css");
-        saveButton = getButton("Save", "save");
+        this.getStylesheets().add(ViewMessages.FOOTER_VIEW_STYLE_SHEET);
+        this.setId(ViewMessages.FOOTER_VIEW_ID);
+        saveButton = getButton(ViewMessages.SAVE_BUTTON, ViewMessages.SAVE_BUTTON_ID);
     }
 
     @Override

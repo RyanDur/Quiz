@@ -2,6 +2,7 @@ package pij.ryan.durling.resources;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pij.ryan.durling.messages.ServerMessages;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -15,9 +16,9 @@ public class ServerLinkImpl implements ServerLink {
 
     public ServerLinkImpl()  {
         try {
-            registry = LocateRegistry.getRegistry("localhost", 1099);
+            registry = LocateRegistry.getRegistry(ServerMessages.HOST, ServerMessages.PORT);
         } catch (RemoteException e) {
-            log.info("Server is not running");
+            log.error(ServerMessages.ERROR_MESSAGE);
         }
     }
 
@@ -27,7 +28,7 @@ public class ServerLinkImpl implements ServerLink {
         try {
             server = (Server) registry.lookup("Server");
         } catch (RemoteException | NotBoundException e) {
-            log.info("Server is not running");
+            log.error(ServerMessages.ERROR_MESSAGE);
         }
         return server;
     }

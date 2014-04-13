@@ -3,6 +3,7 @@ package pij.ryan.durling.controllers;
 import com.google.inject.Inject;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
+import pij.ryan.durling.messages.ControllerMessages;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
@@ -26,15 +27,15 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void createQuiz(String name) throws IllegalArgumentException {
-        if (inValid(name)) throw new IllegalArgumentException("Must specify a name for the quiz");
+        if (inValid(name)) throw new IllegalArgumentException(ControllerMessages.EMPTY_TITLE);
         quiz = quizServer.createQuiz(name);
     }
 
     @Override
     public void addQuestion(String questionString, int score) throws IllegalArgumentException, IllegalQuizCreationException {
         if (quiz == null) throw new IllegalQuizCreationException();
-        if (score < 1) throw new IllegalArgumentException("Must have a score greater than zero");
-        if (inValid(questionString)) throw new IllegalArgumentException("Must have a question");
+        if (score < 1) throw new IllegalArgumentException(ControllerMessages.INVALID_SCORE);
+        if (inValid(questionString)) throw new IllegalArgumentException(ControllerMessages.EMPTY_QUESTION);
         question = quizServer.createQuestion(questionString, score);
         quiz.add(question);
     }
@@ -42,7 +43,7 @@ public class QuizCreatorImpl implements QuizCreator {
     @Override
     public void addAnswer(String answerString, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
         if (quiz == null) throw new IllegalQuizCreationException();
-        if (inValid(answerString)) throw new IllegalArgumentException("Must have an answer");
+        if (inValid(answerString)) throw new IllegalArgumentException(ControllerMessages.EMPTY_ANSWER);
         Answer answer = quizServer.createAnswer(answerString, value);
         question.add(answer);
     }

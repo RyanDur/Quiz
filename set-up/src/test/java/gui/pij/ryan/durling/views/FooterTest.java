@@ -6,6 +6,7 @@ import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
+import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.views.pages.Footer;
 import pij.ryan.durling.views.pages.FooterImpl;
 
@@ -29,6 +30,8 @@ public class FooterTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToAddASaveBar() throws InvalidQuizException, IllegalQuizCreationException {
+        String saveButtonId = "#" + ViewMessages.SAVE_BUTTON_ID;
+
         footer.getSaveButton().setOnAction(e -> {
             try {
                 quizCreator.save();
@@ -37,9 +40,9 @@ public class FooterTest extends GuiTest {
             }
         });
 
-        click("#save");
+        click(saveButtonId);
 
-        verifyThat("#save", hasText("Save"));
+        verifyThat(saveButtonId, hasText(ViewMessages.SAVE_BUTTON));
         verify(quizCreator).save();
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
+import pij.ryan.durling.messages.ViewMessages;
 
 
 public class EditorImpl extends BorderPane implements Editor {
@@ -18,8 +19,8 @@ public class EditorImpl extends BorderPane implements Editor {
 
     @Inject
     public EditorImpl(QuizCreator quizCreator, Views views) {
-        this.getStylesheets().add("styles/editor.css");
-        this.setId("editor");
+        this.getStylesheets().add(ViewMessages.EDITOR_VIEW_STYLE_SHEET);
+        this.setId(ViewMessages.EDITOR_VIEW_ID);
         this.views = views;
         this.quizCreator = quizCreator;
         addHeader();

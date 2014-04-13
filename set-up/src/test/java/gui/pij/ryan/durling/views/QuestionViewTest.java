@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.views.pages.QuestionView;
 import pij.ryan.durling.views.pages.QuestionViewImpl;
 import pij.ryan.durling.views.pages.Views;
@@ -31,9 +32,9 @@ public class QuestionViewTest extends GuiTest {
 
         String bacon = "Bacon";
         String text = "9";
-        String addQuestion = "#add-question-button";
-        String addQuestionArea = "#add-question-area";
-        String scoreField = "#score";
+        String addQuestion = "#" + ViewMessages.ADD_QUESTION_BUTTON_ID;
+        String addQuestionArea = "#" + ViewMessages.QUESTION_INPUT_AREA_ID;
+        String scoreField = "#" + ViewMessages.SCORE_ID;
 
         click(addQuestionArea)
                 .type(bacon)

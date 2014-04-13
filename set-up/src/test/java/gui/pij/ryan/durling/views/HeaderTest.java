@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
+import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.views.pages.Header;
 import pij.ryan.durling.views.pages.HeaderImpl;
 import pij.ryan.durling.views.pages.Views;
@@ -17,11 +18,11 @@ public class HeaderTest extends GuiTest {
     private Header quizView;
     private QuizCreator mockQuizCreator;
     private String title = "Poo";
-    private String addQuizButton = "#add-quiz-button";
-    private String quizTitleField = "#create-quiz";
-    private String createQuizButton = "#create-quiz-button";
+    private String addQuizButton = "#" + ViewMessages.ADD_QUIZ_BUTTON_ID;
+    private String quizTitleField = "#" + ViewMessages.CREATE_QUIZ_TITLE_FIELD_ID;
+    private String createQuizButton = "#" + ViewMessages.CREATE_QUIZ_BUTTON_ID;
     private Views mockViews;
-    private String lock = "#lock";
+    private String lock = "#" + ViewMessages.LOCK_QUIZ_BUTTON_ID;
 
     @Override
     protected Parent getRootNode() {
@@ -52,7 +53,7 @@ public class HeaderTest extends GuiTest {
                 .click(createQuizButton);
 
         verify(mockQuizCreator).createQuiz(title);
-        verifyThat("#title", hasText(title));
+        verifyThat("#" + ViewMessages.TITLE_ID, hasText(title));
     }
 
     @Test
@@ -73,7 +74,7 @@ public class HeaderTest extends GuiTest {
                 .type(title)
                 .click(createQuizButton);
 
-        verifyThat(lock, hasText("Lock Quiz"));
+        verifyThat(lock, hasText(ViewMessages.LOCK_QUIZ_BUTTON));
     }
 
     @Test
@@ -84,7 +85,7 @@ public class HeaderTest extends GuiTest {
                 .click(createQuizButton)
                 .click(lock);
 
-        verifyThat(lock, hasText("Quiz Locked"));
+        verifyThat(lock, hasText(ViewMessages.LOCKED_QUIZ_BUTTON));
         verify(mockQuizCreator).lockQuiz(anyInt());
     }
 }

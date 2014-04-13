@@ -3,8 +3,8 @@ package gui.pij.ryan.durling.views;
 import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
-import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
+import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.views.pages.AnswerView;
 import pij.ryan.durling.views.pages.AnswerViewImpl;
 import pij.ryan.durling.views.pages.Views;
@@ -14,17 +14,14 @@ import static org.mockito.Mockito.verify;
 
 public class AnswerViewImplTest extends GuiTest {
 
-    private QuizCreator mockQuizCreator;
     private AnswerView answerView;
-    private String answerArea = "#add-answer-area";
+    private String answerArea = "#" + ViewMessages.ANSWER_AREA_ID;
     private String answer = "answer";
-    private String correct = "#correct";
-    private String addAnswer = "#add-answer-button";
+    private String correct = "#" + ViewMessages.CORRECT_ID;
     private Views views;
 
     @Override
     protected Parent getRootNode() {
-        mockQuizCreator = mock(QuizCreator.class);
         views = mock(Views.class);
         answerView = new AnswerViewImpl();
         answerView.setQuestionLabel("What is a goldfish?\n My Goldfish");
@@ -37,6 +34,7 @@ public class AnswerViewImplTest extends GuiTest {
             views.getAnswerView();
         });
 
+        String addAnswer = "#" + ViewMessages.ANSWER_BUTTON_ID;
         click(answerArea)
                 .type(answer)
                 .click(correct)
@@ -51,7 +49,7 @@ public class AnswerViewImplTest extends GuiTest {
             views.getQuestionView();
         });
 
-        String addAnotherQuestion = "#add-another-question";
+        String addAnotherQuestion = "#" + ViewMessages.ANOTHER_QUESTION_BUTTON_ID;
 
         click(answerArea)
                 .type(answer)

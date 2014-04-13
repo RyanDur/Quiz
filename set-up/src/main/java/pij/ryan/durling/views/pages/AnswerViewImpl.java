@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import pij.ryan.durling.messages.ViewMessages;
 
 public class AnswerViewImpl extends GridPane implements AnswerView {
 
@@ -15,11 +16,11 @@ public class AnswerViewImpl extends GridPane implements AnswerView {
     private TextArea answerArea;
 
     public AnswerViewImpl() {
-        this.getStylesheets().add("styles/answerView.css");
-        this.setId("answer-view");
+        this.getStylesheets().add(ViewMessages.ANSWER_VIEW_STYLE_SHEET);
+        this.setId(ViewMessages.ANSWER_VIEW_ID);
         this.setAlignment(Pos.CENTER);
-        addAnotherQuestionButton = getButton("Another Question", "add-another-question");
-        addAnswerButton = getButton("Add Answer", "add-answer-button");
+        addAnotherQuestionButton = getButton(ViewMessages.ANOTHER_QUESTION_BUTTON, ViewMessages.ANOTHER_QUESTION_BUTTON_ID);
+        addAnswerButton = getButton(ViewMessages.ANSWER_BUTTON, ViewMessages.ANSWER_BUTTON_ID);
 
         addAnswerArea();
         addUserControls();
@@ -52,7 +53,7 @@ public class AnswerViewImpl extends GridPane implements AnswerView {
 
     private void addUserControls() {
         GridPane innerGrid = new GridPane();
-        innerGrid.setId("user-controls");
+        innerGrid.setId(ViewMessages.USER_CONTROLS_ID);
         GridPane radios = addRadioButtons();
 
         innerGrid.add(addAnswerButton, 2, 0);
@@ -64,17 +65,17 @@ public class AnswerViewImpl extends GridPane implements AnswerView {
 
     private void addAnswerArea() {
         answerArea = new TextArea();
-        answerArea.setPromptText("Add Answer");
-        answerArea.setId("add-answer-area");
+        answerArea.setPromptText(ViewMessages.ANSWER_AREA_PROMPT_TEXT);
+        answerArea.setId(ViewMessages.ANSWER_AREA_ID);
         this.add(answerArea, 1, 1);
     }
 
     private GridPane addRadioButtons() {
-        RadioButton correct = getRadioButton("Correct", "correct", true);
-        RadioButton incorrect = getRadioButton("Incorrect", "incorrect", false);
+        RadioButton correct = getRadioButton(ViewMessages.CORRECT, ViewMessages.CORRECT_ID, true);
+        RadioButton incorrect = getRadioButton(ViewMessages.INCORRECT, ViewMessages.INCORRECT_ID, false);
 
         GridPane radios = new GridPane();
-        radios.setId("radios");
+        radios.setId(ViewMessages.RADIOS_ID);
         radios.add(correct, 1, 0);
         radios.add(incorrect, 2, 0);
 
