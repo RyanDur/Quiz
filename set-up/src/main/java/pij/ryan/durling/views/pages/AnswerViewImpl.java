@@ -1,5 +1,6 @@
 package pij.ryan.durling.views.pages;
 
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import pij.ryan.durling.messages.ViewMessages;
+
 
 public class AnswerViewImpl extends GridPane implements AnswerView {
 
