@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import pij.ryan.durling.messages.ViewMessages;
 
 public class ViewBoxImpl extends BorderPane implements ViewBox {
@@ -27,6 +28,7 @@ public class ViewBoxImpl extends BorderPane implements ViewBox {
     @Override
     public void setMessage(String message) {
         label.setText(message);
+        label.setTextFill(Color.RED);
     }
 
     @Override

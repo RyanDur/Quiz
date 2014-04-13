@@ -23,4 +23,26 @@
     -fx-pref-width: 600;
     -fx-hgap: 10;
     -fx-vgap: 10;
+    -fx-spacing: 10;
+}
+
+#add-quiz-button {
+    -fx-pref-width: 120;
+    -fx-pref-height: 15;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+#create-quiz-button {
+    -fx-pref-width: 120;
+    -fx-pref-height: 15;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+
+#create-quiz {
+    -fx-pref-height: 15;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
 }
