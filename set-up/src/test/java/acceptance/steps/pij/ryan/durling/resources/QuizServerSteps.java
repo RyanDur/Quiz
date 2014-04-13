@@ -96,4 +96,10 @@ public class QuizServerSteps {
         quizServer.lock(Integer.parseInt(id));
         verify(mockServer).lock(anyInt());
     }
+
+    @Then("^a user can unlock a quiz with an id of (\\d+)$")
+    public void a_user_can_unlock_a_quiz_with_an_id_of(String id) throws Throwable {
+        quizServer.unlock(Integer.parseInt(id));
+        verify(mockServer).unlock(anyInt());
+    }
 }

@@ -47,3 +47,11 @@ Feature: Ability to communicate with the server
     | id |
     | 3  |
     | 4  |
+
+  Scenario Outline: Should be able to unlock a quiz
+    Then a user can unlock a quiz with an id of <id>
+
+  Examples:
+    | id |
+    | 3  |
+    | 4  |

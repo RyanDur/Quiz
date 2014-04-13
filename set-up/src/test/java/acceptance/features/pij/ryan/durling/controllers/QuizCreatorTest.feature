@@ -170,3 +170,12 @@ Feature: The ability to create quizzes
     | name  |
     | "foo" |
     | "foo" |
+
+  Scenario Outline: should be able to unlock the current quiz
+    When a user creates a quiz named <name>
+    Then a user should be able to unlock a quiz
+
+  Examples:
+    | name  |
+    | "foo" |
+    | "foo" |

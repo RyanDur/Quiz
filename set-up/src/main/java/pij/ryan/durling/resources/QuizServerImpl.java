@@ -41,4 +41,9 @@ public class QuizServerImpl implements QuizServer {
     public void lock(int quizId) {
         server.lock(quizId);
     }
+
+    @Override
+    public void unlock(int quizId) {
+        server.unlock(quizId);
+    }
 }

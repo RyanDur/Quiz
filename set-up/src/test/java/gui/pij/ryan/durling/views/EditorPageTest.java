@@ -30,6 +30,7 @@ public class EditorPageTest extends GuiTest {
     private String incorrectRadio = "#" + ViewMessages.INCORRECT_ID;
     private String correctRadio = "#" + ViewMessages.CORRECT_ID;
     private String addAnotherQuestionButton = "#" + ViewMessages.ANOTHER_QUESTION_BUTTON_ID;
+    private String lock = "#" + ViewMessages.LOCK_QUIZ_BUTTON_ID;
     private String quizName = "Name";
     private String button = ".button";
     private String question = "pancakes";
@@ -38,7 +39,7 @@ public class EditorPageTest extends GuiTest {
     private String never = "never";
     private String foobar = "Bacon";
     private QuizCreator mockQuizCreator;
-    private String lock = "#" + ViewMessages.LOCK_QUIZ_BUTTON_ID;
+    private String save = "#" + ViewMessages.SAVE_BUTTON_ID;
 
     @Override
     protected Parent getRootNode() {
@@ -257,7 +258,6 @@ public class EditorPageTest extends GuiTest {
     @Test
     public void shouldBeAbleToSaveAQuiz() throws InvalidQuizException, IllegalQuizCreationException {
         when(mockQuizCreator.validQuiz()).thenReturn(true);
-        String save = "#" + ViewMessages.SAVE_BUTTON_ID;
 
         click(addQuiz)
                 .click(addQuizField)
@@ -297,10 +297,9 @@ public class EditorPageTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToUnlockCurrentQuizAndAddANewQuizAfterSaving() throws InvalidQuizException, IllegalQuizCreationException {
+        when(mockQuizCreator.validQuiz()).thenReturn(true);
         String addQuizId = "#" + ViewMessages.ADD_QUIZ_BUTTON_ID;
         String footer = "#" + ViewMessages.FOOTER_VIEW_ID;
-        when(mockQuizCreator.validQuiz()).thenReturn(true);
-        String save = "#" + ViewMessages.SAVE_BUTTON_ID;
         String header = "#" + ViewMessages.HEADER_VIEW_ID;
 
         click(addQuiz)

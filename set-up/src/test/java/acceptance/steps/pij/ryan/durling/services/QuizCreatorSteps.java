@@ -196,6 +196,12 @@ public class QuizCreatorSteps {
         verify(mockQuizServer).lock(anyInt());
     }
 
+    @Then("^a user should be able to unlock a quiz$")
+    public void a_user_should_be_able_to_unlock_a_quiz() throws Throwable {
+        quizCreator.unlockQuiz(quizCreator.getQuizId());
+        verify(mockQuizServer).unlock(anyInt());
+    }
+
     private String ifNull(String argument) {
         String nullValue = "null";
         if (nullValue.equals(argument)) argument = null;

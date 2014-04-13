@@ -77,7 +77,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void unlockQuiz(int id) {
-
+        quizServer.unlock(id);
     }
 
     private boolean inValid(String argument) {

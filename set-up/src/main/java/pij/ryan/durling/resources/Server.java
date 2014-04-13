@@ -14,4 +14,6 @@ public interface Server {
     Answer createAnswer(String answer, boolean value);
 
     void lock(int quizId);
+
+    void unlock(int quizId);
 }
