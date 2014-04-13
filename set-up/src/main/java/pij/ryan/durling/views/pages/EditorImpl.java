@@ -33,12 +33,7 @@ public class EditorImpl extends BorderPane implements Editor {
         footer.getSaveButton().setOnAction(e -> {
             try {
                 quizCreator.save();
-                remove((Node) questionView);
-                remove((Node) answerView);
-                remove((Node) header);
-                remove((Node) footer);
-                addHeader();
-                addFooter();
+                resetEditor();
             } catch (IllegalQuizCreationException | InvalidQuizException e1) {
                 e1.printStackTrace();
             }
@@ -56,6 +51,7 @@ public class EditorImpl extends BorderPane implements Editor {
         });
         this.setTop((Node) header);
     }
+
 
     private void addLockQuizButton(Header quizView) {
         quizView.getLockQuizButton().setOnAction(event -> {
@@ -107,6 +103,15 @@ public class EditorImpl extends BorderPane implements Editor {
                 e1.printStackTrace();
             }
         });
+    }
+
+    private void resetEditor() {
+        remove((Node) questionView);
+        remove((Node) answerView);
+        remove((Node) header);
+        remove((Node) footer);
+        addHeader();
+        addFooter();
     }
 
     private void remove(Node node) {
