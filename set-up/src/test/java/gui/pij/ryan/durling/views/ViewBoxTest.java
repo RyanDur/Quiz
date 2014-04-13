@@ -52,10 +52,9 @@ public class ViewBoxTest extends GuiTest {
             label.setText("expected\n\n\n\n\n\nMoney");
             borderPane.getChildren().add(label);
             viewBox.setView(borderPane);
+            assertNodeExists("#expected");
+            verifyThat("#expected .label", hasText("expected\n\n\n\n\n\nMoney"));
         });
-
-        assertNodeExists("#expected");
-        verifyThat("#expected .label", hasText("expected\n\n\n\n\n\nMoney"));
     }
 
     @Test
