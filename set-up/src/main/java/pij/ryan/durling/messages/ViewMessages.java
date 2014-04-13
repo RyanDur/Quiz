@@ -35,7 +35,7 @@ public class ViewMessages {
     public static final String HEADER_VIEW_ID = "header";
     public static final String INNER_HEADER_VIEW_ID = "grid";
     public static final String LOCK_QUIZ_BUTTON = "Lock Quiz";
-    public static final String LOCKED_QUIZ_BUTTON = "Lock Quiz";
+    public static final String LOCKED_QUIZ_BUTTON = "Quiz Locked";
     public static final String LOCK_QUIZ_BUTTON_ID = "lock";
     public static final String CREATE_QUIZ_BUTTON = "Create Quiz";
     public static final String CREATE_QUIZ_BUTTON_ID = "create-quiz-button";

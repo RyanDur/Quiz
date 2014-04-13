@@ -38,6 +38,7 @@ public class EditorPageTest extends GuiTest {
     private String never = "never";
     private String foobar = "Bacon";
     private QuizCreator mockQuizCreator;
+    private String lock = "#" + ViewMessages.LOCK_QUIZ_BUTTON_ID;
 
     @Override
     protected Parent getRootNode() {
@@ -82,7 +83,6 @@ public class EditorPageTest extends GuiTest {
     @Test
     public void shouldBeAbleToLockAQuizYouAreWorkingOn() {
         String lockedQuiz = ViewMessages.LOCKED_QUIZ_BUTTON;
-        String lock = "#" + ViewMessages.LOCK_QUIZ_BUTTON_ID;
 
         click(addQuiz)
                 .click(addQuizField)
@@ -92,6 +92,21 @@ public class EditorPageTest extends GuiTest {
 
         verify(mockQuizCreator).lockQuiz(anyInt());
         verifyThat(lock, hasText(lockedQuiz));
+    }
+
+    @Test
+    public void shouldBeAbleToUnlockAQuizLocking() {
+        String lockQuiz = ViewMessages.LOCK_QUIZ_BUTTON;
+
+        click(addQuiz)
+                .click(addQuizField)
+                .type(quizName)
+                .click(createQuiz)
+                .click(lock).click(addQuestionField)
+                .click(lock);
+
+        verify(mockQuizCreator).unlockQuiz(anyInt());
+        verifyThat(lock, hasText(lockQuiz));
     }
 
     @Test
@@ -281,7 +296,7 @@ public class EditorPageTest extends GuiTest {
     }
 
     @Test
-    public void shouldBeAbleToAddANewQuizAfterSaving() throws InvalidQuizException, IllegalQuizCreationException {
+    public void shouldBeAbleToUnlockCurrentQuizAndAddANewQuizAfterSaving() throws InvalidQuizException, IllegalQuizCreationException {
         String addQuizId = "#" + ViewMessages.ADD_QUIZ_BUTTON_ID;
         String footer = "#" + ViewMessages.FOOTER_VIEW_ID;
         when(mockQuizCreator.validQuiz()).thenReturn(true);
@@ -322,6 +337,7 @@ public class EditorPageTest extends GuiTest {
                 .click(save);
 
         verify(mockQuizCreator).save();
+        verify(mockQuizCreator).unlockQuiz(anyInt());
         assertNodeExists(header);
         assertNodeExists(addQuizId);
         assertNodeExists(footer);

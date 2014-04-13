@@ -75,6 +75,11 @@ public class QuizCreatorImpl implements QuizCreator {
         return quiz.getId();
     }
 
+    @Override
+    public void unlockQuiz(int id) {
+
+    }
+
     private boolean inValid(String argument) {
         return argument == null || argument.trim().isEmpty();
     }

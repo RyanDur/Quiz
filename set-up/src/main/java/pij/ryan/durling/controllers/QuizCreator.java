@@ -21,4 +21,6 @@ public interface QuizCreator {
     void lockQuiz(int id);
 
     int getQuizId();
+
+    void unlockQuiz(int id);
 }
