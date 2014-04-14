@@ -12,9 +12,15 @@ public interface QuizPlayer {
 
     Set<Question> getQuestions();
 
-    String getName();
+    String getQuizName();
 
     void setPlayerName(String name);
 
     String getPlayerName();
+
+    void submitQuiz();
+
+    int getScore();
+
+    boolean hasWon();
 }

@@ -12,6 +12,8 @@ public class QuizPlayerImpl implements QuizPlayer {
     private Menu menu;
     private Quiz quiz;
     private String playerName;
+    private int score;
+    private boolean winner;
 
 
     public QuizPlayerImpl(QuizServer quizServer, QuizElements quizElements) {
@@ -36,7 +38,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     }
 
     @Override
-    public String getName() {
+    public String getQuizName() {
         return quiz.getName();
     }
 
@@ -48,5 +50,21 @@ public class QuizPlayerImpl implements QuizPlayer {
     @Override
     public String getPlayerName() {
         return playerName;
+    }
+
+    @Override
+    public void submitQuiz() {
+        score = quiz.getScore();
+        winner = quizServer.checkHighScore(quiz, getPlayerName());
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public boolean hasWon() {
+        return winner;
     }
 }

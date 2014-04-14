@@ -14,4 +14,6 @@ public interface Quiz {
     void add(Question question);
 
     Set<Question> getQuestions();
+
+    int getScore();
 }

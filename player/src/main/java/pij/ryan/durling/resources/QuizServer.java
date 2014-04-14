@@ -9,4 +9,6 @@ public interface QuizServer {
     List<QuizOptions> getQuizOptions();
 
     Quiz getQuiz(int quizId);
+
+    boolean checkHighScore(Quiz quiz, String userName);
 }

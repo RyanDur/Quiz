@@ -1,5 +1,6 @@
 package acceptance.steps.pij.ryan.durling.controllers;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -27,7 +28,7 @@ public class QuizPlayerSteps {
     private QuizServer server;
     private Quiz quiz;
     private QuizElements quizElements;
-    private String name;
+    private int score;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
@@ -72,15 +73,10 @@ public class QuizPlayerSteps {
     public void a_player_should_be_able_to_get_the_name_for_that_quiz() throws Throwable {
         String expected = "Bob";
         when(quiz.getName()).thenReturn(expected);
-        String actual = quizPlayer.getName();
+        String actual = quizPlayer.getQuizName();
 
         verify(quiz).getName();
         assertThat(actual, is(equalTo(expected)));
-    }
-
-    @Given("^a player named \"([^\"]*)\"$")
-    public void a_player_named(String name) throws Throwable {
-        this.name = name;
     }
 
     @Then("^a player should be able to get there \"([^\"]*)\"$")
@@ -91,5 +87,35 @@ public class QuizPlayerSteps {
     @When("^a player gives there \"([^\"]*)\"$")
     public void a_player_gives_there(String name) throws Throwable {
         quizPlayer.setPlayerName(name);
+    }
+
+    @And("^a player submits the quiz$")
+    public void a_player_submits_the_quiz() throws Throwable {
+        score = 52;
+        when(server.checkHighScore(eq(quiz), anyString())).thenReturn(true);
+        when(quiz.getScore()).thenReturn(score);
+        quizPlayer.submitQuiz();
+
+        verify(quiz).getScore();
+    }
+
+    @Then("^a player should be able to get the score for the quiz$")
+    public void a_player_should_be_able_to_get_the_score_for_the_quiz() throws Throwable {
+        assertThat(quizPlayer.getScore(), is(equalTo(score)));
+    }
+
+    @Then("^a player should be able to know if they have \"([^\"]*)\"$")
+    public void a_player_should_be_able_to_know_if_they_have(String wonString) throws Throwable {
+        boolean won = ifTrue(wonString);
+
+        assertThat(quizPlayer.hasWon(), is(equalTo(won)));
+        verify(server).checkHighScore(eq(quiz), anyString());
+    }
+
+    private boolean ifTrue(String argument) {
+        boolean value = false;
+        String aTrueValue = "true";
+        if (aTrueValue.equals(argument)) value = true;
+        return value;
     }
 }
