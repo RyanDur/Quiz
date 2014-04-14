@@ -3,6 +3,15 @@ Feature: Coordinate the playing of a quiz
   Background:
     Given there is a quiz player
 
+  Scenario Outline: A player should be able to give there name for a quiz
+    When a player gives there <name>
+    Then a player should be able to get there <name>
+
+  Examples:
+    | name    |
+    | "Ryan"  |
+    | "Keimi" |
+
   Scenario Outline: Should be able to choose a quiz
     Given a player has a menu
     When a player chooses an available quiz <menuOption>

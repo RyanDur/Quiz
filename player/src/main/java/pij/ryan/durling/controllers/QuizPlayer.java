@@ -13,4 +13,8 @@ public interface QuizPlayer {
     Set<Question> getQuestions();
 
     String getName();
+
+    void setPlayerName(String name);
+
+    String getPlayerName();
 }

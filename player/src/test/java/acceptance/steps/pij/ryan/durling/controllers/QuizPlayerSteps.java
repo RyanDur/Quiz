@@ -27,6 +27,7 @@ public class QuizPlayerSteps {
     private QuizServer server;
     private Quiz quiz;
     private QuizElements quizElements;
+    private String name;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
@@ -75,5 +76,20 @@ public class QuizPlayerSteps {
 
         verify(quiz).getName();
         assertThat(actual, is(equalTo(expected)));
+    }
+
+    @Given("^a player named \"([^\"]*)\"$")
+    public void a_player_named(String name) throws Throwable {
+        this.name = name;
+    }
+
+    @Then("^a player should be able to get there \"([^\"]*)\"$")
+    public void a_player_should_be_able_to_get_there(String expected) throws Throwable {
+        assertThat(quizPlayer.getPlayerName(), is(equalTo(expected)));
+    }
+
+    @When("^a player gives there \"([^\"]*)\"$")
+    public void a_player_gives_there(String name) throws Throwable {
+        quizPlayer.setPlayerName(name);
     }
 }

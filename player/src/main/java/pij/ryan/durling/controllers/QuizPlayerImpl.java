@@ -11,6 +11,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     private QuizElements quizElements;
     private Menu menu;
     private Quiz quiz;
+    private String playerName;
 
 
     public QuizPlayerImpl(QuizServer quizServer, QuizElements quizElements) {
@@ -37,5 +38,15 @@ public class QuizPlayerImpl implements QuizPlayer {
     @Override
     public String getName() {
         return quiz.getName();
+    }
+
+    @Override
+    public void setPlayerName(String name) {
+        playerName = name;
+    }
+
+    @Override
+    public String getPlayerName() {
+        return playerName;
     }
 }
