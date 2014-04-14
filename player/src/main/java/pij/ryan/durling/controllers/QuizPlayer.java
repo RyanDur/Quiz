@@ -14,7 +14,7 @@ public interface QuizPlayer {
 
     String getQuizName();
 
-    void setPlayerName(String name);
+    void setPlayerName(String name) throws IllegalArgumentException;
 
     String getPlayerName();
 

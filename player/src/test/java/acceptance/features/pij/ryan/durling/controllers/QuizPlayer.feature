@@ -12,6 +12,17 @@ Feature: Coordinate the playing of a quiz
     | "Ryan"  |
     | "Keimi" |
 
+  Scenario Outline: A player cannot submit an empty name
+    When a player gives there <name>
+    Then a player should not be able to get there name
+    And should get the message "Name cannot be empty"
+
+  Examples:
+    | name   |
+    | ""     |
+    | "   "  |
+    | "null" |
+
   Scenario Outline: Should be able to choose a quiz
     Given a player has a menu
     When a player chooses an available quiz <menuOption>

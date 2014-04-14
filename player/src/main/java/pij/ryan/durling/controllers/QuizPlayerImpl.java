@@ -43,7 +43,8 @@ public class QuizPlayerImpl implements QuizPlayer {
     }
 
     @Override
-    public void setPlayerName(String name) {
+    public void setPlayerName(String name) throws IllegalArgumentException {
+        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
         playerName = name;
     }
 

@@ -29,6 +29,7 @@ public class QuizPlayerSteps {
     private Quiz quiz;
     private QuizElements quizElements;
     private int score;
+    private String caught;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
@@ -85,8 +86,13 @@ public class QuizPlayerSteps {
     }
 
     @When("^a player gives there \"([^\"]*)\"$")
-    public void a_player_gives_there(String name) throws Throwable {
-        quizPlayer.setPlayerName(name);
+    public void a_player_gives_there(String nameString) throws Throwable {
+        String name = ifNull(nameString);
+        try {
+            quizPlayer.setPlayerName(name);
+        } catch (IllegalArgumentException e) {
+            caught = e.getMessage();
+        }
     }
 
     @And("^a player submits the quiz$")
@@ -112,10 +118,26 @@ public class QuizPlayerSteps {
         verify(server).checkHighScore(eq(quiz), anyString());
     }
 
+    @Then("^a player should not be able to get there name$")
+    public void a_player_should_not_be_able_to_get_there() throws Throwable {
+        assertThat(quizPlayer.getPlayerName(), is(equalTo(null)));
+    }
+
+    @And("^should get the message \"([^\"]*)\"$")
+    public void should_get_the_message(String message) throws Throwable {
+        assertThat(caught, is(equalTo(message)));
+    }
+
     private boolean ifTrue(String argument) {
         boolean value = false;
         String aTrueValue = "true";
         if (aTrueValue.equals(argument)) value = true;
         return value;
+    }
+
+    private String ifNull(String argument) {
+        String nullValue = "null";
+        if (nullValue.equals(argument)) argument = null;
+        return argument;
     }
 }
