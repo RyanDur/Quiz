@@ -41,7 +41,7 @@ public class QuizPlayerSteps {
     @Given("^a player has a menu$")
     public void a_player_has_a_menu() throws Throwable {
         Menu mockMenu = mock(Menu.class);
-        when(quizElements.getMenu(anyList())).thenReturn(mockMenu);
+        when(quizElements.getMenu(anySet())).thenReturn(mockMenu);
         menu = quizPlayer.getMenu();
 
         verify(server).getQuizOptions();

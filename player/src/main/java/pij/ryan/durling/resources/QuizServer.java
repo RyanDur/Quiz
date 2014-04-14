@@ -3,10 +3,10 @@ package pij.ryan.durling.resources;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOptions;
 
-import java.util.List;
+import java.util.Set;
 
 public interface QuizServer {
-    List<QuizOptions> getQuizOptions();
+    Set<QuizOptions> getQuizOptions();
 
     Quiz getQuiz(int quizId);
 

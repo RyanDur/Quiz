@@ -1,5 +1,6 @@
 package pij.ryan.durling.controllers;
 
+import pij.ryan.durling.messages.ControllerMessages;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.resources.QuizServer;
@@ -44,7 +45,7 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void setPlayerName(String name) throws IllegalArgumentException {
-        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
+        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException(ControllerMessages.EMPTY_NAME);
         playerName = name;
     }
 

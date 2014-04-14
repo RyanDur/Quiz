@@ -2,8 +2,8 @@ package pij.ryan.durling.controllers;
 
 import pij.ryan.durling.models.QuizOptions;
 
-import java.util.List;
+import java.util.Set;
 
 public interface QuizElements {
-    Menu getMenu(List<QuizOptions> quizOptions);
+    Menu getMenu(Set<QuizOptions> quizOptions);
 }
