@@ -1,11 +1,16 @@
 package pij.ryan.durling.controllers;
 
-import pij.ryan.durling.models.Quiz;
+import pij.ryan.durling.models.Question;
 
-import java.util.List;
+import java.util.Set;
 
 public interface QuizPlayer {
-    List<Quiz> getQuizList();
 
-    Quiz getQuiz(int quizIndex);
+    Menu getMenu();
+
+    void chooseQuiz(int choice);
+
+    Set<Question> getQuestions();
+
+    String getName();
 }

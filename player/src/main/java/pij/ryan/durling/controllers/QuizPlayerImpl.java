@@ -1,27 +1,41 @@
 package pij.ryan.durling.controllers;
 
+import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.resources.QuizServer;
 
-import java.util.List;
+import java.util.Set;
 
 public class QuizPlayerImpl implements QuizPlayer {
     private QuizServer quizServer;
-    private List<Quiz> quizList;
+    private QuizElements quizElements;
+    private Menu menu;
+    private Quiz quiz;
 
-    public QuizPlayerImpl(QuizServer quizServer) {
+
+    public QuizPlayerImpl(QuizServer quizServer, QuizElements quizElements) {
         this.quizServer = quizServer;
+        this.quizElements = quizElements;
     }
 
     @Override
-    public List<Quiz> getQuizList() {
-        quizList = quizServer.getQuizList();
-        return quizList;
+    public Menu getMenu() {
+        menu = quizElements.getMenu(quizServer.getQuizOptions());
+        return menu;
     }
 
     @Override
-    public Quiz getQuiz(int quizIndex) {
-        quizIndex -= 1;
-        return quizList.get(quizIndex);
+    public void chooseQuiz(int choice) {
+        quiz = quizServer.getQuiz(menu.getQuizId(choice));
+    }
+
+    @Override
+    public Set<Question> getQuestions() {
+        return quiz.getQuestions();
+    }
+
+    @Override
+    public String getName() {
+        return quiz.getName();
     }
 }

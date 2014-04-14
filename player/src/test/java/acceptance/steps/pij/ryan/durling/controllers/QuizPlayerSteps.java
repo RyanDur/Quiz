@@ -1,64 +1,79 @@
 package acceptance.steps.pij.ryan.durling.controllers;
 
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import pij.ryan.durling.controllers.Menu;
+import pij.ryan.durling.controllers.QuizElements;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.controllers.QuizPlayerImpl;
+import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.resources.QuizServer;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.*;
 
 public class QuizPlayerSteps {
-    private List<Quiz> quizzes;
-    private Quiz quiz;
-    private QuizServer mockQuizServer;
+
     private QuizPlayer quizPlayer;
-    private Quiz quiz1;
-    private Quiz quiz2;
-    private Quiz quiz3;
-    private Quiz quiz4;
-    private Quiz quiz5;
-    private Quiz quiz6;
-    private Quiz quiz7;
-    private int userChoice;
+    private Menu menu;
+    private QuizServer server;
+    private Quiz quiz;
+    private QuizElements quizElements;
 
-    @cucumber.api.java.en.Given("^there is a menu of quizzes$")
-    public void there_is_a_menu_of_quizzes() throws Throwable {
-        mockQuizServer = mock(QuizServer.class);
-        quizPlayer = new QuizPlayerImpl(mockQuizServer);
-        List<Quiz> quizList = getQuizzes();
-        when(mockQuizServer.getQuizList()).thenReturn(quizList);
-
-        quizzes = quizPlayer.getQuizList();
+    @Given("^there is a quiz player$")
+    public void there_is_a_quiz_player() throws Throwable {
+        server = mock(QuizServer.class);
+        quizElements = mock(QuizElements.class);
+        quizPlayer = new QuizPlayerImpl(server, quizElements);
     }
 
-    @When("^a player chooses quiz (\\d+)$")
-    public void a_player_chooses_quiz(int quizIndex) throws Throwable {
-        userChoice = quizIndex - 1;
-        quiz = quizPlayer.getQuiz(quizIndex);
+    @Given("^a player has a menu$")
+    public void a_player_has_a_menu() throws Throwable {
+        Menu mockMenu = mock(Menu.class);
+        when(quizElements.getMenu(anyList())).thenReturn(mockMenu);
+        menu = quizPlayer.getMenu();
+
+        verify(server).getQuizOptions();
+        assertThat(menu, is(equalTo(mockMenu)));
     }
 
-    @Then("^a player should get to play the quiz$")
-    public void a_player_should_get_to_play_the_quiz() throws Throwable {
-        assertThat(quiz, is(equalTo(quizzes.get(userChoice))));
+    @When("^a player chooses an available quiz (\\d+)$")
+    public void a_player_chooses_an_available_quiz(int menuOption) throws Throwable {
+        quiz = mock(Quiz.class);
+        int quizId = 4;
+        when(menu.getQuizId(anyInt())).thenReturn(quizId);
+        when(server.getQuiz(anyInt())).thenReturn(quiz);
+        quizPlayer.chooseQuiz(menuOption);
+
+        verify(server).getQuiz(anyInt());
+        verify(menu).getQuizId(anyInt());
     }
 
-    private List<Quiz> getQuizzes() {
-        quiz1 = mock(Quiz.class);
-        quiz2 = mock(Quiz.class);
-        quiz3 = mock(Quiz.class);
-        quiz4 = mock(Quiz.class);
-        quiz5 = mock(Quiz.class);
-        quiz6 = mock(Quiz.class);
-        quiz7 = mock(Quiz.class);
-        return Arrays.asList(quiz1, quiz2, quiz3, quiz4, quiz5, quiz6, quiz7);
+    @Then("^a player should be able to get the questions for that quiz$")
+    public void a_player_should_be_able_to_get_the_questions_for_that_quiz() throws Throwable {
+        Set<Question> expected = new HashSet<>();
+        when(quiz.getQuestions()).thenReturn(expected);
+        Set<Question> actual = quizPlayer.getQuestions();
+
+        verify(quiz).getQuestions();
+        assertThat(actual, is(equalTo(expected)));
+    }
+
+    @Then("^a player should be able to get the name for that quiz$")
+    public void a_player_should_be_able_to_get_the_name_for_that_quiz() throws Throwable {
+        String expected = "Bob";
+        when(quiz.getName()).thenReturn(expected);
+        String actual = quizPlayer.getName();
+
+        verify(quiz).getName();
+        assertThat(actual, is(equalTo(expected)));
     }
 }
