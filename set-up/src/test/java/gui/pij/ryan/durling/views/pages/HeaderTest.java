@@ -1,4 +1,4 @@
-package gui.pij.ryan.durling.views;
+package gui.pij.ryan.durling.views.pages;
 
 import javafx.scene.Parent;
 import org.junit.Test;
