@@ -30,7 +30,7 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void chooseQuiz(int choice) {
-        quiz = quizServer.getQuiz(menu.getQuizId(choice));
+        quiz = quizServer.getQuiz(choice);
     }
 
     @Override

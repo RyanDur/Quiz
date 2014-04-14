@@ -14,11 +14,6 @@ public class MenuImpl implements Menu {
     }
 
     @Override
-    public int getQuizId(int choice) {
-        return 0;
-    }
-
-    @Override
     public Set<QuizOption> getQuizzes() {
         return null;
     }

@@ -51,13 +51,10 @@ public class QuizPlayerSteps {
     @When("^a player chooses an available quiz (\\d+)$")
     public void a_player_chooses_an_available_quiz(int menuOption) throws Throwable {
         quiz = mock(Quiz.class);
-        int quizId = 4;
-        when(menu.getQuizId(anyInt())).thenReturn(quizId);
         when(server.getQuiz(anyInt())).thenReturn(quiz);
         quizPlayer.chooseQuiz(menuOption);
 
         verify(server).getQuiz(anyInt());
-        verify(menu).getQuizId(anyInt());
     }
 
     @Then("^a player should be able to get the questions for that quiz$")
