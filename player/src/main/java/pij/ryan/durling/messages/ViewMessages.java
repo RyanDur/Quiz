@@ -16,4 +16,10 @@ public class ViewMessages {
     public static final String NAME_FIELD = "name-field";
     public static final String SIGN_IN_GRID = "sign-in-grid";
     public static final String SIGN_IN_PROMPT_TEXT = "Your Name";
+
+    // Question View
+    public static final String QUESTION_VIEW_STYLE_SHEET = "styles/questions.css";
+    public static final String QUESTION_VIEW_ID = "questions-view";
+    public static final String QUESTIONS_ID = "questions";
+    public static final String QUESTION_ID = "question";
 }

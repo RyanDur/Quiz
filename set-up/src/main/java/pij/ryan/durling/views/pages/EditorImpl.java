@@ -129,8 +129,4 @@ public class EditorImpl extends BorderPane implements Editor {
         addHeader();
         addFooter();
     }
-
-    private void remove(Node node) {
-        this.getChildren().remove(node);
-    }
 }
