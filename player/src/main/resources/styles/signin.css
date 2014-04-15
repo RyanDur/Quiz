@@ -1,0 +1,19 @@
+#signin {
+    -fx-pref-height: 500;
+    -fx-pref-width: 500;
+}
+
+#name-field {
+    -fx-pref-height: 20;
+    -fx-pref-width: 200;
+}
+
+#sign-in-button {
+    -fx-pref-height: 20;
+    -fx-pref-width: 200;
+}
+
+#sign-in-grid {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
