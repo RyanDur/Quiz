@@ -48,7 +48,6 @@ public class MenuViewTest extends GuiTest {
     private Set<QuizOption> getQuizzes() {
         Set<QuizOption> quizSet = new HashSet<>();
         title = "Poo";
-        String title2 = "bar";
         QuizOption quizOption = mock(QuizOption.class);
         when(quizOption.getQuizTitle()).thenReturn(title);
         when(quizOption.getQuizId()).thenReturn(1);
@@ -62,7 +61,7 @@ public class MenuViewTest extends GuiTest {
         when(quizOption2.getQuizId()).thenReturn(1);
 
         QuizOption quizOption3 = mock(QuizOption.class);
-        when(quizOption3.getQuizTitle()).thenReturn(title2);
+        when(quizOption3.getQuizTitle()).thenReturn(title);
         when(quizOption3.getQuizId()).thenReturn(1);
 
         quizSet.add(quizOption);
