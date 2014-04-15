@@ -3,3 +3,13 @@
     -fx-pref-width: 600;
     -fx-padding: 20;
 }
+
+#questions {
+    -fx-vgap: 40;
+    -fx-hgap: 40;
+}
+
+#question {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}

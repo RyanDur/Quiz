@@ -22,4 +22,9 @@ public class ViewMessages {
     public static final String QUESTION_VIEW_ID = "questions-view";
     public static final String QUESTIONS_ID = "questions";
     public static final String QUESTION_ID = "question";
+
+    // Answer View
+    public static final String ANSWER_VIEW_STYLE_SHEET = "styles/answers.css";
+    public static final String ANSWER_ID = "answer";
+    public static final String ANSWER_VIEW_ID = "answer-view";
 }

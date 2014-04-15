@@ -3,6 +3,7 @@ package pij.ryan.durling.views.pages;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.views.factories.AnswerViewFactory;
@@ -43,7 +44,7 @@ public class QuestionsViewImpl extends ScrollPane implements QuestionsView {
         return innerGrid;
     }
 
-    private GridPane getAnswers(Question question) {
+    private StackPane getAnswers(Question question) {
         return answerViewFactory.getAnswerView(question.getAnswers());
     }
 }

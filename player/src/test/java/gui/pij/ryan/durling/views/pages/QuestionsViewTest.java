@@ -1,7 +1,7 @@
 package gui.pij.ryan.durling.views.pages;
 
 import javafx.scene.Parent;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.models.Question;
@@ -26,7 +26,8 @@ public class QuestionsViewTest extends GuiTest {
     @Override
     protected Parent getRootNode() {
         Set<Question> questions = getQuestions();
-        GridPane answerView = new GridPane();
+        answerViewFactory = mock(AnswerViewFactory.class);
+        StackPane answerView = new StackPane();
         when(answerViewFactory.getAnswerView(anySet())).thenReturn(answerView);
         QuestionsView questionsView = new QuestionsViewImpl(questions, answerViewFactory);
         return (Parent) questionsView;
@@ -41,7 +42,6 @@ public class QuestionsViewTest extends GuiTest {
 
     private Set<Question> getQuestions() {
         Set<Question> questions = new HashSet<>();
-        answerViewFactory = mock(AnswerViewFactory.class);
         question1 = mock(Question.class);
         when(question1.getQuestion()).thenReturn("Who is Kieth?");
         question2 = mock(Question.class);
