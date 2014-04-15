@@ -5,5 +5,5 @@ import javafx.scene.layout.GridPane;
 import java.util.Set;
 
 public interface AnswerViewFactory {
-    javafx.scene.layout.StackPane getAnswerView(Set set);
+    GridPane getAnswerView(Set set);
 }
