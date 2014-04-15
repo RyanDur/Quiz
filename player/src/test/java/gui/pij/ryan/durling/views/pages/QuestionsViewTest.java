@@ -25,14 +25,7 @@ public class QuestionsViewTest extends GuiTest {
 
     @Override
     protected Parent getRootNode() {
-        Set<Question> questions = new HashSet<>();
-        answerViewFactory = mock(AnswerViewFactory.class);
-        question1 = mock(Question.class);
-        when(question1.getQuestion()).thenReturn("Who is Kieth?");
-        question2 = mock(Question.class);
-        when((question2.getQuestion())).thenReturn("What is spam?");
-        questions.add(question1);
-        questions.add(question2);
+        Set<Question> questions = getQuestions();
         GridPane answerView = new GridPane();
         when(answerViewFactory.getAnswerView(anySet())).thenReturn(answerView);
         QuestionsView questionsView = new QuestionsViewImpl(questions, answerViewFactory);
@@ -44,5 +37,17 @@ public class QuestionsViewTest extends GuiTest {
         assertNodeExists(hasText(question1.getQuestion()));
         assertNodeExists(hasText(question2.getQuestion()));
         verify(answerViewFactory, times(2)).getAnswerView(anySet());
+    }
+
+    private Set<Question> getQuestions() {
+        Set<Question> questions = new HashSet<>();
+        answerViewFactory = mock(AnswerViewFactory.class);
+        question1 = mock(Question.class);
+        when(question1.getQuestion()).thenReturn("Who is Kieth?");
+        question2 = mock(Question.class);
+        when((question2.getQuestion())).thenReturn("What is spam?");
+        questions.add(question1);
+        questions.add(question2);
+        return questions;
     }
 }
