@@ -18,6 +18,11 @@ public class SignInViewImpl extends StackPane implements SignInView {
         this.getChildren().add(getSignIn());
     }
 
+    @Override
+    public String getName() {
+        return field.getText();
+    }
+
     private GridPane getSignIn() {
         GridPane gridPane = new GridPane();
         gridPane.setId(ViewMessages.SIGN_IN_GRID);
@@ -39,10 +44,5 @@ public class SignInViewImpl extends StackPane implements SignInView {
         button.setText(ViewMessages.SIGN_IN_BUTTON);
         button.setId(ViewMessages.SIGN_IN_BUTTON_ID);
         return button;
-    }
-
-    @Override
-    public String getName() {
-        return field.getText();
     }
 }
