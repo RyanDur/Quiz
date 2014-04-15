@@ -10,7 +10,6 @@ import java.util.Set;
 public class QuizPlayerImpl implements QuizPlayer {
     private QuizServer quizServer;
     private QuizElements quizElements;
-    private Menu menu;
     private Quiz quiz;
     private String playerName;
     private int score;
@@ -24,8 +23,7 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public Menu getMenu() {
-        menu = quizElements.getMenu(quizServer.getQuizOptions());
-        return menu;
+        return quizElements.getMenu(quizServer.getQuizOptions());
     }
 
     @Override
