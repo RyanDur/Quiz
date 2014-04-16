@@ -16,4 +16,6 @@ public interface Views {
     QuestionsView getQuestionView(Set<Question> questions);
 
     Footer getFooter();
+
+    ResultsView getResultsView();
 }

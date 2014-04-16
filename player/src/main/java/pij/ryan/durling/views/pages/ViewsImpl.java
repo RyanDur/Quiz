@@ -37,4 +37,9 @@ public class ViewsImpl implements Views {
     public Footer getFooter() {
         return new FooterImpl();
     }
+
+    @Override
+    public ResultsView getResultsView() {
+        return new ResultsViewImpl();
+    }
 }

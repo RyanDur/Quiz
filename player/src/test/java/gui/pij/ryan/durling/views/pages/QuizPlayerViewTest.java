@@ -21,7 +21,6 @@ import static org.loadui.testfx.Assertions.assertNodeExists;
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizPlayerViewTest extends GuiTest {
@@ -35,7 +34,7 @@ public class QuizPlayerViewTest extends GuiTest {
     private Answer answer4;
     private QuizPlayer quizPlayer;
     private String answer5 = "#" + ViewMessages.ANSWER_ID + 4;
-    private String submit;
+    private String submit = ViewMessages.SUBMIT;
 
     @Override
     protected Parent getRootNode() {
@@ -103,26 +102,9 @@ public class QuizPlayerViewTest extends GuiTest {
     }
 
     @Test
-    public void shouldBeAbleToSubmitTheAnswersForTheQuestionsOfTheChosenAQuiz() {
-        submit = ViewMessages.SUBMIT;
-        click(nameField)
-                .type(name)
-                .click(signInButton)
-                .click(quizTitle)
-                .click(answer5)
-                .click(submit);
-
-        assertNodeExists(submit);
-        assertNodeExists(hasText(question1.getQuestion()));
-        assertNodeExists(hasText(question2.getQuestion()));
-        assertNodeExists(hasText(answer4.getAnswer()));
-        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(quizTitle));
-        verify(quizPlayer).submitQuiz();
-    }
-
-    @Test
     public void shouldKnowIfWinnerAfterSubmitting() {
-        submit = ViewMessages.SUBMIT;
+        when(quizPlayer.hasWon()).thenReturn(true);
+        when(quizPlayer.getScore()).thenReturn(54);
         click(nameField)
                 .type(name)
                 .click(signInButton)

@@ -69,7 +69,10 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
 
     private Button getButton() {
         Button submitButton = new Button();
-        submitButton.setOnAction(e -> quizPlayer.submitQuiz());
+        submitButton.setOnAction(e -> {
+            quizPlayer.submitQuiz();
+            getResultsView();
+        });
         submitButton.setText(ViewMessages.SUBMIT);
         return submitButton;
     }
@@ -80,5 +83,11 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
         button.setText(name);
         button.setId(ViewMessages.MENU_VIEW_BUTTON_ID + id);
         return button;
+    }
+
+    public void getResultsView() {
+        ResultsView resultsView = views.getResultsView();
+        resultsView.setResults(quizPlayer.hasWon(), quizPlayer.getScore());
+        viewPane.setView((Node) resultsView);
     }
 }
