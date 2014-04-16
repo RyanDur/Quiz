@@ -1,4 +1,4 @@
 #quiz-player {
-    -fx-pref-height: 800;
-    -fx-pref-width: 500;
+    -fx-max-height: 800;
+    -fx-max-width: 500;
 }

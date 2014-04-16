@@ -1,6 +1,10 @@
 package gui.pij.ryan.durling.views.pages;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.StackPane;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.Menu;
@@ -35,7 +39,7 @@ public class QuizPlayerViewTest extends GuiTest {
     private QuizPlayer quizPlayer;
     private String answer5 = "#" + ViewMessages.ANSWER_ID + 4;
     private String submit = ViewMessages.SUBMIT;
-    private String nameTitle = "#" + ViewMessages.NAME_TITLE_ID;
+    private String playAgain = ViewMessages.PLAY_AGAIN;
 
     @Override
     protected Parent getRootNode() {
@@ -44,7 +48,14 @@ public class QuizPlayerViewTest extends GuiTest {
         Set<Question> questions = getQuestions();
         when(quizPlayer.getQuestions()).thenReturn(questions);
         QuizPlayerView quizPlayerView = new QuizPlayerViewImpl(quizPlayer, views);
-        return (Parent) quizPlayerView;
+
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.BOTTOM_CENTER);
+        stackPane.getChildren().add((Node) quizPlayerView);
+        stackPane.setPrefHeight(700);
+        stackPane.setPrefWidth(600);
+        stackPane.setPadding(new Insets(50));
+        return stackPane;
     }
 
     @Test
@@ -118,6 +129,34 @@ public class QuizPlayerViewTest extends GuiTest {
                 .click(submit);
 
         assertNodeExists(ViewMessages.LOSER);
+    }
+
+    @Test
+    public void shouldBeAbleToPlayAnotherQuizAfterPlaying() {
+        when(quizPlayer.hasWon()).thenReturn(true);
+        when(quizPlayer.getScore()).thenReturn(54);
+
+        click(nameField)
+                .type(name)
+                .click(signInButton)
+                .click(quizTitle)
+                .click(answer5)
+                .click(submit);
+
+        assertNodeExists(ViewMessages.PLAY_AGAIN);
+    }
+
+    @Test
+    public void shouldBeAbleToPlayAnotherQuiz() {
+         click(nameField)
+                .type(name)
+                .click(signInButton)
+                .click(quizTitle)
+                .click(answer5)
+                .click(submit)
+                .click(playAgain);
+
+        assertNodeExists(quizTitle);
     }
 
     private QuizPlayer getQuizPlayer() {

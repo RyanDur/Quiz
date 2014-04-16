@@ -1,8 +1,12 @@
 package gui.pij.ryan.durling.views.pages;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.models.Question;
@@ -31,7 +35,14 @@ public class QuestionsViewTest extends GuiTest {
         GridPane answerView = new GridPane();
         when(answerViewFactory.getAnswerView(anySet())).thenReturn(answerView);
         QuestionsView questionsView = new QuestionsViewImpl(questions, answerViewFactory);
-        return (Parent) questionsView;
+
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.BOTTOM_CENTER);
+        stackPane.getChildren().add((Node) questionsView);
+        stackPane.setPrefHeight(700);
+        stackPane.setPrefWidth(600);
+        stackPane.setPadding(new Insets(50));
+        return stackPane;
     }
 
     @Test

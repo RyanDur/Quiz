@@ -12,9 +12,10 @@ import pij.ryan.durling.models.QuizOption;
 public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     private QuizPlayer quizPlayer;
     private Views views;
-    private final Header header;
-    private final ViewPane viewPane;
-    private final Footer footer;
+    private Header header;
+    private ViewPane viewPane;
+    private Footer footer;
+    private BorderPane borderPane;
 
     public QuizPlayerViewImpl(QuizPlayer quizPlayer, Views views) {
         this.quizPlayer = quizPlayer;
@@ -23,7 +24,7 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
         this.getStylesheets().add(ViewMessages.QUIZ_PLAYER_VIEW_STYLE_SHEET);
 
 
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         header = views.getHeader();
         borderPane.setTop((Node) header);
         viewPane = views.getViewPane();
@@ -78,16 +79,29 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     }
 
 
+    public void getResultsView() {
+        ResultsView resultsView = views.getResultsView();
+        resultsView.setResults(quizPlayer.hasWon(), quizPlayer.getScore());
+        viewPane.setView((Node) resultsView);
+        getNewQuizButton();
+    }
+
+    private void getNewQuizButton() {
+        Button newQuizButton = new Button();
+        newQuizButton.setText(ViewMessages.PLAY_AGAIN);
+        newQuizButton.setOnAction(e -> {
+            header.setQuizTitle("");
+            viewPane.setView((Node) getMenuView());
+            footer = views.getFooter();
+            borderPane.setBottom((Node) footer);
+        });
+        footer.setSubmitButton(newQuizButton);
+    }
+
     private Button getButton(String name, int id) {
         Button button = new Button();
         button.setText(name);
         button.setId(ViewMessages.MENU_VIEW_BUTTON_ID + id);
         return button;
-    }
-
-    public void getResultsView() {
-        ResultsView resultsView = views.getResultsView();
-        resultsView.setResults(quizPlayer.hasWon(), quizPlayer.getScore());
-        viewPane.setView((Node) resultsView);
     }
 }

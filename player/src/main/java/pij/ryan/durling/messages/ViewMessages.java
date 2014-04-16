@@ -49,6 +49,7 @@ public class ViewMessages {
     public static final String FOOTER_STYLESHEETS = "styles/footer.css";
     public static final String FOOTER_ID = "footer";
     public static final String SUBMIT_BUTTON_ID = "submit";
+    public static final String PLAY_AGAIN = "Play Again";
     public static final String SUBMIT = "Submit";
 
     //Results view

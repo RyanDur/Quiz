@@ -1,7 +1,11 @@
 package gui.pij.ryan.durling.views.pages;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.StackPane;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.messages.ViewMessages;
@@ -18,7 +22,13 @@ public class HeaderTest extends GuiTest {
     @Override
     protected Parent getRootNode() {
         header = new HeaderImpl();
-        return (Parent) header;
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.BOTTOM_CENTER);
+        stackPane.getChildren().add((Node) header);
+        stackPane.setPrefHeight(700);
+        stackPane.setPrefWidth(600);
+        stackPane.setPadding(new Insets(50));
+        return stackPane;
     }
 
     @Test

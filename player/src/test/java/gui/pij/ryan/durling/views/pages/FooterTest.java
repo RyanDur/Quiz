@@ -1,9 +1,12 @@
 package gui.pij.ryan.durling.views.pages;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.messages.ViewMessages;
@@ -20,7 +23,13 @@ public class FooterTest extends GuiTest {
     @Override
     protected Parent getRootNode() {
         footer = new FooterImpl();
-        return (Parent) footer;
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.BOTTOM_CENTER);
+        stackPane.getChildren().add((Node) footer);
+        stackPane.setPrefHeight(700);
+        stackPane.setPrefWidth(600);
+        stackPane.setPadding(new Insets(50));
+        return stackPane;
     }
 
     @Test
