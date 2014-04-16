@@ -48,7 +48,7 @@ public class QuizPlayerViewTest extends GuiTest {
 
         verifyThat("#" + ViewMessages.NAME_TITLE_ID, hasText(name));
     }
-    ~
+
     @Test
     public void shouldBeAbleToSeeAListOfQuizzesQuiz() throws InterruptedException {
         click(nameField)
