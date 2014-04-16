@@ -14,6 +14,7 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     private Views views;
     private final Header header;
     private final ViewPane viewPane;
+    private final Footer footer;
 
     public QuizPlayerViewImpl(QuizPlayer quizPlayer, Views views) {
         this.quizPlayer = quizPlayer;
@@ -27,7 +28,8 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
         borderPane.setTop((Node) header);
         viewPane = views.getViewPane();
         borderPane.setCenter((Node) viewPane);
-
+        footer = views.getFooter();
+        borderPane.setBottom((Node) footer);
         viewPane.setView((Node) getSignInView(header, viewPane));
         this.getChildren().add(borderPane);
     }
@@ -48,16 +50,30 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
         int y = 0;
         for (QuizOption option : menu.getQuizzes()) {
             Button button = getButton(option.getQuizTitle(), y);
-
             button.setOnAction(e -> {
-                option.getQuizId();
                 header.setQuizTitle(option.getQuizTitle());
+                getQuestionView(option);
             });
-
             menuView.addOption(button, y++);
         }
         return menuView;
     }
+
+    private void getQuestionView(QuizOption option) {
+        Button submitButton = getButton();
+        footer.setSubmitButton(submitButton);
+        quizPlayer.chooseQuiz(option.getQuizId());
+        QuestionsView questionsView = views.getQuestionView(quizPlayer.getQuestions());
+        viewPane.setView((Node) questionsView);
+    }
+
+    private Button getButton() {
+        Button submitButton = new Button();
+        submitButton.setOnAction(e -> quizPlayer.submitQuiz());
+        submitButton.setText(ViewMessages.SUBMIT);
+        return submitButton;
+    }
+
 
     private Button getButton(String name, int id) {
         Button button = new Button();

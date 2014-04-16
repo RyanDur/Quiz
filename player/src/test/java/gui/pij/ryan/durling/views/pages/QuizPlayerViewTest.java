@@ -6,6 +6,8 @@ import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.messages.ViewMessages;
+import pij.ryan.durling.models.Answer;
+import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.views.pages.QuizPlayerView;
 import pij.ryan.durling.views.pages.QuizPlayerViewImpl;
@@ -19,6 +21,7 @@ import static org.loadui.testfx.Assertions.assertNodeExists;
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizPlayerViewTest extends GuiTest {
@@ -27,14 +30,17 @@ public class QuizPlayerViewTest extends GuiTest {
     private String name = "Keith";
     private String signInButton = ViewMessages.SIGN_IN_BUTTON;
     private String title = "Poo";
+    private Question question1;
+    private Question question2;
+    private Answer answer4;
+    private QuizPlayer quizPlayer;
 
     @Override
     protected Parent getRootNode() {
         Views views = new ViewsImpl();
-        QuizPlayer quizPlayer = getQuizPlayer();
-
-
-
+        quizPlayer = getQuizPlayer();
+        Set<Question> questions = getQuestions();
+        when(quizPlayer.getQuestions()).thenReturn(questions);
         QuizPlayerView quizPlayerView = new QuizPlayerViewImpl(quizPlayer, views);
         return (Parent) quizPlayerView;
     }
@@ -66,6 +72,49 @@ public class QuizPlayerViewTest extends GuiTest {
                 .click(title);
 
         verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+    }
+
+    @Test
+    public void shouldBeAbleToSeeTheQuestionsOfTheChosenAQuiz() {
+        click(nameField)
+                .type(name)
+                .click(signInButton)
+                .click(title);
+
+        assertNodeExists(hasText(question1.getQuestion()));
+        assertNodeExists(hasText(question2.getQuestion()));
+        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+    }
+
+    @Test
+    public void shouldBeAbleToSeeTheAnswersForTheQuestionsOfTheChosenAQuiz() throws InterruptedException {
+        click(nameField)
+                .type(name)
+                .click(signInButton)
+                .click(title);
+
+        assertNodeExists(ViewMessages.SUBMIT);
+        assertNodeExists(hasText(question1.getQuestion()));
+        assertNodeExists(hasText(question2.getQuestion()));
+        assertNodeExists(hasText(answer4.getAnswer()));
+        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+    }
+
+    @Test
+    public void shouldBeAbleToSubmitTheAnswersForTheQuestionsOfTheChosenAQuiz() {
+        click(nameField)
+                .type(name)
+                .click(signInButton)
+                .click(title)
+                .click("#" + ViewMessages.ANSWER_ID + 4)
+                .click(ViewMessages.SUBMIT);
+
+        assertNodeExists(ViewMessages.SUBMIT);
+        assertNodeExists(hasText(question1.getQuestion()));
+        assertNodeExists(hasText(question2.getQuestion()));
+        assertNodeExists(hasText(answer4.getAnswer()));
+        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+        verify(quizPlayer).submitQuiz();
     }
 
     private QuizPlayer getQuizPlayer() {
@@ -108,5 +157,57 @@ public class QuizPlayerViewTest extends GuiTest {
         quizSet.add(quizOption2);
         quizSet.add(quizOption3);
         return quizSet;
+    }
+
+    private Set<Question> getQuestions() {
+        Set<Question> questions = new HashSet<>();
+        Set<Answer> answers = getAnswers();
+        question1 = mock(Question.class);
+        when(question1.getQuestion()).thenReturn("Who is Kieth?");
+        when(question1.getAnswers()).thenReturn(answers);
+
+        question2 = mock(Question.class);
+        when((question2.getQuestion())).thenReturn("What is spam?");
+        when(question2.getAnswers()).thenReturn(answers);
+
+        questions.add(question1);
+        questions.add(question2);
+        return questions;
+    }
+
+    private Set<Answer> getAnswers() {
+        Set<Answer> answers = new HashSet<>();
+
+        Answer answer = mock(Answer.class);
+        when(answer.getAnswer()).thenReturn("Answer 1");
+        when(answer.getId()).thenReturn(1);
+
+        Answer answer1 = mock(Answer.class);
+        when(answer1.getAnswer()).thenReturn("Answer 2");
+        when(answer1.getId()).thenReturn(2);
+
+        Answer answer2 = mock(Answer.class);
+        when(answer2.getAnswer()).thenReturn("Answer 3");
+        when(answer2.getId()).thenReturn(3);
+
+        Answer answer3 = mock(Answer.class);
+        when(answer3.getAnswer()).thenReturn("Answer 4");
+        when(answer3.getId()).thenReturn(4);
+
+        answer4 = mock(Answer.class);
+        when(answer4.getAnswer()).thenReturn("Answer 5");
+        when(answer4.getId()).thenReturn(5);
+
+        Answer answer5 = mock(Answer.class);
+        when(answer5.getAnswer()).thenReturn("Answer 6");
+        when(answer5.getId()).thenReturn(6);
+
+        answers.add(answer);
+        answers.add(answer1);
+        answers.add(answer2);
+        answers.add(answer3);
+        answers.add(answer4);
+        answers.add(answer5);
+        return answers;
     }
 }

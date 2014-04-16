@@ -1,6 +1,5 @@
 package pij.ryan.durling.views.pages;
 
-import javafx.scene.Node;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.views.factories.AnswerViewFactory;
 import pij.ryan.durling.views.factories.AnswerViewFactoryImpl;
@@ -29,8 +28,13 @@ public class ViewsImpl implements Views {
     }
 
     @Override
-    public Node getQuestionView(Set<Question> questions) {
+    public QuestionsView getQuestionView(Set<Question> questions) {
         AnswerViewFactory answerViewFactory = new AnswerViewFactoryImpl();
         return new QuestionsViewImpl(questions, answerViewFactory);
+    }
+
+    @Override
+    public Footer getFooter() {
+        return new FooterImpl();
     }
 }
