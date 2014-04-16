@@ -43,7 +43,7 @@ public class ViewPaneTest extends GuiTest {
     public void shouldBeAbleToSetAHelpfulMessage() {
         String test = "Helpful Message";
         Platform.runLater(() -> viewPane.setMessage(test));
-        
+
         verifyThat("#" + ViewMessages.ERROR_LABEL, hasText(test));
     }
 }
