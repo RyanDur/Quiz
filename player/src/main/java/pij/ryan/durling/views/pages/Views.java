@@ -1,7 +1,6 @@
 package pij.ryan.durling.views.pages;
 
 import javafx.scene.Node;
-import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.models.Question;
 
 import java.util.Set;
@@ -13,7 +12,7 @@ public interface Views {
 
     SignInView getSignInView();
 
-    MenuView getMenuView(Menu menu, Header header);
+    MenuView getMenuView();
 
     Node getQuestionView(Set<Question> questions);
 }

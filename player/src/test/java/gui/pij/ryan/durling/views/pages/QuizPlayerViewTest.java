@@ -26,7 +26,7 @@ public class QuizPlayerViewTest extends GuiTest {
     private String nameField = "#" + ViewMessages.NAME_FIELD;
     private String name = "Keith";
     private String signInButton = ViewMessages.SIGN_IN_BUTTON;
-    private String title;
+    private String title = "Poo";
 
     @Override
     protected Parent getRootNode() {
@@ -84,7 +84,6 @@ public class QuizPlayerViewTest extends GuiTest {
 
     private Set<QuizOption> getQuizzes() {
         Set<QuizOption> quizSet = new HashSet<>();
-        title = "Poo";
         QuizOption quizOption = mock(QuizOption.class);
         when(quizOption.getQuizTitle()).thenReturn(title);
         when(quizOption.getQuizId()).thenReturn(1);

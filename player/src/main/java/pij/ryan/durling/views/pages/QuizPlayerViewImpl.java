@@ -1,10 +1,13 @@
 package pij.ryan.durling.views.pages;
 
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.messages.ViewMessages;
+import pij.ryan.durling.models.QuizOption;
 
 public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     private QuizPlayer quizPlayer;
@@ -40,6 +43,26 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     }
 
     private MenuView getMenuView() {
-        return views.getMenuView(quizPlayer.getMenu(), header);
+        MenuView menuView = views.getMenuView();
+        Menu menu = quizPlayer.getMenu();
+        int y = 0;
+        for (QuizOption option : menu.getQuizzes()) {
+            Button button = getButton(option.getQuizTitle(), y);
+
+            button.setOnAction(e -> {
+                option.getQuizId();
+                header.setQuizTitle(option.getQuizTitle());
+            });
+
+            menuView.addOption(button, y++);
+        }
+        return menuView;
+    }
+
+    private Button getButton(String name, int id) {
+        Button button = new Button();
+        button.setText(name);
+        button.setId(ViewMessages.MENU_VIEW_BUTTON_ID + id);
+        return button;
     }
 }

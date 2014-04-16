@@ -1,9 +1,8 @@
 package pij.ryan.durling.views.pages;
 
-import javafx.scene.Group;
+import javafx.scene.control.Button;
 
 public interface MenuView {
-    int getChosenQuizId();
 
-    Group getButtonGroup();
+    void addOption(Button button, int y);
 }

@@ -1,7 +1,6 @@
 package pij.ryan.durling.views.pages;
 
 import javafx.scene.Node;
-import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.views.factories.AnswerViewFactory;
 import pij.ryan.durling.views.factories.AnswerViewFactoryImpl;
@@ -25,8 +24,8 @@ public class ViewsImpl implements Views {
     }
 
     @Override
-    public MenuView getMenuView(Menu menu, Header header) {
-        return new MenuViewImpl(menu, header);
+    public MenuView getMenuView() {
+        return new MenuViewImpl();
     }
 
     @Override

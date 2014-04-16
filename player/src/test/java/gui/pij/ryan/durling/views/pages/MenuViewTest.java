@@ -1,21 +1,19 @@
 package gui.pij.ryan.durling.views.pages;
 
+import javafx.application.Platform;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.QuizOption;
-import pij.ryan.durling.views.pages.Header;
 import pij.ryan.durling.views.pages.MenuView;
 import pij.ryan.durling.views.pages.MenuViewImpl;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
 import static org.mockito.Mockito.mock;
@@ -24,27 +22,52 @@ import static org.mockito.Mockito.when;
 public class MenuViewTest extends GuiTest {
 
     private String title;
-    private MenuView menu;
+    private MenuView menuView;
 
     @Override
     protected Parent getRootNode() {
         Menu mockMenu = mock(Menu.class);
         Set<QuizOption> quizSet = getQuizzes();
         when(mockMenu.getQuizzes()).thenReturn(quizSet);
-        Header header = mock(Header.class);
-        menu = new MenuViewImpl(mockMenu, header);
-        return (Parent) menu;
+        menuView = new MenuViewImpl();
+        return (Parent) menuView;
     }
 
     @Test
     public void shouldHaveAListOfQuizzes() throws InterruptedException {
+        Platform.setImplicitExit(false);
+        Platform.runLater(() -> {
+            int y = 0;
+            for (QuizOption option : getQuizzes()) {
+                Button button = getButton(option.getQuizTitle(), y);
+
+                button.setOnAction(e -> {
+                    option.getQuizId();
+                });
+
+                menuView.addOption(button, y++);
+            }
+        });
+
        verifyThat("#"+ ViewMessages.MENU_VIEW_BUTTON_ID +"2", hasText(title));
     }
 
     @Test
     public void shouldBeAbleToChooseAQuiz() {
+        Platform.setImplicitExit(false);
+        Platform.runLater(() -> {
+            int y = 0;
+            for (QuizOption option : getQuizzes()) {
+                Button button = getButton(option.getQuizTitle(), y);
+
+                button.setOnAction(e -> {
+                    option.getQuizId();
+                });
+
+                menuView.addOption(button, y++);
+            }
+        });
         click("#"+ ViewMessages.MENU_VIEW_BUTTON_ID +"3");
-        assertThat(menu.getChosenQuizId(), is(equalTo(1)));
     }
 
     private Set<QuizOption> getQuizzes() {
@@ -71,5 +94,12 @@ public class MenuViewTest extends GuiTest {
         quizSet.add(quizOption2);
         quizSet.add(quizOption3);
         return quizSet;
+    }
+
+    private Button getButton(String name, int id) {
+        Button button = new Button();
+        button.setText(name);
+        button.setId(ViewMessages.MENU_VIEW_BUTTON_ID + id);
+        return button;
     }
 }
