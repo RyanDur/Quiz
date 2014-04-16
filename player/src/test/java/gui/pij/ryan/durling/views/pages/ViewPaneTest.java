@@ -34,6 +34,7 @@ public class ViewPaneTest extends GuiTest {
         Label label = new Label(test);
         hBox.getChildren().add(label);
 
+        Platform.setImplicitExit(false);
         Platform.runLater(() -> viewPane.setView(hBox));
 
         assertNodeExists(hasText(test));
@@ -42,6 +43,7 @@ public class ViewPaneTest extends GuiTest {
     @Test
     public void shouldBeAbleToSetAHelpfulMessage() {
         String test = "Helpful Message";
+        Platform.setImplicitExit(false);
         Platform.runLater(() -> viewPane.setMessage(test));
 
         verifyThat("#" + ViewMessages.ERROR_LABEL, hasText(test));
