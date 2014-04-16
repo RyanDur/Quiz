@@ -11,6 +11,7 @@ import pij.ryan.durling.messages.ViewMessages;
 public class SignInViewImpl extends StackPane implements SignInView {
 
     private TextField field;
+    private Button button;
 
     public SignInViewImpl() {
         this.getStylesheets().add(ViewMessages.SIGN_IN_VIEW_STYLE_SHEET);
@@ -21,6 +22,11 @@ public class SignInViewImpl extends StackPane implements SignInView {
     @Override
     public String getName() {
         return field.getText();
+    }
+
+    @Override
+    public Button getSignInButton() {
+        return button;
     }
 
     private GridPane getSignIn() {
@@ -40,7 +46,7 @@ public class SignInViewImpl extends StackPane implements SignInView {
     }
 
     private Button signInButton() {
-        Button button = new Button();
+        button = new Button();
         button.setText(ViewMessages.SIGN_IN_BUTTON);
         button.setId(ViewMessages.SIGN_IN_BUTTON_ID);
         return button;

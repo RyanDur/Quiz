@@ -7,7 +7,6 @@
 #labels {
     -fx-pref-height: 200;
     -fx-pref-width: 800;
-    -fx-border-color: black;
 }
 
 .label {

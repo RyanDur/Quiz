@@ -12,6 +12,7 @@ public class ViewPaneImpl extends StackPane implements ViewPane {
 
     private final BorderPane borderPane;
     private final Label label;
+    private Node node;
 
     public ViewPaneImpl() {
         this.getStylesheets().add(ViewMessages.VIEW_PANE_STYLESHEETS);
@@ -19,6 +20,7 @@ public class ViewPaneImpl extends StackPane implements ViewPane {
 
         borderPane = new BorderPane();
         borderPane.setId(ViewMessages.VIEW_BOX_ID);
+
 
         label = new Label();
         label.setId(ViewMessages.ERROR_LABEL);

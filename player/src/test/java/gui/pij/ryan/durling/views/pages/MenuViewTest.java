@@ -6,6 +6,7 @@ import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.QuizOption;
+import pij.ryan.durling.views.pages.Header;
 import pij.ryan.durling.views.pages.MenuView;
 import pij.ryan.durling.views.pages.MenuViewImpl;
 
@@ -30,7 +31,8 @@ public class MenuViewTest extends GuiTest {
         Menu mockMenu = mock(Menu.class);
         Set<QuizOption> quizSet = getQuizzes();
         when(mockMenu.getQuizzes()).thenReturn(quizSet);
-        menu = new MenuViewImpl(mockMenu);
+        Header header = mock(Header.class);
+        menu = new MenuViewImpl(mockMenu, header);
         return (Parent) menu;
     }
 
