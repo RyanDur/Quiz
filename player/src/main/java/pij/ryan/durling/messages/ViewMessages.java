@@ -27,4 +27,13 @@ public class ViewMessages {
     public static final String ANSWER_VIEW_STYLE_SHEET = "styles/answers.css";
     public static final String ANSWER_ID = "answer";
     public static final String ANSWER_VIEW_ID = "answer-view";
+    public static final String QUIZ_PLAYER_VIEW_STYLE_SHEET = "styles/quizPlayer.css";
+    public static final String HEADER_ID = "header";
+
+    //Header
+    public static final String HEADER_STYLESHEET = "styles/header.css";
+    public static final String NAME_TITLE_ID = "name-title";
+
+    public static final String HEADER_LABELS_ID = "labels";
+    public static final String QUIZ_TITLE_ID = "quiz-title";
 }

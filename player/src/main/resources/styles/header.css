@@ -1,0 +1,25 @@
+#header {
+    -fx-pref-height: 100;
+    -fx-pref-width: 800;
+    -fx-background-color: #889499;
+}
+
+#labels {
+    -fx-pref-height: 200;
+    -fx-pref-width: 800;
+    -fx-border-color: black;
+}
+
+.label {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#name-title {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
