@@ -50,4 +50,12 @@ public class ViewMessages {
     public static final String FOOTER_ID = "footer";
     public static final String SUBMIT_BUTTON_ID = "submit";
     public static final String SUBMIT = "Submit";
+
+    //Results view
+    public static final String WINNER = "WINNER";
+    public static final String LOSER = "LOSER";
+    public static final String RESULTS_VIEW_STYLESHEETS = "styles/results.css";
+    public static final String RESULTS_VIEW_ID = "results-view";
+    public static final String RESULT_ID = "result";
+    public static final String SCORE_ID = "score";
 }

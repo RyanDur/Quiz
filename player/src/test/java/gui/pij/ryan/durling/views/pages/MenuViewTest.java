@@ -47,9 +47,9 @@ public class MenuViewTest extends GuiTest {
 
                 menuView.addOption(button, y++);
             }
+            verifyThat("#"+ ViewMessages.MENU_VIEW_BUTTON_ID +"2", hasText(title));
         });
 
-       verifyThat("#"+ ViewMessages.MENU_VIEW_BUTTON_ID +"2", hasText(title));
     }
 
     @Test
@@ -66,10 +66,20 @@ public class MenuViewTest extends GuiTest {
 
                 menuView.addOption(button, y++);
             }
+            click("#"+ ViewMessages.MENU_VIEW_BUTTON_ID +"3");
         });
-        click("#"+ ViewMessages.MENU_VIEW_BUTTON_ID +"3");
     }
-
+    //    gui.pij.ryan.durling.views.pages.MenuViewTest > shouldBeAbleToChooseAQuiz FAILED
+//    org.loadui.testfx.exceptions.NoNodesFoundException at MenuViewTest.java:70
+//
+//    gui.pij.ryan.durling.views.pages.MenuViewTest > shouldHaveAListOfQuizzes FAILED
+//    org.loadui.testfx.exceptions.NoNodesFoundException at MenuViewTest.java:52
+//
+//    gui.pij.ryan.durling.views.pages.QuizPlayerViewTest > shouldKnowIfWinnerAfterSubmitting FAILED
+//    org.loadui.testfx.exceptions.NoNodesFoundException at QuizPlayerViewTest.java:133
+//
+//    gui.pij.ryan.durling.views.pages.ViewPaneTest > shouldBeAbleToSetAView FAILED
+//    org.loadui.testfx.exceptions.NoNodesFoundException at ViewPaneTest.java:40
     private Set<QuizOption> getQuizzes() {
         Set<QuizOption> quizSet = new HashSet<>();
         title = "Poo";

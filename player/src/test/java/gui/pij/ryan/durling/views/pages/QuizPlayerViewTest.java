@@ -29,11 +29,13 @@ public class QuizPlayerViewTest extends GuiTest {
     private String nameField = "#" + ViewMessages.NAME_FIELD;
     private String name = "Keith";
     private String signInButton = ViewMessages.SIGN_IN_BUTTON;
-    private String title = "Poo";
+    private String quizTitle = "Poo";
     private Question question1;
     private Question question2;
     private Answer answer4;
     private QuizPlayer quizPlayer;
+    private String answer5 = "#" + ViewMessages.ANSWER_ID + 4;
+    private String submit;
 
     @Override
     protected Parent getRootNode() {
@@ -61,7 +63,7 @@ public class QuizPlayerViewTest extends GuiTest {
                 .type(name)
                 .click(signInButton);
 
-        assertNodeExists(title);
+        assertNodeExists(quizTitle);
     }
 
     @Test
@@ -69,9 +71,9 @@ public class QuizPlayerViewTest extends GuiTest {
         click(nameField)
                 .type(name)
                 .click(signInButton)
-                .click(title);
+                .click(quizTitle);
 
-        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(quizTitle));
     }
 
     @Test
@@ -79,11 +81,11 @@ public class QuizPlayerViewTest extends GuiTest {
         click(nameField)
                 .type(name)
                 .click(signInButton)
-                .click(title);
+                .click(quizTitle);
 
         assertNodeExists(hasText(question1.getQuestion()));
         assertNodeExists(hasText(question2.getQuestion()));
-        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(quizTitle));
     }
 
     @Test
@@ -91,30 +93,44 @@ public class QuizPlayerViewTest extends GuiTest {
         click(nameField)
                 .type(name)
                 .click(signInButton)
-                .click(title);
+                .click(quizTitle);
 
         assertNodeExists(ViewMessages.SUBMIT);
         assertNodeExists(hasText(question1.getQuestion()));
         assertNodeExists(hasText(question2.getQuestion()));
         assertNodeExists(hasText(answer4.getAnswer()));
-        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(quizTitle));
     }
 
     @Test
     public void shouldBeAbleToSubmitTheAnswersForTheQuestionsOfTheChosenAQuiz() {
+        submit = ViewMessages.SUBMIT;
         click(nameField)
                 .type(name)
                 .click(signInButton)
-                .click(title)
-                .click("#" + ViewMessages.ANSWER_ID + 4)
-                .click(ViewMessages.SUBMIT);
+                .click(quizTitle)
+                .click(answer5)
+                .click(submit);
 
-        assertNodeExists(ViewMessages.SUBMIT);
+        assertNodeExists(submit);
         assertNodeExists(hasText(question1.getQuestion()));
         assertNodeExists(hasText(question2.getQuestion()));
         assertNodeExists(hasText(answer4.getAnswer()));
-        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(title));
+        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(quizTitle));
         verify(quizPlayer).submitQuiz();
+    }
+
+    @Test
+    public void shouldKnowIfWinnerAfterSubmitting() {
+        submit = ViewMessages.SUBMIT;
+        click(nameField)
+                .type(name)
+                .click(signInButton)
+                .click(quizTitle)
+                .click(answer5)
+                .click(submit);
+
+        assertNodeExists(ViewMessages.WINNER);
     }
 
     private QuizPlayer getQuizPlayer() {
@@ -134,7 +150,7 @@ public class QuizPlayerViewTest extends GuiTest {
     private Set<QuizOption> getQuizzes() {
         Set<QuizOption> quizSet = new HashSet<>();
         QuizOption quizOption = mock(QuizOption.class);
-        when(quizOption.getQuizTitle()).thenReturn(title);
+        when(quizOption.getQuizTitle()).thenReturn(quizTitle);
         when(quizOption.getQuizId()).thenReturn(1);
 
         String title1 = "Chicken";
