@@ -1,0 +1,14 @@
+#view-pane {
+    -fx-pref-height: 500;
+    -fx-pref-width: 500;
+}
+
+#view-box {
+    -fx-pref-height: 400;
+    -fx-pref-width: 400;
+}
+
+#error-box {
+    -fx-pref-height: 100;
+    -fx-pref-width: 400;
+}

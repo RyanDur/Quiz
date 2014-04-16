@@ -36,4 +36,11 @@ public class ViewMessages {
 
     public static final String HEADER_LABELS_ID = "labels";
     public static final String QUIZ_TITLE_ID = "quiz-title";
+
+    // View Pane
+    public static final String VIEW_PANE_ID = "view-pane";
+    public static final String VIEW_PANE_STYLESHEETS = "styles/viewPane.css";
+    public static final String VIEW_BOX_ID = "view-box";
+    public static final String ERROR_BOX_ID = "error-box";
+    public static final String ERROR_LABEL = "error-label";
 }
