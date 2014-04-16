@@ -1,5 +1,6 @@
 package gui.pij.ryan.durling.views.pages;
 
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.when;
 public class AnswerViewTest extends GuiTest {
 
     private Answer answer4;
+    private String query = "#" + ViewMessages.ANSWER_ID + "5";
 
     @Override
     protected Parent getRootNode() {
@@ -27,7 +29,8 @@ public class AnswerViewTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToChooseAnAnswer() {
-        click("#" + ViewMessages.ANSWER_ID + "5");
+        Platform.setImplicitExit(false);
+        click(query);
 
         verify(answer4).select();
     }

@@ -1,5 +1,6 @@
 package gui.pij.ryan.durling.views.pages;
 
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 import org.junit.Test;
@@ -35,9 +36,12 @@ public class QuestionsViewTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToSeeTheQuestionsWithAnswers() {
-        assertNodeExists(hasText(question1.getQuestion()));
-        assertNodeExists(hasText(question2.getQuestion()));
-        verify(answerViewFactory, times(2)).getAnswerView(anySet());
+        Platform.setImplicitExit(false);
+        Platform.runLater(() -> {
+            assertNodeExists(hasText(question1.getQuestion()));
+            assertNodeExists(hasText(question2.getQuestion()));
+            verify(answerViewFactory, times(2)).getAnswerView(anySet());
+        });
     }
 
     private Set<Question> getQuestions() {

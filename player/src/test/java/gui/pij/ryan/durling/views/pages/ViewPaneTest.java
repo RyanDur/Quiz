@@ -35,9 +35,11 @@ public class ViewPaneTest extends GuiTest {
         hBox.getChildren().add(label);
 
         Platform.setImplicitExit(false);
-        Platform.runLater(() -> viewPane.setView(hBox));
+        Platform.runLater(() -> {
+            viewPane.setView(hBox);
+            assertNodeExists(hasText(test));
+        });
 
-        assertNodeExists(hasText(test));
     }
 
     @Test

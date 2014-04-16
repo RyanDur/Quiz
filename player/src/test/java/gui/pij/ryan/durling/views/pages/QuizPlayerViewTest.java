@@ -35,6 +35,7 @@ public class QuizPlayerViewTest extends GuiTest {
     private QuizPlayer quizPlayer;
     private String answer5 = "#" + ViewMessages.ANSWER_ID + 4;
     private String submit = ViewMessages.SUBMIT;
+    private String nameTitle = "#" + ViewMessages.NAME_TITLE_ID;
 
     @Override
     protected Parent getRootNode() {
@@ -44,16 +45,6 @@ public class QuizPlayerViewTest extends GuiTest {
         when(quizPlayer.getQuestions()).thenReturn(questions);
         QuizPlayerView quizPlayerView = new QuizPlayerViewImpl(quizPlayer, views);
         return (Parent) quizPlayerView;
-    }
-
-    @Test
-    public void shouldBeAbleToAddAUsersName() {
-
-        click(nameField)
-                .type(name)
-                .click(signInButton);
-
-        verifyThat("#" + ViewMessages.NAME_TITLE_ID, hasText(name));
     }
 
     @Test
@@ -113,6 +104,20 @@ public class QuizPlayerViewTest extends GuiTest {
                 .click(submit);
 
         assertNodeExists(ViewMessages.WINNER);
+    }
+
+    @Test
+    public void shouldKnowIfLoserAfterSubmitting() {
+        when(quizPlayer.hasWon()).thenReturn(false);
+        when(quizPlayer.getScore()).thenReturn(54);
+        click(nameField)
+                .type(name)
+                .click(signInButton)
+                .click(quizTitle)
+                .click(answer5)
+                .click(submit);
+
+        assertNodeExists(ViewMessages.LOSER);
     }
 
     private QuizPlayer getQuizPlayer() {
