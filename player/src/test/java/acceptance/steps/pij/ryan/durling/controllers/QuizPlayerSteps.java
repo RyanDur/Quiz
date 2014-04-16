@@ -4,8 +4,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import pij.ryan.durling.controllers.Menu;
-import pij.ryan.durling.controllers.QuizElements;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.controllers.QuizPlayerImpl;
 import pij.ryan.durling.models.Question;
@@ -24,28 +22,22 @@ import static org.mockito.Mockito.*;
 public class QuizPlayerSteps {
 
     private QuizPlayer quizPlayer;
-    private Menu menu;
     private QuizServer server;
     private Quiz quiz;
-    private QuizElements quizElements;
     private int score;
     private String caught;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
         server = mock(QuizServer.class);
-        quizElements = mock(QuizElements.class);
-        quizPlayer = new QuizPlayerImpl(server, quizElements);
+        quizPlayer = new QuizPlayerImpl(server);
     }
 
     @Given("^a player has a menu$")
     public void a_player_has_a_menu() throws Throwable {
-        Menu mockMenu = mock(Menu.class);
-        when(quizElements.getMenu(anySet())).thenReturn(mockMenu);
-        menu = quizPlayer.getMenu();
+        quizPlayer.getMenu();
 
         verify(server).getQuizOptions();
-        assertThat(menu, is(equalTo(mockMenu)));
     }
 
     @When("^a player chooses an available quiz (\\d+)$")

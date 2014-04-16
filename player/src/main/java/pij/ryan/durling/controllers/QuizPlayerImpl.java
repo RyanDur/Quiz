@@ -3,27 +3,26 @@ package pij.ryan.durling.controllers;
 import pij.ryan.durling.messages.ControllerMessages;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
+import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.resources.QuizServer;
 
 import java.util.Set;
 
 public class QuizPlayerImpl implements QuizPlayer {
     private QuizServer quizServer;
-    private QuizElements quizElements;
     private Quiz quiz;
     private String playerName;
     private int score;
     private boolean winner;
 
 
-    public QuizPlayerImpl(QuizServer quizServer, QuizElements quizElements) {
+    public QuizPlayerImpl(QuizServer quizServer) {
         this.quizServer = quizServer;
-        this.quizElements = quizElements;
     }
 
     @Override
-    public Menu getMenu() {
-        return quizElements.getMenu(quizServer.getQuizOptions());
+    public Set<QuizOption> getMenu() {
+        return quizServer.getQuizOptions();
     }
 
     @Override

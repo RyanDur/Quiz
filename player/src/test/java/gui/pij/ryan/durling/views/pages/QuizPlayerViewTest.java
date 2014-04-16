@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
-import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.Answer;
@@ -44,6 +43,7 @@ public class QuizPlayerViewTest extends GuiTest {
     @Override
     protected Parent getRootNode() {
         Views views = new ViewsImpl();
+        quizPlayer = mock(QuizPlayer.class);
         quizPlayer = getQuizPlayer();
         Set<Question> questions = getQuestions();
         when(quizPlayer.getQuestions()).thenReturn(questions);
@@ -160,17 +160,9 @@ public class QuizPlayerViewTest extends GuiTest {
     }
 
     private QuizPlayer getQuizPlayer() {
-        QuizPlayer quizPlayer = mock(QuizPlayer.class);
-        Menu mockMenu = getMenu();
-        when(quizPlayer.getMenu()).thenReturn(mockMenu);
-        return quizPlayer;
-    }
-
-    private Menu getMenu() {
-        Menu mockMenu = mock(Menu.class);
         Set<QuizOption> quizSet = getQuizzes();
-        when(mockMenu.getQuizzes()).thenReturn(quizSet);
-        return mockMenu;
+        when(quizPlayer.getMenu()).thenReturn(quizSet);
+        return quizPlayer;
     }
 
     private Set<QuizOption> getQuizzes() {

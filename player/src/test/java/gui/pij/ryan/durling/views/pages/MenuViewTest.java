@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import org.loadui.testfx.GuiTest;
-import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.views.pages.MenuView;
@@ -28,9 +27,7 @@ public class MenuViewTest extends GuiTest {
 
     @Override
     protected Parent getRootNode() {
-        Menu mockMenu = mock(Menu.class);
         Set<QuizOption> quizSet = getQuizzes();
-        when(mockMenu.getQuizzes()).thenReturn(quizSet);
 
         menuView = new MenuViewImpl();
         StackPane stackPane = new StackPane();

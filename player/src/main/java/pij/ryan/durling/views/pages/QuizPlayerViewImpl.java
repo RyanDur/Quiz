@@ -4,7 +4,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import pij.ryan.durling.controllers.Menu;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.QuizOption;
@@ -47,9 +46,8 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
 
     private MenuView getMenuView() {
         MenuView menuView = views.getMenuView();
-        Menu menu = quizPlayer.getMenu();
         int y = 0;
-        for (QuizOption option : menu.getQuizzes()) {
+        for (QuizOption option : quizPlayer.getMenu()) {
             Button button = getButton(option.getQuizTitle(), y);
             button.setOnAction(e -> {
                 header.setQuizTitle(option.getQuizTitle());

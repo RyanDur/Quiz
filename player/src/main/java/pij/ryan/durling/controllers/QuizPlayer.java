@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface QuizPlayer {
 
-    Menu getMenu();
+    Set<pij.ryan.durling.models.QuizOption> getMenu();
 
     void chooseQuiz(int choice);
 
