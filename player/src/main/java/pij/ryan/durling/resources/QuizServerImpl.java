@@ -1,5 +1,6 @@
 package pij.ryan.durling.resources;
 
+import com.google.inject.Inject;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
 
@@ -12,6 +13,7 @@ public class QuizServerImpl implements QuizServer {
 
     private Server server;
 
+    @Inject
     public QuizServerImpl(ServerLink serverLink) {
         try {
             server = serverLink.getServer();

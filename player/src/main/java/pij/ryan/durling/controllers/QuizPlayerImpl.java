@@ -1,5 +1,6 @@
 package pij.ryan.durling.controllers;
 
+import com.google.inject.Inject;
 import pij.ryan.durling.messages.ControllerMessages;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
@@ -16,6 +17,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     private boolean winner;
 
 
+    @Inject
     public QuizPlayerImpl(QuizServer quizServer) {
         this.quizServer = quizServer;
     }

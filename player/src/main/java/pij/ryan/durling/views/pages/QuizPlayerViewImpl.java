@@ -1,5 +1,6 @@
 package pij.ryan.durling.views.pages;
 
+import com.google.inject.Inject;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -16,6 +17,7 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     private Footer footer;
     private BorderPane borderPane;
 
+    @Inject
     public QuizPlayerViewImpl(QuizPlayer quizPlayer, Views views) {
         this.quizPlayer = quizPlayer;
         this.views = views;

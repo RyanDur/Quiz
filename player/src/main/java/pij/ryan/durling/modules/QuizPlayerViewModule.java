@@ -1,16 +1,17 @@
 package pij.ryan.durling.modules;
 
 import com.google.inject.AbstractModule;
-import pij.ryan.durling.controllers.QuizCreator;
-import pij.ryan.durling.controllers.QuizCreatorImpl;
+import pij.ryan.durling.controllers.QuizPlayer;
+import pij.ryan.durling.controllers.QuizPlayerImpl;
 import pij.ryan.durling.views.pages.Views;
 import pij.ryan.durling.views.pages.ViewsImpl;
 
-public class StartModule extends AbstractModule {
+public class QuizPlayerViewModule extends AbstractModule {
+
     @Override
     protected void configure() {
-        install(new QuizCreatorModule());
-        bind(QuizCreator.class).to(QuizCreatorImpl.class);
+        install(new QuizPlayerModule());
+        bind(QuizPlayer.class).to(QuizPlayerImpl.class);
         bind(Views.class).to(ViewsImpl.class);
     }
 }
