@@ -3,9 +3,10 @@ Feature: server interface for the clients
   Background:
     Given there is a server
 
+
   Scenario Outline: Should be able to create a quiz
     When a user creates a quiz named <title>
-    Then the user should receive a quiz
+    Then a user receives a quiz
 
   Examples:
     | title |
@@ -31,3 +32,28 @@ Feature: server interface for the clients
     | correct | answer  |
     | "true"  | "flop"  |
     | "false" | "bloop" |
+
+
+  Scenario Outline: Should be able to save a quiz
+    When a user creates a quiz named <title>
+    Then the user can save a quiz
+
+  Examples:
+    | title |
+    | "foo" |
+    | "bar" |
+
+
+  Scenario: should be able to get a set of available quizzes
+    When a user asks for the available quizzes
+    Then a user receives a list of available quizzes
+
+
+  Scenario Outline: should be able to get a quiz by id
+    When a user asks for quiz <id>
+    Then a user receives a quiz
+
+  Examples:
+    | id |
+    | 34 |
+    | 5  |
