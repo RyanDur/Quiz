@@ -21,7 +21,7 @@ public class QuestionsViewTest extends GuiTest {
 //        answerViewFactory = mock(AnswerViewFactory.class);
 //        GridPane answerView = new GridPane();
 //        when(answerViewFactory.getAnswerView(anySet())).thenReturn(answerView);
-//        QuestionView questionsView = new QuestionViewImpl(questions, answerViewFactory);
+//        Question questionsView = new QuestionImpl(questions, answerViewFactory);
 //
 //        StackPane stackPane = new StackPane();
 //        stackPane.setAlignment(Pos.BOTTOM_CENTER);

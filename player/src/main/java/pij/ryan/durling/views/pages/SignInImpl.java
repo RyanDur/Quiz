@@ -8,12 +8,12 @@ import javafx.scene.layout.StackPane;
 import pij.ryan.durling.messages.ViewMessages;
 
 
-public class SignInViewImpl extends StackPane implements SignInView {
+public class SignInImpl extends StackPane implements SignIn {
 
     private TextField field;
     private Button button;
 
-    public SignInViewImpl() {
+    public SignInImpl() {
         this.getStylesheets().add(ViewMessages.SIGN_IN_VIEW_STYLE_SHEET);
         this.setId(ViewMessages.SIGN_IN_ID);
         this.getChildren().add(getSignIn());

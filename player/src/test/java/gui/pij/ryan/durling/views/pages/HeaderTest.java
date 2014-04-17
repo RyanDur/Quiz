@@ -9,8 +9,8 @@ import javafx.scene.layout.StackPane;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.views.pages.Header;
-import pij.ryan.durling.views.pages.HeaderImpl;
+import pij.ryan.durling.views.elements.Header;
+import pij.ryan.durling.views.elements.HeaderImpl;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;

@@ -1,4 +1,4 @@
-package pij.ryan.durling.views.pages;
+package pij.ryan.durling.views.navigation;
 
 import com.google.inject.Inject;
 import javafx.scene.Node;
@@ -10,13 +10,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.models.Answer;
-import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.QuizOption;
+import pij.ryan.durling.views.elements.Footer;
+import pij.ryan.durling.views.elements.Header;
+import pij.ryan.durling.views.elements.ViewPane;
+import pij.ryan.durling.views.factories.Views;
+import pij.ryan.durling.views.pages.*;
 
 import java.util.Set;
 
-public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
+public class QuizNavImpl extends StackPane implements QuizNav {
     private QuizPlayer quizPlayer;
     private Views views;
     private Header header;
@@ -25,7 +28,7 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     private BorderPane borderPane;
 
     @Inject
-    public QuizPlayerViewImpl(QuizPlayer quizPlayer, Views views) {
+    public QuizNavImpl(QuizPlayer quizPlayer, Views views) {
         this.quizPlayer = quizPlayer;
         this.views = views;
         this.setId(ViewMessages.QUIZ_PLAYER_ID);
@@ -43,18 +46,18 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
         this.getChildren().add(borderPane);
     }
 
-    private SignInView getSignInView(Header header, ViewPane viewPane) {
-        SignInView signInView = views.getSignInView();
+    private SignIn getSignInView(Header header, ViewPane viewPane) {
+        SignIn signIn = views.getSignInView();
 
-        signInView.getSignInButton().setOnAction(e -> {
-            header.setPlayerName(signInView.getName());
+        signIn.getSignInButton().setOnAction(e -> {
+            header.setPlayerName(signIn.getName());
             viewPane.setView((Node) getMenuView());
         });
-        return signInView;
+        return signIn;
     }
 
-    private MenuView getMenuView() {
-        MenuView menuView = views.getMenuView();
+    private Menu getMenuView() {
+        Menu menu = views.getMenuView();
         int y = 0;
         for (QuizOption option : quizPlayer.getMenu()) {
             Button button = getButton(option.getQuizTitle(), y);
@@ -62,9 +65,9 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
                 header.setQuizTitle(option.getQuizTitle());
                 getQuestionView(option);
             });
-            menuView.addOption(button, y++);
+            menu.addOption(button, y++);
         }
-        return menuView;
+        return menu;
     }
 
     private void getQuestionView(QuizOption option) {
@@ -79,18 +82,18 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
         ScrollPane scrollPane = new ScrollPane();
         GridPane gridPane = new GridPane();
         int y = 0;
-        for(Question question : quizPlayer.getQuestions()) {
-            QuestionView questionView = views.getQuestionView(question, getAnswers(question.getAnswers(), question));
+        for(pij.ryan.durling.models.Question question : quizPlayer.getQuestions()) {
+            Question questionView = views.getQuestionView(question, getAnswers(question.getAnswers(), question));
             gridPane.add((Node) questionView, 0, y++);
         }
         scrollPane.setContent(gridPane);
         return scrollPane;
     }
 
-    private GridPane getAnswers(Set<Answer> answers, Question question) {
-        AnswerView answerView = views.getAnswerView();
+    private GridPane getAnswers(Set<pij.ryan.durling.models.Answer> answers, pij.ryan.durling.models.Question question) {
+        Answer answerView = views.getAnswerView();
         int y = 0;
-        for (Answer answer : answers) {
+        for (pij.ryan.durling.models.Answer answer : answers) {
             RadioButton radioButton = new RadioButton();
             radioButton.setId(ViewMessages.ANSWER_ID + y);
             radioButton.setOnAction(e -> {
@@ -115,9 +118,9 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
 
 
     public void getResultsView() {
-        ResultsView resultsView = views.getResultsView();
-        resultsView.setResults(quizPlayer.hasWon(), quizPlayer.getScore());
-        viewPane.setView((Node) resultsView);
+        Results results = views.getResultsView();
+        results.setResults(quizPlayer.hasWon(), quizPlayer.getScore());
+        viewPane.setView((Node) results);
         getNewQuizButton();
     }
 

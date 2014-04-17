@@ -3,11 +3,10 @@ package pij.ryan.durling.views.pages;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.models.Question;
 
-public class QuestionViewImpl extends GridPane implements QuestionView {
+public class QuestionImpl extends GridPane implements Question {
 
-    public QuestionViewImpl(Question question, GridPane answerView) {
+    public QuestionImpl(pij.ryan.durling.models.Question question, GridPane answerView) {
         this.getStylesheets().add(ViewMessages.QUESTION_VIEW_STYLE_SHEET);
         this.setId(ViewMessages.QUESTION_VIEW_ID);
         addQuestion(question.getQuestion());

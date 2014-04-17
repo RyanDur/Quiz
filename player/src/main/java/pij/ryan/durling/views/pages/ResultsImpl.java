@@ -6,12 +6,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import pij.ryan.durling.messages.ViewMessages;
 
-public class ResultsViewImpl extends StackPane implements ResultsView {
+public class ResultsImpl extends StackPane implements Results {
 
     private Label winnerLabel;
     private Label scoreLabel;
 
-    public ResultsViewImpl() {
+    public ResultsImpl() {
         this.getStylesheets().add(ViewMessages.RESULTS_VIEW_STYLESHEETS);
         this.setId(ViewMessages.RESULTS_VIEW_ID);
         GridPane borderPane = getGridPane();

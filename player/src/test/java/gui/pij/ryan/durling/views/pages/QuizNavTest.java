@@ -12,10 +12,10 @@ import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.QuizOption;
-import pij.ryan.durling.views.pages.QuizPlayerView;
-import pij.ryan.durling.views.pages.QuizPlayerViewImpl;
-import pij.ryan.durling.views.pages.Views;
-import pij.ryan.durling.views.pages.ViewsImpl;
+import pij.ryan.durling.views.navigation.QuizNav;
+import pij.ryan.durling.views.navigation.QuizNavImpl;
+import pij.ryan.durling.views.factories.Views;
+import pij.ryan.durling.views.factories.ViewsImpl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class QuizPlayerViewTest extends GuiTest {
+public class QuizNavTest extends GuiTest {
 
     private String nameField = "#" + ViewMessages.NAME_FIELD;
     private String name = "Keith";
@@ -54,11 +54,11 @@ public class QuizPlayerViewTest extends GuiTest {
         quizPlayer = getQuizPlayer();
         Set<Question> questions = getQuestions();
         when(quizPlayer.getQuestions()).thenReturn(questions);
-        QuizPlayerView quizPlayerView = new QuizPlayerViewImpl(quizPlayer, views);
+        QuizNav quizNav = new QuizNavImpl(quizPlayer, views);
 
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.BOTTOM_CENTER);
-        stackPane.getChildren().add((Node) quizPlayerView);
+        stackPane.getChildren().add((Node) quizNav);
         stackPane.setPrefHeight(800);
         stackPane.setPrefWidth(600);
         stackPane.setPadding(new Insets(50));

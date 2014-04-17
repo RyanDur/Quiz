@@ -1,4 +1,4 @@
 package pij.ryan.durling.views.pages;
 
-public interface QuizPlayerView {
+public interface Question {
 }

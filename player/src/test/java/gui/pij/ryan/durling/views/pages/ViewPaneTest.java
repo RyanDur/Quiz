@@ -7,8 +7,8 @@ import javafx.scene.layout.HBox;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.views.pages.ViewPane;
-import pij.ryan.durling.views.pages.ViewPaneImpl;
+import pij.ryan.durling.views.elements.ViewPane;
+import pij.ryan.durling.views.elements.ViewPaneImpl;
 
 import static org.loadui.testfx.Assertions.assertNodeExists;
 import static org.loadui.testfx.Assertions.verifyThat;

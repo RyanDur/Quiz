@@ -1,4 +1,4 @@
-package pij.ryan.durling.views.pages;
+package pij.ryan.durling.views.elements;
 
 public interface Header {
     void setPlayerName(String name);

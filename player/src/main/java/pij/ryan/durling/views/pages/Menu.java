@@ -2,7 +2,7 @@ package pij.ryan.durling.views.pages;
 
 import javafx.scene.control.Button;
 
-public interface MenuView {
+public interface Menu {
 
     void addOption(Button button, int y);
 }

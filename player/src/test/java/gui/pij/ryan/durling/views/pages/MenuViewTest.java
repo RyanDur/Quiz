@@ -9,8 +9,8 @@ import javafx.scene.layout.StackPane;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.messages.ViewMessages;
 import pij.ryan.durling.models.QuizOption;
-import pij.ryan.durling.views.pages.MenuView;
-import pij.ryan.durling.views.pages.MenuViewImpl;
+import pij.ryan.durling.views.pages.Menu;
+import pij.ryan.durling.views.pages.MenuImpl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class MenuViewTest extends GuiTest {
 
     private String title;
-    private MenuView menuView;
+    private Menu menu;
     private String value = "#" + ViewMessages.MENU_VIEW_BUTTON_ID + "2";
     private String query = "#" + ViewMessages.MENU_VIEW_BUTTON_ID + "3";
 
@@ -29,10 +29,10 @@ public class MenuViewTest extends GuiTest {
     protected Parent getRootNode() {
         Set<QuizOption> quizSet = getQuizzes();
 
-        menuView = new MenuViewImpl();
+        menu = new MenuImpl();
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.BOTTOM_CENTER);
-        stackPane.getChildren().add((Node) menuView);
+        stackPane.getChildren().add((Node) menu);
         stackPane.setPrefHeight(700);
         stackPane.setPrefWidth(600);
         stackPane.setPadding(new Insets(50));
@@ -52,7 +52,7 @@ public class MenuViewTest extends GuiTest {
 //                    option.getQuizId();
 //                });
 //
-//                menuView.addOption(button, y++);
+//                menu.addOption(button, y++);
 //            }
 //            verifyThat(value, hasText(title));
 //        });
@@ -71,7 +71,7 @@ public class MenuViewTest extends GuiTest {
 //                    option.getQuizId();
 //                });
 //
-//                menuView.addOption(button, y++);
+//                menu.addOption(button, y++);
 //            }
 //            click(query);
 //        });

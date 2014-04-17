@@ -4,8 +4,8 @@ import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.views.pages.SignInView;
-import pij.ryan.durling.views.pages.SignInViewImpl;
+import pij.ryan.durling.views.pages.SignIn;
+import pij.ryan.durling.views.pages.SignInImpl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -13,15 +13,15 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
 
-public class SignInViewTest extends GuiTest {
+public class SignInTest extends GuiTest {
 
-    private SignInView signInView;
+    private SignIn signIn;
     private String signInButton = "#" + ViewMessages.SIGN_IN_BUTTON_ID;
 
     @Override
     protected Parent getRootNode() {
-        signInView = new SignInViewImpl();
-        return (Parent) signInView;
+        signIn = new SignInImpl();
+        return (Parent) signIn;
     }
 
     @Test
@@ -36,6 +36,6 @@ public class SignInViewTest extends GuiTest {
                 .type(name)
                 .click(signInButton);
 
-        assertThat(signInView.getName(), is(equalTo(name)));
+        assertThat(signIn.getName(), is(equalTo(name)));
     }
 }

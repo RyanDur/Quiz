@@ -6,11 +6,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import pij.ryan.durling.messages.ViewMessages;
 
-public class MenuViewImpl extends ScrollPane implements MenuView {
+public class MenuImpl extends ScrollPane implements Menu {
 
     private GridPane gridPane;
 
-    public MenuViewImpl() {
+    public MenuImpl() {
         this.getStylesheets().add(ViewMessages.MENU_VIEW_STYLE_SHEET);
         this.setId(ViewMessages.MENU_VIEW_ID);
         setGridOptions();

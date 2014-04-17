@@ -7,9 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.log4j.BasicConfigurator;
-import pij.ryan.durling.modules.QuizPlayerViewModule;
-import pij.ryan.durling.views.pages.QuizPlayerView;
-import pij.ryan.durling.views.pages.QuizPlayerViewImpl;
+import pij.ryan.durling.modules.QuizNavModule;
+import pij.ryan.durling.views.navigation.QuizNav;
+import pij.ryan.durling.views.navigation.QuizNavImpl;
 
 public class Start extends Application {
 
@@ -20,9 +20,9 @@ public class Start extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         BasicConfigurator.configure();
-        Injector injector = Guice.createInjector(new QuizPlayerViewModule());
-        QuizPlayerView quizPlayerView = injector.getInstance(QuizPlayerViewImpl.class);
-        stage.setScene(new Scene((Parent) quizPlayerView, 600, 800));
+        Injector injector = Guice.createInjector(new QuizNavModule());
+        QuizNav quizNav = injector.getInstance(QuizNavImpl.class);
+        stage.setScene(new Scene((Parent) quizNav, 600, 800));
         stage.show();
     }
 }

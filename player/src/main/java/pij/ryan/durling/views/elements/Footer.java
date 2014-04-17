@@ -1,4 +1,4 @@
-package pij.ryan.durling.views.pages;
+package pij.ryan.durling.views.elements;
 
 import javafx.scene.control.Button;
 
