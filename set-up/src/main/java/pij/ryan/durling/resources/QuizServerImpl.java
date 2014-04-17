@@ -10,11 +10,15 @@ import java.rmi.RemoteException;
 
 public class QuizServerImpl implements QuizServer {
 
-    private final Server server;
+    private Server server;
 
     @Inject
-    public QuizServerImpl(ServerLink serverLink) throws RemoteException, NotBoundException {
-        server = serverLink.getServer();
+    public QuizServerImpl(ServerLink serverLink) {
+        try {
+            server = serverLink.getServer();
+        } catch (RemoteException | NotBoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
