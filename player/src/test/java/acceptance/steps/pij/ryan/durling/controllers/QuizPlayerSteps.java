@@ -91,7 +91,6 @@ public class QuizPlayerSteps {
     public void a_player_submits_the_quiz() throws Throwable {
         score = 52;
         when(server.checkHighScore(eq(quiz), anyInt())).thenReturn(true);
-        when(quiz.getScore()).thenReturn(score);
         quizPlayer.submitQuiz();
 
         verify(server).checkHighScore(eq(quiz), anyInt());

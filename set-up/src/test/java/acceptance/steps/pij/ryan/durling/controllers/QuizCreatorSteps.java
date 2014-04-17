@@ -163,7 +163,7 @@ public class QuizCreatorSteps {
 
     @Then("^the answer should not be added$")
     public void the_answer_should_not_be_added() throws Throwable {
-        verify(mockQuestion, never()).createAnswer(anyString(), anyBoolean());
+        verify(mockServer, never()).createAnswer(anyString(), anyBoolean());
     }
 
     @And("^have the message \"([^\"]*)\"$")

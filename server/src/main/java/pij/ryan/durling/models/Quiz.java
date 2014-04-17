@@ -9,11 +9,7 @@ public interface Quiz {
 
     boolean valid();
 
-    boolean contains(Question question);
-
     void add(Question question);
 
     Set<Question> getQuestions();
-
-    int getScore();
 }
