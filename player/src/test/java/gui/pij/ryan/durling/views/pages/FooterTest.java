@@ -40,9 +40,11 @@ public class FooterTest extends GuiTest {
         button.setText("Hello");
         button.setAlignment(Pos.BOTTOM_RIGHT);
 
-        Platform.runLater(() -> footer.setSubmitButton(button));
+        Platform.runLater(() -> {
+            footer.setSubmitButton(button);
+            verifyThat(submitButton, hasText("Hello"));
+        });
 
-        verifyThat(submitButton, hasText("Hello"));
     }
 
 
