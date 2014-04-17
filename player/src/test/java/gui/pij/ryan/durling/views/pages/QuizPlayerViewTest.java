@@ -52,7 +52,7 @@ public class QuizPlayerViewTest extends GuiTest {
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.BOTTOM_CENTER);
         stackPane.getChildren().add((Node) quizPlayerView);
-        stackPane.setPrefHeight(700);
+        stackPane.setPrefHeight(800);
         stackPane.setPrefWidth(600);
         stackPane.setPadding(new Insets(50));
         return stackPane;
