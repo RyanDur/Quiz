@@ -24,5 +24,7 @@ public interface Server {
 
     Quiz getQuiz(int id);
 
-    boolean checkHighScore(Quiz quiz, String userName);
+    boolean checkHighScore(Quiz quiz, int score);
+
+    void setHighScore(Quiz quiz, String playerName, int score);
 }
