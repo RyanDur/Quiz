@@ -1,16 +1,24 @@
 package pij.ryan.durling.controllers;
 
 import com.google.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pij.ryan.durling.messages.ControllerMessages;
+import pij.ryan.durling.messages.ServerMessages;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
-import pij.ryan.durling.resources.QuizServer;
+import pij.ryan.durling.resources.Server;
+import pij.ryan.durling.resources.ServerLink;
+import pij.ryan.durling.resources.ServerLinkImpl;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.Set;
 
 public class QuizPlayerImpl implements QuizPlayer {
-    private QuizServer quizServer;
+    private static final Logger log = LoggerFactory.getLogger(ServerLinkImpl.class);
+    private Server server;
     private Quiz quiz;
     private String playerName;
     private int score;
@@ -18,18 +26,22 @@ public class QuizPlayerImpl implements QuizPlayer {
 
 
     @Inject
-    public QuizPlayerImpl(QuizServer quizServer) {
-        this.quizServer = quizServer;
+    public QuizPlayerImpl(ServerLink serverLink) {
+        try {
+            this.server = serverLink.getServer();
+        } catch (RemoteException | NotBoundException e) {
+            log.error(ServerMessages.ERROR_MESSAGE, e);
+        }
     }
 
     @Override
     public Set<QuizOption> getMenu() {
-        return quizServer.getQuizOptions();
+        return server.getQuizOptions();
     }
 
     @Override
     public void chooseQuiz(int choice) {
-        quiz = quizServer.getQuiz(choice);
+        quiz = server.getQuiz(choice);
     }
 
     @Override
@@ -55,8 +67,8 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void submitQuiz() {
-        winner = quizServer.checkHighScore(quiz, getScore());
-        if (winner) quizServer.setHighSore(quiz, getPlayerName(), getScore());
+        winner = server.checkHighScore(quiz, getScore());
+        if (winner) server.setHighScore(quiz, getPlayerName(), getScore());
     }
 
     @Override

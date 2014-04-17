@@ -8,7 +8,8 @@ import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.controllers.QuizPlayerImpl;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
-import pij.ryan.durling.resources.QuizServer;
+import pij.ryan.durling.resources.Server;
+import pij.ryan.durling.resources.ServerLink;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,15 +23,17 @@ import static org.mockito.Mockito.*;
 public class QuizPlayerSteps {
 
     private QuizPlayer quizPlayer;
-    private QuizServer server;
+    private Server server;
     private Quiz quiz;
     private int score;
     private String caught;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
-        server = mock(QuizServer.class);
-        quizPlayer = new QuizPlayerImpl(server);
+        ServerLink serverLink = mock(ServerLink.class);
+        server = mock(Server.class);
+        when(serverLink.getServer()).thenReturn(server);
+        quizPlayer = new QuizPlayerImpl(serverLink);
     }
 
     @Given("^a player has a menu$")
@@ -135,7 +138,7 @@ public class QuizPlayerSteps {
 
     @Then("^the high score should be submitted$")
     public void the_high_score_should_be_submitted() throws Throwable {
-        verify(server).setHighSore(eq(quiz), anyString(), anyInt());
+        verify(server).setHighScore(eq(quiz), anyString(), anyInt());
     }
 
     private boolean ifTrue(String argument) {
