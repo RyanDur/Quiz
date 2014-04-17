@@ -5,8 +5,6 @@ public interface Question {
 
     int getValue();
 
-    Answer createAnswer(String answerString, boolean correct);
-
     void add(Answer answer);
 
     boolean valid();
