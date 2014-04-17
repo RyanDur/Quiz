@@ -7,12 +7,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import pij.ryan.durling.messages.ViewMessages;
 
-public class QuestionViewImpl extends GridPane implements QuestionView {
+public class QuestionsImpl extends GridPane implements Questions {
     private TextArea questionArea;
     private TextField scoreArea;
     private Button addQuestionButton;
 
-    public QuestionViewImpl() {
+    public QuestionsImpl() {
         this.getStylesheets().add(ViewMessages.QUESTION_VIEW_STYLE_SHEET);
         this.setId(ViewMessages.QUESTION_VIEW_ID);
         this.setAlignment(Pos.TOP_CENTER);

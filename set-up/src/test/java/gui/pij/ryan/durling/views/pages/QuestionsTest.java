@@ -5,28 +5,28 @@ import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.views.pages.QuestionView;
-import pij.ryan.durling.views.pages.QuestionViewImpl;
-import pij.ryan.durling.views.pages.Views;
+import pij.ryan.durling.views.pages.Questions;
+import pij.ryan.durling.views.pages.QuestionsImpl;
+import pij.ryan.durling.views.factories.Views;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class QuestionViewTest extends GuiTest {
-    private QuestionView questionView;
+public class QuestionsTest extends GuiTest {
+    private Questions questions;
     private Views views;
 
     @Override
     protected Parent getRootNode() {
         views = mock(Views.class);
-        questionView = new QuestionViewImpl();
+        questions = new QuestionsImpl();
 
-        return (Parent) questionView;
+        return (Parent) questions;
     }
 
     @Test
     public void shouldBeAbleToAddAQuestionAndChangeView() throws IllegalQuizCreationException {
-        questionView.getAddQuestionButton().setOnMousePressed(e -> {
+        questions.getAddQuestionButton().setOnMousePressed(e -> {
             views.getAnswerView();
         });
 

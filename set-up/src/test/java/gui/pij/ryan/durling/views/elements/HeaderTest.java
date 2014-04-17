@@ -1,13 +1,13 @@
-package gui.pij.ryan.durling.views.pages;
+package gui.pij.ryan.durling.views.elements;
 
 import javafx.scene.Parent;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.views.pages.Header;
-import pij.ryan.durling.views.pages.HeaderImpl;
-import pij.ryan.durling.views.pages.Views;
+import pij.ryan.durling.views.elements.Header;
+import pij.ryan.durling.views.elements.HeaderImpl;
+import pij.ryan.durling.views.factories.Views;
 
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;

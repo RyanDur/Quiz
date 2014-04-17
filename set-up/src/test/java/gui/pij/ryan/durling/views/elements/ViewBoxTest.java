@@ -1,4 +1,4 @@
-package gui.pij.ryan.durling.views.pages;
+package gui.pij.ryan.durling.views.elements;
 
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -7,8 +7,8 @@ import javafx.scene.layout.HBox;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.views.pages.ViewBox;
-import pij.ryan.durling.views.pages.ViewBoxImpl;
+import pij.ryan.durling.views.elements.ViewBox;
+import pij.ryan.durling.views.elements.ViewBoxImpl;
 
 import static org.loadui.testfx.Assertions.assertNodeExists;
 import static org.loadui.testfx.Assertions.verifyThat;

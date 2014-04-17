@@ -1,4 +1,4 @@
-package pij.ryan.durling.views.pages;
+package pij.ryan.durling.views.navigation;
 
 import com.google.inject.Inject;
 import javafx.scene.Node;
@@ -7,14 +7,19 @@ import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.messages.ViewMessages;
+import pij.ryan.durling.views.elements.Footer;
+import pij.ryan.durling.views.elements.Header;
+import pij.ryan.durling.views.elements.ViewBox;
+import pij.ryan.durling.views.factories.Views;
+import pij.ryan.durling.views.pages.*;
 
 
 public class EditorImpl extends BorderPane implements Editor {
 
     private Views views;
     private QuizCreator quizCreator;
-    private AnswerView answerView;
-    private QuestionView questionView;
+    private Answers answers;
+    private Questions questions;
     private Footer footer;
     private Header header;
     private ViewBox viewBox;
@@ -64,10 +69,10 @@ public class EditorImpl extends BorderPane implements Editor {
 
 
     private void addQuestionView() {
-        questionView = views.getQuestionView();
-        questionView.getAddQuestionButton().setOnAction(e -> {
+        questions = views.getQuestionView();
+        questions.getAddQuestionButton().setOnAction(e -> {
             try {
-                quizCreator.addQuestion(questionView.getQuestion(), questionView.getScore());
+                quizCreator.addQuestion(questions.getQuestion(), questions.getScore());
                 viewBox.removeMessage();
                 viewBox.removeView();
                 addAnswerView();
@@ -75,20 +80,20 @@ public class EditorImpl extends BorderPane implements Editor {
                 viewBox.setMessage(e1.getMessage());
             }
         });
-        viewBox.setView((Node) questionView);
+        viewBox.setView((Node) questions);
     }
 
     private void addAnswerView() {
-        answerView = views.getAnswerView();
-        answerView.setQuestionLabel(questionView.getQuestion());
-        viewBox.setView((Node) answerView);
+        answers = views.getAnswerView();
+        answers.setQuestionLabel(questions.getQuestion());
+        viewBox.setView((Node) answers);
         addAnswer();
         addAnotherQuestion();
 
     }
 
     private void addAnotherQuestion() {
-        answerView.getAddAnotherQuestionButton().setOnMousePressed(e -> {
+        answers.getAddAnotherQuestionButton().setOnMousePressed(e -> {
             viewBox.removeView();
             addQuestionView();
             if (quizCreator.validQuiz()) {
@@ -98,9 +103,9 @@ public class EditorImpl extends BorderPane implements Editor {
     }
 
     private void addAnswer() {
-        answerView.getAddAnswerButton().setOnAction(e -> {
+        answers.getAddAnswerButton().setOnAction(e -> {
             try {
-                quizCreator.addAnswer(answerView.getAnswer(), answerView.getAnswerValue());
+                quizCreator.addAnswer(answers.getAnswer(), answers.getAnswerValue());
                 viewBox.removeMessage();
                 viewBox.removeView();
                 addAnswerView();

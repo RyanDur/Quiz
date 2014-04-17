@@ -9,8 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.log4j.BasicConfigurator;
 import pij.ryan.durling.modules.EditorModule;
-import pij.ryan.durling.views.pages.Editor;
-import pij.ryan.durling.views.pages.EditorImpl;
+import pij.ryan.durling.views.navigation.Editor;
+import pij.ryan.durling.views.navigation.EditorImpl;
 
 public class Start extends Application {
 

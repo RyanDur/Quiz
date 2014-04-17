@@ -10,14 +10,14 @@ import javafx.scene.layout.GridPane;
 import pij.ryan.durling.messages.ViewMessages;
 
 
-public class AnswerViewImpl extends GridPane implements AnswerView {
+public class AnswersImpl extends GridPane implements Answers {
 
     private boolean answerValue;
     private Button addAnswerButton;
     private Button addAnotherQuestionButton;
     private TextArea answerArea;
 
-    public AnswerViewImpl() {
+    public AnswersImpl() {
         this.getStylesheets().add(ViewMessages.ANSWER_VIEW_STYLE_SHEET);
         this.setId(ViewMessages.ANSWER_VIEW_ID);
         this.setAlignment(Pos.TOP_CENTER);

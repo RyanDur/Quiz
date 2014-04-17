@@ -1,4 +1,4 @@
-package gui.pij.ryan.durling.views.pages;
+package gui.pij.ryan.durling.views.navigation;
 
 import javafx.scene.Parent;
 import org.junit.Test;
@@ -7,9 +7,9 @@ import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.messages.ViewMessages;
-import pij.ryan.durling.views.pages.EditorImpl;
-import pij.ryan.durling.views.pages.Views;
-import pij.ryan.durling.views.pages.ViewsImpl;
+import pij.ryan.durling.views.navigation.EditorImpl;
+import pij.ryan.durling.views.factories.Views;
+import pij.ryan.durling.views.factories.ViewsImpl;
 
 import static org.loadui.testfx.Assertions.assertNodeExists;
 import static org.loadui.testfx.Assertions.verifyThat;
