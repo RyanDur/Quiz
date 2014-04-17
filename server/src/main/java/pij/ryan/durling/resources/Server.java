@@ -8,17 +8,13 @@ import pij.ryan.durling.models.QuizOption;
 import java.util.Set;
 
 public interface Server {
-    Quiz createQuiz(String s);
+    Quiz createQuiz(String title);
 
     Question createQuestion(String question, int score);
 
-    void save(Quiz quiz);
-
     Answer createAnswer(String answer, boolean value);
 
-    void lock(int quizId);
-
-    void unlock(int quizId);
+    void save(Quiz quiz);
 
     Set<QuizOption> getQuizOptions();
 
