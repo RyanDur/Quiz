@@ -64,9 +64,9 @@ public class QuizServerSteps {
 
     @When("^a user submits a quiz$")
     public void a_user_submits_a_quiz() throws Throwable {
-        when(mockServer.checkHighScore(eq(quiz), anyString())).thenReturn(true);
-        winner = quizServer.checkHighScore(quiz, "Bob");
-        verify(mockServer).checkHighScore(eq(quiz), anyString());
+        when(mockServer.checkHighScore(eq(quiz), anyInt())).thenReturn(true);
+        winner = quizServer.checkHighScore(quiz, 3);
+        verify(mockServer).checkHighScore(eq(quiz), anyInt());
     }
 
     @Then("^it should check the high score$")

@@ -43,22 +43,35 @@ Feature: Coordinate the playing of a quiz
     | 1          |
     | 5          |
 
-  Scenario Outline: Should be able to get the score of a submitted quiz
+  Scenario Outline: Should be able to get the score
     Given a player has a menu
     When a player chooses an available quiz <menuOption>
-    And a player submits the quiz
-    Then a player should be able to get the score for the quiz
+    And a player adds <score> to the score
+    Then a player should be able to get the <score> for the quiz
+
 
   Examples:
-    | menuOption |
-    | 1          |
-    | 5          |
+    | menuOption | score |
+    | 1          | 4     |
+    | 5          | 54    |
 
   Scenario Outline: Should be able to check if the player has won when quiz is submitted
     Given a player has a menu
     When a player chooses an available quiz <menuOption>
     And a player submits the quiz
     Then a player should be able to know if they have <won>
+
+  Examples:
+    | menuOption | won    |
+    | 1          | "true" |
+    | 5          | "true" |
+
+  Scenario Outline: Should be able to set a new high score if the player is the winner
+    Given a player has a menu
+    When a player chooses an available quiz <menuOption>
+    And a player submits the quiz
+    And a player has <won>
+    Then the high score should be submitted
 
   Examples:
     | menuOption | won    |

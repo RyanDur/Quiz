@@ -20,6 +20,8 @@ public interface QuizPlayer {
 
     void submitQuiz();
 
+    void addScore(int score);
+
     int getScore();
 
     boolean hasWon();

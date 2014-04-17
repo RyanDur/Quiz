@@ -23,7 +23,9 @@ import java.util.Set;
 import static org.loadui.testfx.Assertions.assertNodeExists;
 import static org.loadui.testfx.Assertions.verifyThat;
 import static org.loadui.testfx.controls.Commons.hasText;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class QuizPlayerViewTest extends GuiTest {
@@ -36,9 +38,14 @@ public class QuizPlayerViewTest extends GuiTest {
     private Question question2;
     private Answer answer4;
     private QuizPlayer quizPlayer;
-    private String answer5 = "#" + ViewMessages.ANSWER_ID + 4;
+    private String answer5 = "#" + ViewMessages.ANSWER_ID + 3;
     private String submit = ViewMessages.SUBMIT;
     private String playAgain = ViewMessages.PLAY_AGAIN;
+    private Answer answer;
+    private Answer answer1;
+    private Answer answer2;
+    private Answer answer3;
+    private Answer answer51;
 
     @Override
     protected Parent getRootNode() {
@@ -68,29 +75,7 @@ public class QuizPlayerViewTest extends GuiTest {
     }
 
     @Test
-    public void shouldBeAbleToChooseAQuiz() {
-        click(nameField)
-                .type(name)
-                .click(signInButton)
-                .click(quizTitle);
-
-        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(quizTitle));
-    }
-
-    @Test
-    public void shouldBeAbleToSeeTheQuestionsOfTheChosenAQuiz() {
-        click(nameField)
-                .type(name)
-                .click(signInButton)
-                .click(quizTitle);
-
-        assertNodeExists(hasText(question1.getQuestion()));
-        assertNodeExists(hasText(question2.getQuestion()));
-        verifyThat("#" + ViewMessages.QUIZ_TITLE_ID, hasText(quizTitle));
-    }
-
-    @Test
-    public void shouldBeAbleToSeeTheAnswersForTheQuestionsOfTheChosenAQuiz() throws InterruptedException {
+    public void shouldBeAbleToSeeTheAnswersForTheQuestionsOfTheChosenAQuiz() {
         click(nameField)
                 .type(name)
                 .click(signInButton)
@@ -107,6 +92,14 @@ public class QuizPlayerViewTest extends GuiTest {
     public void shouldKnowIfWinnerAfterSubmitting() {
         when(quizPlayer.hasWon()).thenReturn(true);
         when(quizPlayer.getScore()).thenReturn(54);
+        when(answer.getValue()).thenReturn(true);
+        when(answer1.getValue()).thenReturn(true);
+        when(answer2.getValue()).thenReturn(true);
+        when(answer3.getValue()).thenReturn(true);
+        when(answer4.getValue()).thenReturn(true);
+        when(answer4.getValue()).thenReturn(true);
+        when(answer51.getValue()).thenReturn(true);
+
         click(nameField)
                 .type(name)
                 .click(signInButton)
@@ -115,6 +108,8 @@ public class QuizPlayerViewTest extends GuiTest {
                 .click(submit);
 
         assertNodeExists(ViewMessages.WINNER);
+        verify(quizPlayer).addScore(anyInt());
+        verify(quizPlayer).submitQuiz();
     }
 
     @Test
@@ -212,36 +207,30 @@ public class QuizPlayerViewTest extends GuiTest {
     private Set<Answer> getAnswers() {
         Set<Answer> answers = new HashSet<>();
 
-        Answer answer = mock(Answer.class);
+        answer = mock(Answer.class);
         when(answer.getAnswer()).thenReturn("Answer 1");
-        when(answer.getId()).thenReturn(1);
 
-        Answer answer1 = mock(Answer.class);
+        answer1 = mock(Answer.class);
         when(answer1.getAnswer()).thenReturn("Answer 2");
-        when(answer1.getId()).thenReturn(2);
 
-        Answer answer2 = mock(Answer.class);
+        answer2 = mock(Answer.class);
         when(answer2.getAnswer()).thenReturn("Answer 3");
-        when(answer2.getId()).thenReturn(3);
 
-        Answer answer3 = mock(Answer.class);
+        answer3 = mock(Answer.class);
         when(answer3.getAnswer()).thenReturn("Answer 4");
-        when(answer3.getId()).thenReturn(4);
 
         answer4 = mock(Answer.class);
         when(answer4.getAnswer()).thenReturn("Answer 5");
-        when(answer4.getId()).thenReturn(5);
 
-        Answer answer5 = mock(Answer.class);
-        when(answer5.getAnswer()).thenReturn("Answer 6");
-        when(answer5.getId()).thenReturn(6);
+        answer51 = mock(Answer.class);
+        when(answer51.getAnswer()).thenReturn("Answer 6");
 
         answers.add(answer);
         answers.add(answer1);
         answers.add(answer2);
         answers.add(answer3);
         answers.add(answer4);
-        answers.add(answer5);
+        answers.add(answer51);
         return answers;
     }
 }

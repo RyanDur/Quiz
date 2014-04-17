@@ -3,11 +3,18 @@ package pij.ryan.durling.views.pages;
 import com.google.inject.Inject;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.messages.ViewMessages;
+import pij.ryan.durling.models.Answer;
+import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.QuizOption;
+
+import java.util.Set;
 
 public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
     private QuizPlayer quizPlayer;
@@ -64,8 +71,36 @@ public class QuizPlayerViewImpl extends StackPane implements QuizPlayerView {
         Button submitButton = getButton();
         footer.setSubmitButton(submitButton);
         quizPlayer.chooseQuiz(option.getQuizId());
-        QuestionsView questionsView = views.getQuestionView(quizPlayer.getQuestions());
-        viewPane.setView((Node) questionsView);
+        ScrollPane questions = getQuestions();
+        viewPane.setView(questions);
+    }
+
+    private ScrollPane getQuestions() {
+        ScrollPane scrollPane = new ScrollPane();
+        GridPane gridPane = new GridPane();
+        int y = 0;
+        for(Question question : quizPlayer.getQuestions()) {
+            QuestionView questionView = views.getQuestionView(question, getAnswers(question.getAnswers(), question));
+            gridPane.add((Node) questionView, 0, y++);
+        }
+        scrollPane.setContent(gridPane);
+        return scrollPane;
+    }
+
+    private GridPane getAnswers(Set<Answer> answers, Question question) {
+        AnswerView answerView = views.getAnswerView();
+        int y = 0;
+        for (Answer answer : answers) {
+            RadioButton radioButton = new RadioButton();
+            radioButton.setId(ViewMessages.ANSWER_ID + y);
+            radioButton.setOnAction(e -> {
+                if(answer.getValue()) {
+                    quizPlayer.addScore(question.getValue());
+                }
+            });
+            answerView.addAnswer(radioButton, answer.getAnswer(), y++);
+        }
+        return (GridPane) answerView;
     }
 
     private Button getButton() {

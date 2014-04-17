@@ -10,5 +10,7 @@ public interface QuizServer {
 
     Quiz getQuiz(int quizId);
 
-    boolean checkHighScore(Quiz quiz, String userName);
+    boolean checkHighScore(Quiz quiz, int score);
+
+    void setHighSore(Quiz quiz, String playerName, int score);
 }

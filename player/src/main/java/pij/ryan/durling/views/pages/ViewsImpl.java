@@ -1,10 +1,7 @@
 package pij.ryan.durling.views.pages;
 
+import javafx.scene.layout.GridPane;
 import pij.ryan.durling.models.Question;
-import pij.ryan.durling.views.factories.AnswerViewFactory;
-import pij.ryan.durling.views.factories.AnswerViewFactoryImpl;
-
-import java.util.Set;
 
 public class ViewsImpl implements Views {
     @Override
@@ -28,9 +25,8 @@ public class ViewsImpl implements Views {
     }
 
     @Override
-    public QuestionsView getQuestionView(Set<Question> questions) {
-        AnswerViewFactory answerViewFactory = new AnswerViewFactoryImpl();
-        return new QuestionsViewImpl(questions, answerViewFactory);
+    public QuestionView getQuestionView(Question question, GridPane answerView) {
+        return new QuestionViewImpl(question, answerView);
     }
 
     @Override
@@ -41,5 +37,10 @@ public class ViewsImpl implements Views {
     @Override
     public ResultsView getResultsView() {
         return new ResultsViewImpl();
+    }
+
+    @Override
+    public AnswerView getAnswerView() {
+        return new AnswerViewImpl();
     }
 }

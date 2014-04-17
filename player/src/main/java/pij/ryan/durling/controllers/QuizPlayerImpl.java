@@ -55,8 +55,13 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void submitQuiz() {
-        score = quiz.getScore();
-        winner = quizServer.checkHighScore(quiz, getPlayerName());
+        winner = quizServer.checkHighScore(quiz, getScore());
+        if (winner) quizServer.setHighSore(quiz, getPlayerName(), getScore());
+    }
+
+    @Override
+    public void addScore(int score) {
+        this.score += score;
     }
 
     @Override

@@ -34,7 +34,12 @@ public class QuizServerImpl implements QuizServer {
     }
 
     @Override
-    public boolean checkHighScore(Quiz quiz, String userName) {
-        return server.checkHighScore(quiz, userName);
+    public boolean checkHighScore(Quiz quiz, int score) {
+        return server.checkHighScore(quiz, score);
+    }
+
+    @Override
+    public void setHighSore(Quiz quiz, String playerName, int score) {
+        server.setHighScore(quiz, playerName, score);
     }
 }

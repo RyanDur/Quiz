@@ -1,8 +1,7 @@
 package pij.ryan.durling.views.pages;
 
+import javafx.scene.layout.GridPane;
 import pij.ryan.durling.models.Question;
-
-import java.util.Set;
 
 public interface Views {
     Header getHeader();
@@ -13,9 +12,11 @@ public interface Views {
 
     MenuView getMenuView();
 
-    QuestionsView getQuestionView(Set<Question> questions);
+    QuestionView getQuestionView(Question question, GridPane answerView);
 
     Footer getFooter();
 
     ResultsView getResultsView();
+
+    AnswerView getAnswerView();
 }

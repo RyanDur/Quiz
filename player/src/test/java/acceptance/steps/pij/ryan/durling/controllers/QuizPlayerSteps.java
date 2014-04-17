@@ -87,11 +87,11 @@ public class QuizPlayerSteps {
     @And("^a player submits the quiz$")
     public void a_player_submits_the_quiz() throws Throwable {
         score = 52;
-        when(server.checkHighScore(eq(quiz), anyString())).thenReturn(true);
+        when(server.checkHighScore(eq(quiz), anyInt())).thenReturn(true);
         when(quiz.getScore()).thenReturn(score);
         quizPlayer.submitQuiz();
 
-        verify(quiz).getScore();
+        verify(server).checkHighScore(eq(quiz), anyInt());
     }
 
     @Then("^a player should be able to get the score for the quiz$")
@@ -104,7 +104,7 @@ public class QuizPlayerSteps {
         boolean won = ifTrue(wonString);
 
         assertThat(quizPlayer.hasWon(), is(equalTo(won)));
-        verify(server).checkHighScore(eq(quiz), anyString());
+        verify(server).checkHighScore(eq(quiz), anyInt());
     }
 
     @Then("^a player should not be able to get there name$")
@@ -115,6 +115,27 @@ public class QuizPlayerSteps {
     @And("^should get the message \"([^\"]*)\"$")
     public void should_get_the_message(String message) throws Throwable {
         assertThat(caught, is(equalTo(message)));
+    }
+
+    @And("^a player adds (\\d+) to the score$")
+    public void a_player_adds_to_the_score(int score) throws Throwable {
+        quizPlayer.addScore(score);
+    }
+
+    @Then("^a player should be able to get the (\\d+) for the quiz$")
+    public void a_player_should_be_able_to_get_the_for_the_quiz(int score) throws Throwable {
+        assertThat(quizPlayer.getScore(), is(equalTo(score)));
+    }
+
+    @And("^a player has \"([^\"]*)\"$")
+    public void a_player_has(String wonString) throws Throwable {
+        boolean won = ifTrue(wonString);
+        when(server.checkHighScore(eq(quiz), anyInt())).thenReturn(won);
+    }
+
+    @Then("^the high score should be submitted$")
+    public void the_high_score_should_be_submitted() throws Throwable {
+        verify(server).setHighSore(eq(quiz), anyString(), anyInt());
     }
 
     private boolean ifTrue(String argument) {
