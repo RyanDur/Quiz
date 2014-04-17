@@ -1,4 +1,4 @@
-package acceptance.steps.pij.ryan.durling.services;
+package acceptance.steps.pij.ryan.durling.controllers;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -10,7 +10,8 @@ import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
-import pij.ryan.durling.resources.QuizServer;
+import pij.ryan.durling.resources.Server;
+import pij.ryan.durling.resources.ServerLink;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.*;
 public class QuizCreatorSteps {
 
     private QuizCreator quizCreator;
-    private QuizServer mockQuizServer = mock(QuizServer.class);
+    private Server mockServer = mock(Server.class);
     private Quiz mockQuiz = mock(Quiz.class);
     private Question mockQuestion = mock(Question.class);
     private Integer quizId;
@@ -32,7 +33,9 @@ public class QuizCreatorSteps {
 
     @Given("^a user has a quiz creator$")
     public void a_user_has_a_quiz_creator() throws Throwable {
-        quizCreator = new QuizCreatorImpl(mockQuizServer);
+        ServerLink serverLink = mock(ServerLink.class);
+        when(serverLink.getServer()).thenReturn(mockServer);
+        quizCreator = new QuizCreatorImpl(serverLink);
     }
 
     @When("^a user creates a quiz named \"([^\"]*)\"$")
@@ -41,7 +44,7 @@ public class QuizCreatorSteps {
 
         when(mockQuiz.getName()).thenReturn(name);
         when(mockQuiz.getId()).thenReturn(5);
-        when(mockQuizServer.createQuiz(anyString())).thenReturn(mockQuiz);
+        when(mockServer.createQuiz(anyString())).thenReturn(mockQuiz);
 
         try {
             quizCreator.createQuiz(name);
@@ -56,13 +59,13 @@ public class QuizCreatorSteps {
         String actual = quizCreator.getName();
 
         assertThat(actual, is(equalTo(expected)));
-        verify(mockQuizServer).createQuiz(anyString());
+        verify(mockServer).createQuiz(anyString());
         verify(mockQuiz).getId();
     }
 
     @Then("^a quiz should not be created$")
     public void a_quiz_should_not_be_created() throws Throwable {
-        verify(mockQuizServer, never()).createQuiz(anyString());
+        verify(mockServer, never()).createQuiz(anyString());
     }
 
     @And("^not return the quiz ID$")
@@ -73,12 +76,12 @@ public class QuizCreatorSteps {
 
     @Then("^the question should be added$")
     public void the_question_should_be_added() throws Throwable {
-        verify(mockQuizServer).createQuestion(anyString(), anyInt());
+        verify(mockServer).createQuestion(anyString(), anyInt());
     }
 
     @Then("^the question should not be created$")
     public void the_question_should_not_be_created() throws Throwable {
-        verify(mockQuizServer, never()).createQuestion(anyString(), anyInt());
+        verify(mockServer, never()).createQuestion(anyString(), anyInt());
     }
 
     @When("^a user saves the quiz$")
@@ -92,7 +95,7 @@ public class QuizCreatorSteps {
 
     @Then("^the quiz should not be saved$")
     public void the_quiz_should_not_be_saved() throws Throwable {
-        verify(mockQuizServer, never()).save(eq(mockQuiz));
+        verify(mockServer, never()).save(eq(mockQuiz));
     }
 
     @And("^return the quiz ID$")
@@ -102,7 +105,7 @@ public class QuizCreatorSteps {
 
     @Then("^the quiz should be saved$")
     public void the_quiz_should_be_saved() throws Throwable {
-        verify(mockQuizServer).save(eq(mockQuiz));
+        verify(mockServer).save(eq(mockQuiz));
     }
 
     @When("^a user creates a question with \"([^\"]*)\" and (.*)$")
@@ -111,7 +114,7 @@ public class QuizCreatorSteps {
 
         when(mockQuestion.getQuestion()).thenReturn(questionString);
         when(mockQuestion.getValue()).thenReturn(value);
-        when(mockQuizServer.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
+        when(mockServer.createQuestion(anyString(), anyInt())).thenReturn(mockQuestion);
 
         try {
             quizCreator.addQuestion(questionString, value);
@@ -122,7 +125,7 @@ public class QuizCreatorSteps {
 
     @Then("^the answer should be added$")
     public void the_answer_should_be_added() throws Throwable {
-        verify(mockQuizServer).createAnswer(anyString(), anyBoolean());
+        verify(mockServer).createAnswer(anyString(), anyBoolean());
     }
 
     @And("^a user creates an \"([^\"]*)\" that is \"([^\"]*)\"$")
@@ -181,7 +184,7 @@ public class QuizCreatorSteps {
 
     @Then("^the answer should not be created$")
     public void the_answer_should_not_be_created() throws Throwable {
-        verify(mockQuizServer, never()).createAnswer(anyString(), anyBoolean());
+        verify(mockServer, never()).createAnswer(anyString(), anyBoolean());
     }
 
     @Then("^a user should be able to get the \"([^\"]*)\"$")
@@ -193,13 +196,13 @@ public class QuizCreatorSteps {
     @Then("^a user should be able to lock a quiz$")
     public void a_user_should_be_able_to_lock_a_quiz() throws Throwable {
         quizCreator.lockQuiz(quizCreator.getQuizId());
-        verify(mockQuizServer).lock(anyInt());
+        verify(mockServer).lock(anyInt());
     }
 
     @Then("^a user should be able to unlock a quiz$")
     public void a_user_should_be_able_to_unlock_a_quiz() throws Throwable {
         quizCreator.unlockQuiz(quizCreator.getQuizId());
-        verify(mockQuizServer).unlock(anyInt());
+        verify(mockServer).unlock(anyInt());
     }
 
     private String ifNull(String argument) {

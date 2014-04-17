@@ -7,17 +7,25 @@ import pij.ryan.durling.messages.ControllerMessages;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
-import pij.ryan.durling.resources.QuizServer;
+import pij.ryan.durling.resources.Server;
+import pij.ryan.durling.resources.ServerLink;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class QuizCreatorImpl implements QuizCreator {
 
-    private final QuizServer quizServer;
+    private Server server;
     private Quiz quiz;
     private Question question;
 
     @Inject
-    public QuizCreatorImpl(QuizServer quizServer) {
-        this.quizServer = quizServer;
+    public QuizCreatorImpl(ServerLink serverLink) {
+        try {
+            this.server = serverLink.getServer();
+        } catch (RemoteException | NotBoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -28,7 +36,7 @@ public class QuizCreatorImpl implements QuizCreator {
     @Override
     public void createQuiz(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException(ControllerMessages.EMPTY_TITLE);
-        quiz = quizServer.createQuiz(name);
+        quiz = server.createQuiz(name);
     }
 
     @Override
@@ -36,7 +44,7 @@ public class QuizCreatorImpl implements QuizCreator {
         if (quiz == null) throw new IllegalQuizCreationException();
         if (score < 1) throw new IllegalArgumentException(ControllerMessages.INVALID_SCORE);
         if (inValid(questionString)) throw new IllegalArgumentException(ControllerMessages.EMPTY_QUESTION);
-        question = quizServer.createQuestion(questionString, score);
+        question = server.createQuestion(questionString, score);
         quiz.add(question);
     }
 
@@ -44,7 +52,7 @@ public class QuizCreatorImpl implements QuizCreator {
     public void addAnswer(String answerString, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
         if (quiz == null) throw new IllegalQuizCreationException();
         if (inValid(answerString)) throw new IllegalArgumentException(ControllerMessages.EMPTY_ANSWER);
-        Answer answer = quizServer.createAnswer(answerString, value);
+        Answer answer = server.createAnswer(answerString, value);
         question.add(answer);
     }
 
@@ -52,7 +60,7 @@ public class QuizCreatorImpl implements QuizCreator {
     public void save() throws IllegalQuizCreationException, InvalidQuizException {
         if (quiz == null) throw new IllegalQuizCreationException();
         if (!quiz.valid()) throw new InvalidQuizException();
-        quizServer.save(quiz);
+        server.save(quiz);
     }
 
     @Override
@@ -67,7 +75,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void lockQuiz(int id) {
-        quizServer.lock(id);
+        server.lock(id);
     }
 
     @Override
@@ -77,7 +85,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public void unlockQuiz(int id) {
-        quizServer.unlock(id);
+        server.unlock(id);
     }
 
     private boolean inValid(String argument) {
