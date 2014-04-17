@@ -1,4 +1,4 @@
-package gui.pij.ryan.durling.views.pages;
+package gui.pij.ryan.durling.views.elements;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;

@@ -1,4 +1,4 @@
-package gui.pij.ryan.durling.views.pages;
+package gui.pij.ryan.durling.views.navigation;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

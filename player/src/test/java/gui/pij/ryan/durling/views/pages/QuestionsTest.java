@@ -10,7 +10,7 @@ import java.util.Set;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class QuestionsViewTest extends GuiTest {
+public class QuestionsTest extends GuiTest {
 
     private Question question1;
     private Question question2;

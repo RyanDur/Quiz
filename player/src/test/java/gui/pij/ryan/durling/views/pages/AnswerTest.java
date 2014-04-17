@@ -16,7 +16,7 @@ import java.util.Set;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AnswerViewTest extends GuiTest {
+public class AnswerTest extends GuiTest {
 
     private pij.ryan.durling.models.Answer answer4;
     private String query = "#" + ViewMessages.ANSWER_ID + "5";

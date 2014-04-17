@@ -18,7 +18,7 @@ import java.util.Set;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MenuViewTest extends GuiTest {
+public class MenuTest extends GuiTest {
 
     private String title;
     private Menu menu;
