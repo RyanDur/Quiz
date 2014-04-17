@@ -1,7 +1,9 @@
 package pij.ryan.durling.models;
 
-public interface Answer {
-    String getAnswer();
+import java.rmi.RemoteException;
 
-    boolean getValue();
+public interface Answer {
+    String getAnswer() throws RemoteException;
+
+    boolean getValue() throws RemoteException;
 }
