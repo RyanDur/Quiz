@@ -18,9 +18,5 @@ public interface QuizCreator {
 
     String getQuestion();
 
-    void lockQuiz(int id);
-
     int getQuizId();
-
-    void unlockQuiz(int id);
 }

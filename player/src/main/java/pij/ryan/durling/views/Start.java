@@ -22,7 +22,7 @@ public class Start extends Application {
         BasicConfigurator.configure();
         Injector injector = Guice.createInjector(new QuizNavModule());
         QuizNav quizNav = injector.getInstance(QuizNavImpl.class);
-        stage.setScene(new Scene((Parent) quizNav, 600, 800));
+        stage.setScene(new Scene((Parent) quizNav, 500, 800));
         stage.show();
     }
 }

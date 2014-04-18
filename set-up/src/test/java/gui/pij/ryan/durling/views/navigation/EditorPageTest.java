@@ -95,35 +95,6 @@ public class EditorPageTest extends GuiTest {
     }
 
     @Test
-    public void shouldBeAbleToLockAQuizYouAreWorkingOn() {
-        String lockedQuiz = ViewMessages.LOCKED_QUIZ_BUTTON;
-
-        click(addQuiz)
-                .click(addQuizField)
-                .type(quizName)
-                .click(createQuiz)
-                .click(lock);
-
-        verify(mockQuizCreator).lockQuiz(anyInt());
-        verifyThat(lock, hasText(lockedQuiz));
-    }
-
-    @Test
-    public void shouldBeAbleToUnlockAQuizLocking() {
-        String lockQuiz = ViewMessages.LOCK_QUIZ_BUTTON;
-
-        click(addQuiz)
-                .click(addQuizField)
-                .type(quizName)
-                .click(createQuiz)
-                .click(lock).click(addQuestionField)
-                .click(lock);
-
-        verify(mockQuizCreator).unlockQuiz(anyInt());
-        verifyThat(lock, hasText(lockQuiz));
-    }
-
-    @Test
     public void shouldBeAbleToAddAQuestionAfterCreatingAQuiz() {
         click(addQuiz)
                 .click(addQuizField)
@@ -366,7 +337,6 @@ public class EditorPageTest extends GuiTest {
                 .click(save);
 
         verify(mockQuizCreator).save();
-        verify(mockQuizCreator).unlockQuiz(anyInt());
         assertNodeExists(header);
         assertNodeExists(addQuizId);
         assertNodeExists(footer);

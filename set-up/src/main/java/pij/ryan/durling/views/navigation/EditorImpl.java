@@ -42,7 +42,6 @@ public class EditorImpl extends BorderPane implements Editor {
             try {
                 quizCreator.createQuiz(header.getTitle());
                 viewBox.removeMessage();
-                addLockQuizButton(header);
                 header.setTitle(quizCreator.getName());
                 addQuestionView();
             } catch (IllegalArgumentException e1) {
@@ -57,7 +56,6 @@ public class EditorImpl extends BorderPane implements Editor {
         footer.getSaveButton().setOnAction(e -> {
             try {
                 quizCreator.save();
-                quizCreator.unlockQuiz(quizCreator.getQuizId());
                 viewBox.removeMessage();
                 resetEditor();
             } catch (IllegalQuizCreationException | InvalidQuizException e1) {
@@ -113,19 +111,6 @@ public class EditorImpl extends BorderPane implements Editor {
                 viewBox.setMessage(e1.getMessage());
             }
         });
-    }
-
-    private void addLockQuizButton(Header quizView) {
-        quizView.getLockQuizButton().setOnAction(event -> {
-            if (quizView.getLockQuizButton().getText().equals(ViewMessages.LOCK_QUIZ_BUTTON)) {
-                quizCreator.lockQuiz(quizCreator.getQuizId());
-                quizView.toggleLock();
-            } else {
-                quizCreator.unlockQuiz(quizCreator.getQuizId());
-                quizView.toggleLock();
-            }
-        });
-        quizView.setLockQuiz();
     }
 
     private void resetEditor() {

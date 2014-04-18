@@ -193,18 +193,6 @@ public class QuizCreatorSteps {
         assertThat(quizCreator.getQuestion(), is(equalTo(question)));
     }
 
-    @Then("^a user should be able to lock a quiz$")
-    public void a_user_should_be_able_to_lock_a_quiz() throws Throwable {
-        quizCreator.lockQuiz(quizCreator.getQuizId());
-        verify(mockServer).lock(anyInt());
-    }
-
-    @Then("^a user should be able to unlock a quiz$")
-    public void a_user_should_be_able_to_unlock_a_quiz() throws Throwable {
-        quizCreator.unlockQuiz(quizCreator.getQuizId());
-        verify(mockServer).unlock(anyInt());
-    }
-
     private String ifNull(String argument) {
         String nullValue = "null";
         if (nullValue.equals(argument)) argument = null;

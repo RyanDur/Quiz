@@ -74,18 +74,8 @@ public class QuizCreatorImpl implements QuizCreator {
     }
 
     @Override
-    public void lockQuiz(int id) {
-        server.lock(id);
-    }
-
-    @Override
     public int getQuizId() {
         return quiz.getId();
-    }
-
-    @Override
-    public void unlockQuiz(int id) {
-        server.unlock(id);
     }
 
     private boolean inValid(String argument) {
