@@ -1,10 +1,11 @@
 package pij.ryan.durling.models;
 
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ScoreImpl extends UnicastRemoteObject implements Score {
+public class ScoreImpl extends UnicastRemoteObject implements Score, Serializable {
     private String playerName;
     private int score;
 

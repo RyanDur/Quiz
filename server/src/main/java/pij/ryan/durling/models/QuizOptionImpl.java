@@ -1,9 +1,10 @@
 package pij.ryan.durling.models;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class QuizOptionImpl extends UnicastRemoteObject implements QuizOption {
+public class QuizOptionImpl extends UnicastRemoteObject implements QuizOption, Serializable {
     private String title;
     private int id;
 

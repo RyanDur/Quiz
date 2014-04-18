@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import pij.ryan.durling.factories.OptionFactory;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
+import pij.ryan.durling.serializers.QuizSerializer;
 
 import java.rmi.RemoteException;
 import java.util.HashSet;
@@ -14,11 +15,20 @@ public class QuizCtrlImpl implements QuizCtrl {
 
     private final TreeMap<Integer, Quiz> quizzes;
     private OptionFactory optionFactory;
+    private QuizSerializer quizSerializer;
 
     @Inject
-    public QuizCtrlImpl(OptionFactory optionFactory) {
+    public QuizCtrlImpl(OptionFactory optionFactory, QuizSerializer quizSerializer) {
         this.optionFactory = optionFactory;
-        quizzes = new TreeMap<>();
+        this.quizSerializer = quizSerializer;
+        if (this.quizSerializer.dataExists()) {
+            this.quizSerializer.deserialize();
+            quizzes = quizSerializer.getQuizzes();
+            System.out.println(quizzes);
+        } else {
+            quizzes = new TreeMap<>();
+        }
+        Runtime.getRuntime().addShutdownHook(flushHook());
     }
 
     @Override
@@ -42,5 +52,14 @@ public class QuizCtrlImpl implements QuizCtrl {
     @Override
     public Quiz getQuiz(int id) {
         return quizzes.get(id);
+    }
+
+    @Override
+    public void flush() {
+        quizSerializer.serialize(quizzes);
+    }
+
+    private Thread flushHook() {
+        return new Thread(this::flush);
     }
 }

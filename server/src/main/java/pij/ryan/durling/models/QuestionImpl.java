@@ -1,11 +1,12 @@
 package pij.ryan.durling.models;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashSet;
 import java.util.Set;
 
-public class QuestionImpl extends UnicastRemoteObject implements Question {
+public class QuestionImpl extends UnicastRemoteObject implements Question, Serializable {
     private String question;
     private int score;
     private final Set<Answer> answers;

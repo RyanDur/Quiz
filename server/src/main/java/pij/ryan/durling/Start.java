@@ -9,6 +9,7 @@ import pij.ryan.durling.resources.ServerImpl;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Scanner;
 
 public class Start {
 
@@ -24,5 +25,8 @@ public class Start {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        new Scanner(System.in).nextLine();
+        System.exit(0);
     }
 }

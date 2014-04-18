@@ -12,4 +12,6 @@ public interface QuizCtrl {
     Set<QuizOption> getQuizOptions();
 
     Quiz getQuiz(int id);
+
+    void flush();
 }

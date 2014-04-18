@@ -9,6 +9,7 @@ import pij.ryan.durling.controllers.QuizCtrlImpl;
 import pij.ryan.durling.factories.OptionFactory;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
+import pij.ryan.durling.serializers.QuizSerializer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +33,8 @@ public class QuizCtrlSteps {
     @Given("^a user has a quiz controller$")
     public void a_user_has_a_quiz_controller() throws Throwable {
         optionFactory = mock(OptionFactory.class);
-        quizCtrl = new QuizCtrlImpl(optionFactory);
+        QuizSerializer quizSerializer = mock(QuizSerializer.class);
+        quizCtrl = new QuizCtrlImpl(optionFactory, quizSerializer);
     }
 
     @And("^a user has a (\\d+)$")
