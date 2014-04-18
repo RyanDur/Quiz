@@ -33,7 +33,6 @@ public class HeaderTest extends GuiTest {
         quizView = new HeaderImpl();
         quizView.getCreateQuizButton().setOnMousePressed(e -> {
             quizView.getLockQuizButton().setOnAction(event -> {
-                mockQuizCreator.lockQuiz(0);
                 quizView.toggleLock();
             });
             quizView.setLockQuiz();
@@ -86,6 +85,5 @@ public class HeaderTest extends GuiTest {
                 .click(lock);
 
         verifyThat(lock, hasText(ViewMessages.LOCKED_QUIZ_BUTTON));
-        verify(mockQuizCreator).lockQuiz(anyInt());
     }
 }
