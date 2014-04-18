@@ -79,13 +79,6 @@ public class ServerSteps {
         assertThat(answer, is(equalTo(mockAnswer)));
     }
 
-    private boolean ifTrue(String argument) {
-        boolean value = false;
-        String aTrueValue = "true";
-        if (aTrueValue.equals(argument)) value = true;
-        return value;
-    }
-
     @Then("^the user can save a quiz$")
     public void the_user_can_save_a_quiz() throws Throwable {
         server.save(quiz);
@@ -131,5 +124,12 @@ public class ServerSteps {
     public void a_user_set_the_high(int score) throws Throwable {
         server.setHighScore(quiz, "Bob", score);
         verify(highSoreCtrl).setHighScore(eq(quiz), anyString(), anyInt());
+    }
+
+    private boolean ifTrue(String argument) {
+        boolean value = false;
+        String aTrueValue = "true";
+        if (aTrueValue.equals(argument)) value = true;
+        return value;
     }
 }
