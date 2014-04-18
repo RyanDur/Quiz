@@ -5,14 +5,15 @@ import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
 
+import java.rmi.RemoteException;
 import java.util.Set;
 
 public interface Server {
     Quiz createQuiz(String title);
 
-    Question createQuestion(String question, int score);
+    Question createQuestion(String question, int score) throws RemoteException;
 
-    Answer createAnswer(String answer, boolean value);
+    Answer createAnswer(String answer, boolean value) throws RemoteException;
 
     void save(Quiz quiz);
 

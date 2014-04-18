@@ -8,6 +8,7 @@ import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
 
+import java.rmi.RemoteException;
 import java.util.Set;
 
 public class ServerImpl implements Server {
@@ -27,12 +28,12 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public Question createQuestion(String question, int score) {
+    public Question createQuestion(String question, int score) throws RemoteException {
         return quizFactory.createQuestion(question, score);
     }
 
     @Override
-    public Answer createAnswer(String answer, boolean value) {
+    public Answer createAnswer(String answer, boolean value) throws RemoteException {
         return quizFactory.createAnswer(answer, value);
     }
 
