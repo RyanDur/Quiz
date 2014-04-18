@@ -4,6 +4,7 @@ import pij.ryan.durling.factories.ScoreFactory;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.Score;
 
+import java.rmi.RemoteException;
 import java.util.TreeMap;
 
 public class HighScoreCtrlImpl implements HighScoreCtrl {
@@ -16,7 +17,7 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
     }
 
     @Override
-    public boolean checkHighScore(Quiz quiz, int score) {
+    public boolean checkHighScore(Quiz quiz, int score) throws RemoteException {
         boolean result = true;
         if(scores.containsKey(quiz.getId())) {
             Score current = scores.get(quiz.getId());
@@ -26,7 +27,7 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
     }
 
     @Override
-    public void setHighScore(Quiz quiz, String player, int userScore) {
+    public void setHighScore(Quiz quiz, String player, int userScore) throws RemoteException {
         Score score = scoreFactory.createScore(player, userScore);
         scores.put(quiz.getId(), score);
     }

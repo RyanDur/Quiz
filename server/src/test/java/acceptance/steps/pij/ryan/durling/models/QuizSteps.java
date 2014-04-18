@@ -58,4 +58,13 @@ public class QuizSteps {
         if (aTrueValue.equals(argument)) value = true;
         return value;
     }
+
+//    @Given("^there is a score object for \"([^\"]*)\" with (\\d+)$")
+//    public void there_is_a_score_object_for_with(String name, int userScore) throws Throwable {
+//        score = new ScoreImpl(name, userScore);
+//    }
+//    @Then("^a player has a (\\d+)$")
+//       public void a_player_has_a(int userScore) throws Throwable {
+//        Assert.assertThat(score.getScore(), is(equalTo(userScore)));
+//    }
 }

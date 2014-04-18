@@ -12,7 +12,7 @@ public class QuizFactoryImpl implements QuizFactory {
     }
 
     @Override
-    public Quiz createQuiz(String title) {
+    public Quiz createQuiz(String title) throws RemoteException {
         return new QuizImpl(title, idGenerator.generateId());
     }
 

@@ -7,7 +7,7 @@ import pij.ryan.durling.models.Quiz;
 import java.rmi.RemoteException;
 
 public interface QuizFactory {
-    Quiz createQuiz(String title);
+    Quiz createQuiz(String title) throws RemoteException;
 
     Question createQuestion(String question, int score) throws RemoteException;
 
