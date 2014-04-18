@@ -9,19 +9,19 @@ import java.rmi.RemoteException;
 import java.util.Set;
 
 public interface Server {
-    Quiz createQuiz(String title);
+    Quiz createQuiz(String title) throws RemoteException;
 
     Question createQuestion(String question, int score) throws RemoteException;
 
     Answer createAnswer(String answer, boolean value) throws RemoteException;
 
-    void save(Quiz quiz);
+    void save(Quiz quiz) throws RemoteException;
 
-    Set<QuizOption> getQuizOptions();
+    Set<QuizOption> getQuizOptions() throws RemoteException;
 
-    Quiz getQuiz(int id);
+    Quiz getQuiz(int id) throws RemoteException;
 
-    boolean checkHighScore(Quiz quiz, int score);
+    boolean checkHighScore(Quiz quiz, int score) throws RemoteException;
 
-    void setHighScore(Quiz quiz, String playerName, int score);
+    void setHighScore(Quiz quiz, String playerName, int score) throws RemoteException;
 }

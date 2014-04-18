@@ -1,5 +1,8 @@
 package pij.ryan.durling.models;
 
-public interface Score {
-    int getScore();
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface Score extends Remote {
+    int getScore() throws RemoteException;
 }

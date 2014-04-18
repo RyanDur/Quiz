@@ -1,7 +1,10 @@
 package pij.ryan.durling.models;
 
-public interface QuizOption {
-    String getQuizTitle();
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-    int getQuizId();
+public interface QuizOption extends Remote {
+    String getQuizTitle() throws RemoteException;
+
+    int getQuizId() throws RemoteException;
 }
