@@ -1,5 +1,6 @@
 package pij.ryan.durling.controllers;
 
+import com.google.inject.Inject;
 import pij.ryan.durling.factories.ScoreFactory;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.Score;
@@ -11,6 +12,7 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
     private ScoreFactory scoreFactory;
     private TreeMap<Integer, Score> scores;
 
+    @Inject
     public HighScoreCtrlImpl(ScoreFactory scoreFactory) {
         this.scoreFactory = scoreFactory;
         scores = new TreeMap<>();

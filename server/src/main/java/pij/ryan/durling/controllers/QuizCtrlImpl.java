@@ -1,5 +1,6 @@
 package pij.ryan.durling.controllers;
 
+import com.google.inject.Inject;
 import pij.ryan.durling.factories.OptionFactory;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
@@ -14,6 +15,7 @@ public class QuizCtrlImpl implements QuizCtrl {
     private final TreeMap<Integer, Quiz> quizzes;
     private OptionFactory optionFactory;
 
+    @Inject
     public QuizCtrlImpl(OptionFactory optionFactory) {
         this.optionFactory = optionFactory;
         quizzes = new TreeMap<>();

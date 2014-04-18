@@ -1,5 +1,6 @@
 package pij.ryan.durling.factories;
 
+import com.google.inject.Inject;
 import pij.ryan.durling.models.*;
 
 import java.rmi.RemoteException;
@@ -7,6 +8,7 @@ import java.rmi.RemoteException;
 public class QuizFactoryImpl implements QuizFactory {
     private IdGenerator idGenerator;
 
+    @Inject
     public QuizFactoryImpl(IdGenerator idGenerator) {
         this.idGenerator = idGenerator;
     }
