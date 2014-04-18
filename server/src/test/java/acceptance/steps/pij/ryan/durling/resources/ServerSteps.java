@@ -6,6 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import pij.ryan.durling.controllers.HighScoreCtrl;
 import pij.ryan.durling.controllers.QuizCtrl;
+import pij.ryan.durling.factories.QuizFactory;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
@@ -35,29 +36,31 @@ public class ServerSteps {
     private Set<QuizOption> mockOptions;
     private Set<QuizOption> options;
     private HighScoreCtrl highSoreCtrl;
+    private QuizFactory quizFactory;
 
     @Given("^there is a server$")
     public void there_is_a_server() throws Throwable {
         highSoreCtrl = mock(HighScoreCtrl.class);
+        quizFactory = mock(QuizFactory.class);
         quizCtrl = mock(QuizCtrl.class);
-        server = new ServerImpl(quizCtrl, highSoreCtrl);
+        server = new ServerImpl(quizCtrl, highSoreCtrl, quizFactory);
     }
 
     @When("^a user creates a quiz named \"([^\"]*)\"$")
     public void a_user_creates_a_quiz_named(String title) throws Throwable {
         mockQuiz = mock(Quiz.class);
         when(mockQuiz.getName()).thenReturn(title);
-        when(quizCtrl.createQuiz(anyString())).thenReturn(mockQuiz);
+        when(quizFactory.createQuiz(anyString())).thenReturn(mockQuiz);
         quiz = server.createQuiz(title);
-        verify(quizCtrl).createQuiz(title);
+        verify(quizFactory).createQuiz(title);
     }
 
     @When("^a user creates a \"([^\"]*)\" with a (\\d+)$")
     public void a_user_creates_a_with_a(String questionString, int score) throws Throwable {
         mockQuestion = mock(Question.class);
-        when(quizCtrl.createQuestion(questionString, score)).thenReturn(mockQuestion);
+        when(quizFactory.createQuestion(questionString, score)).thenReturn(mockQuestion);
         question = server.createQuestion(questionString, score);
-        verify(quizCtrl).createQuestion(anyString(), anyInt());
+        verify(quizFactory).createQuestion(anyString(), anyInt());
     }
 
     @Then("^the user should receive a question$")
@@ -69,9 +72,9 @@ public class ServerSteps {
     public void a_user_creates_a(String correct, String answerString) throws Throwable {
         boolean value = ifTrue(correct);
         mockAnswer = mock(Answer.class);
-        when(quizCtrl.createAnswer(answerString, value)).thenReturn(mockAnswer);
+        when(quizFactory.createAnswer(answerString, value)).thenReturn(mockAnswer);
         answer = server.createAnswer(answerString, value);
-        verify(quizCtrl).createAnswer(anyString(), anyBoolean());
+        verify(quizFactory).createAnswer(anyString(), anyBoolean());
     }
 
     @Then("^the user should receive an answer$")

@@ -2,6 +2,7 @@ package pij.ryan.durling.resources;
 
 import pij.ryan.durling.controllers.HighScoreCtrl;
 import pij.ryan.durling.controllers.QuizCtrl;
+import pij.ryan.durling.factories.QuizFactory;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
@@ -12,25 +13,27 @@ import java.util.Set;
 public class ServerImpl implements Server {
     private QuizCtrl quizCtrl;
     private HighScoreCtrl highSoreCtrl;
+    private QuizFactory quizFactory;
 
-    public ServerImpl(QuizCtrl quizCtrl, HighScoreCtrl highSoreCtrl) {
+    public ServerImpl(QuizCtrl quizCtrl, HighScoreCtrl highSoreCtrl, QuizFactory quizFactory) {
         this.quizCtrl = quizCtrl;
         this.highSoreCtrl = highSoreCtrl;
+        this.quizFactory = quizFactory;
     }
 
     @Override
     public Quiz createQuiz(String title) {
-        return quizCtrl.createQuiz(title);
+        return quizFactory.createQuiz(title);
     }
 
     @Override
     public Question createQuestion(String question, int score) {
-        return quizCtrl.createQuestion(question, score);
+        return quizFactory.createQuestion(question, score);
     }
 
     @Override
     public Answer createAnswer(String answer, boolean value) {
-        return quizCtrl.createAnswer(answer, value);
+        return quizFactory.createAnswer(answer, value);
     }
 
     @Override
