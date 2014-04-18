@@ -1,5 +1,6 @@
 package pij.ryan.durling.resources;
 
+import pij.ryan.durling.controllers.HighScoreCtrl;
 import pij.ryan.durling.controllers.QuizCtrl;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
@@ -10,9 +11,11 @@ import java.util.Set;
 
 public class ServerImpl implements Server {
     private QuizCtrl quizCtrl;
+    private HighScoreCtrl highSoreCtrl;
 
-    public ServerImpl(QuizCtrl quizCtrl) {
+    public ServerImpl(QuizCtrl quizCtrl, HighScoreCtrl highSoreCtrl) {
         this.quizCtrl = quizCtrl;
+        this.highSoreCtrl = highSoreCtrl;
     }
 
     @Override
@@ -47,11 +50,11 @@ public class ServerImpl implements Server {
 
     @Override
     public boolean checkHighScore(Quiz quiz, int score) {
-        return false;
+        return highSoreCtrl.checkHighScore(quiz, score);
     }
 
     @Override
     public void setHighScore(Quiz quiz, String playerName, int score) {
-
+        highSoreCtrl.setHighScore(quiz, playerName, score);
     }
 }

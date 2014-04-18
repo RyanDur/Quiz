@@ -1,8 +1,10 @@
 package acceptance.steps.pij.ryan.durling.resources;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import pij.ryan.durling.controllers.HighScoreCtrl;
 import pij.ryan.durling.controllers.QuizCtrl;
 import pij.ryan.durling.models.Answer;
 import pij.ryan.durling.models.Question;
@@ -32,11 +34,13 @@ public class ServerSteps {
     private Answer mockAnswer;
     private Set<QuizOption> mockOptions;
     private Set<QuizOption> options;
+    private HighScoreCtrl highSoreCtrl;
 
     @Given("^there is a server$")
     public void there_is_a_server() throws Throwable {
+        highSoreCtrl = mock(HighScoreCtrl.class);
         quizCtrl = mock(QuizCtrl.class);
-        server = new ServerImpl(quizCtrl);
+        server = new ServerImpl(quizCtrl, highSoreCtrl);
     }
 
     @When("^a user creates a quiz named \"([^\"]*)\"$")
@@ -111,5 +115,21 @@ public class ServerSteps {
     @Then("^a user receives a quiz$")
     public void a_user_receives_a_quiz() throws Throwable {
         assertThat(quiz, is(equalTo(mockQuiz)));
+    }
+
+    @And("^a user checks if he has the high (\\d+)$")
+    public void a_user_checks_if_he_has_the_high(int score) throws Throwable {
+        server.checkHighScore(quiz, score);
+    }
+
+    @Then("^the user receives a notification$")
+    public void the_user_receives_a_notification() throws Throwable {
+        verify(highSoreCtrl).checkHighScore(eq(quiz), anyInt());
+    }
+
+    @Then("^a user set the high (\\d+)$")
+    public void a_user_set_the_high(int score) throws Throwable {
+        server.setHighScore(quiz, "Bob", score);
+        verify(highSoreCtrl).setHighScore(eq(quiz), anyString(), anyInt());
     }
 }

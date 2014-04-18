@@ -57,3 +57,24 @@ Feature: server interface for the clients
     | id |
     | 34 |
     | 5  |
+
+
+  Scenario Outline: Should be able to check the players score against the high score of a given quiz
+    When a user creates a quiz named <title>
+    And a user checks if he has the high <score>
+    Then the user receives a notification
+
+  Examples:
+    | title | score |
+    | "foo" | 45    |
+    | "bar" | 3     |
+
+
+  Scenario Outline: Should be able to set the players score against the high score of a given quiz
+    When a user creates a quiz named <title>
+    Then a user set the high <score>
+
+  Examples:
+    | title | score |
+    | "foo" | 45    |
+    | "bar" | 3     |
