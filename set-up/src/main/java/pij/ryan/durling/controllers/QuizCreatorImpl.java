@@ -4,9 +4,7 @@ import com.google.inject.Inject;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.messages.ControllerMessages;
-import pij.ryan.durling.models.Answer;
-import pij.ryan.durling.models.Question;
-import pij.ryan.durling.models.Quiz;
+import pij.ryan.durling.resources.QuizMaker;
 import pij.ryan.durling.resources.Server;
 import pij.ryan.durling.resources.ServerLink;
 
@@ -15,67 +13,68 @@ import java.rmi.RemoteException;
 
 public class QuizCreatorImpl implements QuizCreator {
 
-    private Server server;
-    private Quiz quiz;
-    private Question question;
+    private QuizMaker quizMaker;
+    private int quizId;
 
     @Inject
     public QuizCreatorImpl(ServerLink serverLink) {
+        Server server = null;
         try {
-            this.server = serverLink.getServer();
+            server = serverLink.getServer();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
+        }
+        if (server != null) {
+            quizMaker = server.getQuizMaker();
         }
     }
 
     @Override
     public String getName() {
-        return quiz.getName();
+        return quizMaker.getName();
     }
 
     @Override
     public void createQuiz(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException(ControllerMessages.EMPTY_TITLE);
-        quiz = server.createQuiz(name);
+        quizId = quizMaker.createQuiz(name);
     }
 
     @Override
-    public void addQuestion(String questionString, int score) throws IllegalArgumentException, IllegalQuizCreationException {
-        if (quiz == null) throw new IllegalQuizCreationException();
+    public void addQuestion(String question, int score) throws IllegalArgumentException, IllegalQuizCreationException {
+        if (quizMaker.empty()) throw new IllegalQuizCreationException();
         if (score < 1) throw new IllegalArgumentException(ControllerMessages.INVALID_SCORE);
-        if (inValid(questionString)) throw new IllegalArgumentException(ControllerMessages.EMPTY_QUESTION);
-        question = server.createQuestion(questionString, score);
-        quiz.add(question);
+        if (inValid(question)) throw new IllegalArgumentException(ControllerMessages.EMPTY_QUESTION);
+        quizMaker.addQuestion(question, score);
     }
 
     @Override
-    public void addAnswer(String answerString, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
-        if (quiz == null) throw new IllegalQuizCreationException();
-        if (inValid(answerString)) throw new IllegalArgumentException(ControllerMessages.EMPTY_ANSWER);
-        Answer answer = server.createAnswer(answerString, value);
-        question.add(answer);
+    public void addAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException {
+        if (quizMaker.empty()) throw new IllegalQuizCreationException();
+        if (inValid(answer)) throw new IllegalArgumentException(ControllerMessages.EMPTY_ANSWER);
+        quizMaker.addAnswer(answer, value);
     }
 
     @Override
     public void save() throws IllegalQuizCreationException, InvalidQuizException {
-        if (quiz == null) throw new IllegalQuizCreationException();
-        if (!quiz.valid()) throw new InvalidQuizException();
-        server.save(quiz);
+        if (quizMaker.empty()) throw new IllegalQuizCreationException();
+        if (!quizMaker.validQuiz()) throw new InvalidQuizException();
+        quizMaker.save();
     }
 
     @Override
     public boolean validQuiz() {
-        return quiz.valid();
+        return quizMaker.validQuiz();
     }
 
     @Override
     public String getQuestion() {
-        return question.getQuestion();
+        return quizMaker.getQuestion();
     }
 
     @Override
     public int getQuizId() {
-        return quiz.getId();
+        return quizId;
     }
 
     private boolean inValid(String argument) {

@@ -8,6 +8,8 @@ import pij.ryan.durling.messages.ServerMessages;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
+import pij.ryan.durling.models.Score;
+import pij.ryan.durling.resources.QuizPlay;
 import pij.ryan.durling.resources.Server;
 import pij.ryan.durling.resources.ServerLink;
 import pij.ryan.durling.resources.ServerLinkImpl;
@@ -18,6 +20,7 @@ import java.util.Set;
 
 public class QuizPlayerImpl implements QuizPlayer {
     private static final Logger log = LoggerFactory.getLogger(ServerLinkImpl.class);
+    private QuizPlay quizPlay;
     private Server server;
     private Quiz quiz;
     private String playerName;
@@ -29,6 +32,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     public QuizPlayerImpl(ServerLink serverLink) {
         try {
             this.server = serverLink.getServer();
+            this.quizPlay = server.getQuizPlay();
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE, e);
         }
@@ -36,12 +40,12 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public Set<QuizOption> getMenu() {
-        return server.getQuizOptions();
+        return quizPlay.getQuizOptions();
     }
 
     @Override
     public void chooseQuiz(int choice) {
-        quiz = server.getQuiz(choice);
+        quiz = quizPlay.getQuiz(choice);
     }
 
     @Override
@@ -67,8 +71,9 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void submitQuiz() {
-        winner = server.checkHighScore(quiz, getScore());
-        if (winner) server.setHighScore(quiz, getPlayerName(), getScore());
+        Score score1 = quizPlay.getHighScore(quiz.getId());
+        setWinner(score1.getScore() < score);
+        if (hasWon()) quizPlay.setHighScore(quiz.getId(), getPlayerName(), getScore());
     }
 
     @Override
@@ -84,5 +89,9 @@ public class QuizPlayerImpl implements QuizPlayer {
     @Override
     public boolean hasWon() {
         return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 }

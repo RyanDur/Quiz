@@ -17,6 +17,11 @@ public class Start {
         Injector injector = Guice.createInjector(new ServerModule());
         Server server = injector.getInstance(ServerImpl.class);
 
+        System.setProperty("java.security.policy", "security.policy");
+        if (System.getSecurityManager() == null) {
+            System.setSecurityManager(new SecurityManager());
+        }
+
         try {
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind("Server", server);

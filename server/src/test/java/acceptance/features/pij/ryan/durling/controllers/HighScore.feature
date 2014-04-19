@@ -3,23 +3,23 @@ Feature: Should be able to store high scores
   Background:
     Given there is a high score controller
 
-  Scenario Outline: should have the high score if none exists
-    When a user can check if there <score> beats the <current high score>
-    Then a user receives the <result>
+  Scenario Outline: should be able to get the high score
+    When a <user> has a quiz <id>
+    And a user sets there <score>
+    And a user gets the score via the quiz <id>
+    Then a user should receive the score
 
   Examples:
-    | score | current high score | result |
-    | 73    | 0                  | "true" |
-    | 5     | 0                  | "true" |
+    | user    | score | id   |
+    | "Ryan"  | 45    | 3    |
+    | "Keimi" | 67    | 1005 |
 
 
   Scenario Outline: should be able to set the high score
     When a <user> has a quiz <id>
     Then a user sets there <score>
-    When a user can check if there <score> beats the <current high score>
-    Then a user receives the <result>
 
   Examples:
-    | user    | score | id   | current high score | result  |
-    | "Ryan"  | 45    | 3    | 0                  | "true"  |
-    | "Keimi" | 67    | 1005 | 93                 | "false" |
+    | user    | score | id   |
+    | "Ryan"  | 45    | 3    |
+    | "Keimi" | 67    | 1005 |

@@ -40,7 +40,6 @@ public class QuizNavTest extends GuiTest {
     private QuizPlayer quizPlayer;
     private String answer5 = "#" + ViewMessages.ANSWER_ID + 3;
     private String submit = ViewMessages.SUBMIT;
-    private String playAgain = ViewMessages.PLAY_AGAIN;
     private Answer answer;
     private Answer answer1;
     private Answer answer2;
@@ -143,7 +142,8 @@ public class QuizNavTest extends GuiTest {
 
     @Test
     public void shouldBeAbleToPlayAnotherQuiz() {
-         click(nameField)
+        String playAgain = ViewMessages.PLAY_AGAIN;
+        click(nameField)
                 .type(name)
                 .click(signInButton)
                 .click(quizTitle)

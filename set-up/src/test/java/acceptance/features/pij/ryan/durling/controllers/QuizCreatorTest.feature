@@ -41,6 +41,7 @@ Feature: The ability to create quizzes
     | "bar" | "bar?"   | 3     |
 
   Scenario: should not be able to add a question to a null quiz
+    Given a quiz is never created
     When a user creates a question with "foo?" and 7
     Then the question should not be added
     And throw an IllegalQuizCreationException
@@ -60,6 +61,7 @@ Feature: The ability to create quizzes
     | "baz" | "null"   | 3     |
 
   Scenario Outline: should not be able to create a question without a quiz
+    Given a quiz is never created
     When a user creates a question with <question> and <value>
     Then the question should not be created
     And throw an IllegalQuizCreationException
@@ -121,6 +123,7 @@ Feature: The ability to create quizzes
 
   Scenario Outline: should not be able to save an improperly named quiz
     When a user creates a quiz named <name>
+    And a quiz is never created
     And the quiz is <valid>
     And a user saves the quiz
     Then the quiz should not be saved
@@ -147,6 +150,7 @@ Feature: The ability to create quizzes
     | "bar" | "false" |
 
   Scenario: should not be able to save a quiz that does not exist
+    Given a quiz is never created
     When a user saves the quiz
     Then the quiz should not be saved
     And throw an IllegalQuizCreationException
