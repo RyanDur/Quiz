@@ -5,7 +5,6 @@ import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.messages.ControllerMessages;
 import pij.ryan.durling.resources.QuizMaker;
-import pij.ryan.durling.resources.Server;
 import pij.ryan.durling.resources.ServerLink;
 
 import java.rmi.NotBoundException;
@@ -18,14 +17,10 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Inject
     public QuizCreatorImpl(ServerLink serverLink) {
-        Server server = null;
         try {
-            server = serverLink.getServer();
+            quizMaker = serverLink.getQuizMaker();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
-        }
-        if (server != null) {
-            quizMaker = server.getQuizMaker();
         }
     }
 

@@ -10,7 +10,6 @@ import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.models.Score;
 import pij.ryan.durling.resources.QuizPlay;
-import pij.ryan.durling.resources.Server;
 import pij.ryan.durling.resources.ServerLink;
 import pij.ryan.durling.resources.ServerLinkImpl;
 
@@ -32,8 +31,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     @Inject
     public QuizPlayerImpl(ServerLink serverLink) {
         try {
-            Server server = serverLink.getServer();
-            this.quizPlay = server.getQuizPlay();
+            this.quizPlay = serverLink.getQuizPlay();
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE, e);
         }

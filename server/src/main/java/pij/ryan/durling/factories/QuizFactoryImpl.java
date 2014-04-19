@@ -1,10 +1,12 @@
 package pij.ryan.durling.factories;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import pij.ryan.durling.models.*;
 
 import java.rmi.RemoteException;
 
+@Singleton
 public class QuizFactoryImpl implements QuizFactory {
     private IdGenerator idGenerator;
 

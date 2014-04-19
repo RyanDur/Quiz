@@ -38,7 +38,7 @@ public class QuizPlayerSteps {
         ServerLink serverLink = mock(ServerLink.class);
         Server server = mock(Server.class);
         quizPlay = mock(QuizPlay.class);
-        when(serverLink.getServer()).thenReturn(server);
+        when(serverLink.getQuizPlay()).thenReturn(server);
         when(server.getQuizPlay()).thenReturn(quizPlay);
         quizPlayer = new QuizPlayerImpl(serverLink);
     }

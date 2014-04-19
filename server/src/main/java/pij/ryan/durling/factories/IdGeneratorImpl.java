@@ -1,5 +1,8 @@
 package pij.ryan.durling.factories;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class IdGeneratorImpl implements IdGenerator {
     int id;
 

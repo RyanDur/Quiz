@@ -1,6 +1,7 @@
 package pij.ryan.durling.controllers;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import pij.ryan.durling.factories.OptionFactory;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
+@Singleton
 public class QuizCtrlImpl implements QuizCtrl {
 
     private final TreeMap<Integer, Quiz> quizzes;

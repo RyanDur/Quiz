@@ -1,12 +1,14 @@
 package pij.ryan.durling.controllers;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import pij.ryan.durling.factories.ScoreFactory;
 import pij.ryan.durling.models.Score;
 
 import java.rmi.RemoteException;
 import java.util.TreeMap;
 
+@Singleton
 public class HighScoreCtrlImpl implements HighScoreCtrl {
     private ScoreFactory scoreFactory;
     private TreeMap<Integer, Score> scores;

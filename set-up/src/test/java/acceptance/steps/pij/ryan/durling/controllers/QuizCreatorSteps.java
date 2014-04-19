@@ -31,7 +31,7 @@ public class QuizCreatorSteps {
     public void a_user_has_a_quiz_creator() throws Throwable {
         Server mockServer = mock(Server.class);
         ServerLink serverLink = mock(ServerLink.class);
-        when(serverLink.getServer()).thenReturn(mockServer);
+        when(serverLink.getQuizMaker()).thenReturn(mockServer);
         quizMaker = mock(QuizMaker.class);
         when(mockServer.getQuizMaker()).thenReturn(quizMaker);
         quizCreator = new QuizCreatorImpl(serverLink);
