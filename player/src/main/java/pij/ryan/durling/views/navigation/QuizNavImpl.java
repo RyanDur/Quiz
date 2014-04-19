@@ -98,7 +98,7 @@ public class QuizNavImpl extends StackPane implements QuizNav {
             radioButton.setId(ViewMessages.ANSWER_ID + y);
             radioButton.setOnAction(e -> {
                 if(answer.getValue()) {
-                    quizPlayer.addScore(question.getValue());
+                    quizPlayer.addToScore(question.getValue());
                 }
             });
             answerView.addAnswer(radioButton, answer.getAnswer(), y++);

@@ -1,5 +1,6 @@
 package acceptance.steps.pij.ryan.durling.controllers;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -8,6 +9,7 @@ import pij.ryan.durling.controllers.QuizPlayer;
 import pij.ryan.durling.controllers.QuizPlayerImpl;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
+import pij.ryan.durling.models.Score;
 import pij.ryan.durling.resources.QuizPlay;
 import pij.ryan.durling.resources.Server;
 import pij.ryan.durling.resources.ServerLink;
@@ -28,6 +30,8 @@ public class QuizPlayerSteps {
     private int score;
     private String caught;
     private QuizPlay quizPlay;
+    private Score score1;
+    private boolean won;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
@@ -108,7 +112,7 @@ public class QuizPlayerSteps {
 
     @And("^a player adds (\\d+) to the score$")
     public void a_player_adds_to_the_score(int score) throws Throwable {
-        quizPlayer.addScore(score);
+        quizPlayer.addToScore(score);
     }
 
     @Then("^a player should be able to get the (\\d+) for the quiz$")
@@ -119,6 +123,30 @@ public class QuizPlayerSteps {
     @Then("^the high score should be submitted$")
     public void the_high_score_should_be_submitted() throws Throwable {
         verify(quizPlay).setHighScore(anyInt(), anyString(), anyInt());
+    }
+
+    @And("^a player submits the quiz$")
+    public void a_player_submits_the_quiz() throws Throwable {
+        quizPlayer.submitQuiz();
+    }
+
+    @Then("^a player should be able to know if they have \"([^\"]*)\"$")
+    public void a_player_should_be_able_to_know_if_they_have(String value) throws Throwable {
+        won = ifTrue(value);
+        when(score1.getScore()).thenReturn(score);
+
+    }
+
+    @When("^the (\\d+) for the quiz$")
+    public void the_for_the_quiz(int current) throws Throwable {
+        score1 = mock(Score.class);
+        when(quizPlay.getHighScore(anyInt())).thenReturn(score1);
+        when(score1.getScore()).thenReturn(current);
+    }
+
+    @When("^the players (\\d+) for the quiz$")
+    public void the_players_for_the_quiz(int playersScore) throws Throwable {
+        quizPlayer.addToScore(playersScore);
     }
 
     private boolean ifTrue(String argument) {
@@ -132,5 +160,23 @@ public class QuizPlayerSteps {
         String nullValue = "null";
         if (nullValue.equals(argument)) argument = null;
         return argument;
+    }
+
+    @And("^a player has \"([^\"]*)\"$")
+    public void a_player_has(String value) throws Throwable {
+        // Express the Regexp above with the code you wish you had
+        throw new PendingException();
+    }
+
+    @And("^should be able to get the old players name$")
+    public void should_be_able_to_get_the_old_players_name() throws Throwable {
+        quizPlayer.getOldCurrentWinner();
+        verify(score1).getName();
+    }
+
+    @And("^should be able to get the old players score$")
+    public void should_be_able_to_get_the_old_players_score() throws Throwable {
+        quizPlayer.getOldHighScore();
+        verify(score1).getScore();
     }
 }

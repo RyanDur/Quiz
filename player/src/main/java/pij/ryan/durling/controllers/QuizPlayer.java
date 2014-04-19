@@ -20,9 +20,13 @@ public interface QuizPlayer {
 
     void submitQuiz();
 
-    void addScore(int score);
+    void addToScore(int score);
 
     int getScore();
 
     boolean hasWon();
+
+    String getOldCurrentWinner();
+
+    int getOldHighScore();
 }

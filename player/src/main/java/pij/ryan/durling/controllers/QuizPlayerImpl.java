@@ -21,17 +21,18 @@ import java.util.Set;
 public class QuizPlayerImpl implements QuizPlayer {
     private static final Logger log = LoggerFactory.getLogger(ServerLinkImpl.class);
     private QuizPlay quizPlay;
-    private Server server;
     private Quiz quiz;
     private String playerName;
     private int score;
     private boolean winner;
+    private Score scoreObj;
+    private int oldHighScore;
 
 
     @Inject
     public QuizPlayerImpl(ServerLink serverLink) {
         try {
-            this.server = serverLink.getServer();
+            Server server = serverLink.getServer();
             this.quizPlay = server.getQuizPlay();
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE, e);
@@ -45,6 +46,7 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void chooseQuiz(int choice) {
+        score = 0;
         quiz = quizPlay.getQuiz(choice);
     }
 
@@ -71,13 +73,14 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void submitQuiz() {
-        Score score1 = quizPlay.getHighScore(quiz.getId());
-        setWinner(score1.getScore() < score);
+        scoreObj = quizPlay.getHighScore(quiz.getId());
+        oldHighScore = scoreObj.getScore();
+        setWinner(getOldHighScore() < getScore());
         if (hasWon()) quizPlay.setHighScore(quiz.getId(), getPlayerName(), getScore());
     }
 
     @Override
-    public void addScore(int score) {
+    public void addToScore(int score) {
         this.score += score;
     }
 
@@ -91,7 +94,17 @@ public class QuizPlayerImpl implements QuizPlayer {
         return winner;
     }
 
-    public void setWinner(boolean winner) {
+    @Override
+    public String getOldCurrentWinner() {
+        return scoreObj.getName();
+    }
+
+    @Override
+    public int getOldHighScore() {
+        return oldHighScore;
+    }
+
+    private void setWinner(boolean winner) {
         this.winner = winner;
     }
 }

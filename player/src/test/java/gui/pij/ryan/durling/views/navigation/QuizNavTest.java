@@ -107,7 +107,7 @@ public class QuizNavTest extends GuiTest {
                 .click(submit);
 
         assertNodeExists(ViewMessages.WINNER);
-        verify(quizPlayer).addScore(anyInt());
+        verify(quizPlayer).addToScore(anyInt());
         verify(quizPlayer).submitQuiz();
     }
 
