@@ -1,44 +1,42 @@
 package pij.ryan.durling.models;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.HashSet;
 import java.util.Set;
 
-public class QuestionImpl extends UnicastRemoteObject implements Question, Serializable {
+public class QuestionImpl implements Question, Serializable {
     private String question;
     private int score;
     private final Set<Answer> answers;
 
-    public QuestionImpl(String question, int score) throws RemoteException {
+    public QuestionImpl(String question, int score) {
         this.question = question;
         this.score = score;
         answers = new HashSet<>();
     }
 
     @Override
-    public String getQuestion() throws RemoteException {
+    public String getQuestion() {
         return question;
     }
 
     @Override
-    public int getValue() throws RemoteException {
+    public int getValue() {
         return score;
     }
 
     @Override
-    public void add(Answer answer) throws RemoteException {
+    public void add(Answer answer) {
         answers.add(answer);
     }
 
     @Override
-    public boolean valid() throws RemoteException {
+    public boolean valid() {
         return !answers.isEmpty();
     }
 
     @Override
-    public Set<Answer> getAnswers() throws RemoteException {
+    public Set<Answer> getAnswers() {
         return answers;
     }
 }

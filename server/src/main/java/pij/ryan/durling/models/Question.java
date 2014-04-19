@@ -1,17 +1,15 @@
 package pij.ryan.durling.models;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.Set;
 
-public interface Question extends Remote {
-    String getQuestion() throws RemoteException;
+public interface Question {
+    String getQuestion();
 
-    int getValue() throws RemoteException;
+    int getValue();
 
-    void add(Answer answer) throws RemoteException;
+    void add(Answer answer);
 
-    boolean valid() throws RemoteException;
+    boolean valid();
 
-    Set<Answer> getAnswers() throws RemoteException;
+    Set<Answer> getAnswers();
 }

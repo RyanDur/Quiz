@@ -1,26 +1,24 @@
 package pij.ryan.durling.models;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
-public class AnswerImpl extends UnicastRemoteObject implements Answer, Serializable {
+public class AnswerImpl implements Answer, Serializable {
 
     private String answer;
     private boolean correct;
 
-    public AnswerImpl(String answer, boolean correct) throws RemoteException {
+    public AnswerImpl(String answer, boolean correct) {
         this.answer = answer;
         this.correct = correct;
     }
 
     @Override
-    public String getAnswer() throws RemoteException {
+    public String getAnswer() {
         return answer;
     }
 
     @Override
-    public boolean getValue() throws RemoteException {
+    public boolean getValue() {
         return correct;
     }
 }
