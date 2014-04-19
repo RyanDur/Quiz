@@ -9,7 +9,6 @@ import pij.ryan.durling.controllers.QuizCreatorImpl;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.resources.QuizMaker;
-import pij.ryan.durling.resources.Server;
 import pij.ryan.durling.resources.ServerLink;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -29,11 +28,9 @@ public class QuizCreatorSteps {
 
     @Given("^a user has a quiz creator$")
     public void a_user_has_a_quiz_creator() throws Throwable {
-        Server mockServer = mock(Server.class);
         ServerLink serverLink = mock(ServerLink.class);
-        when(serverLink.getQuizMaker()).thenReturn(mockServer);
         quizMaker = mock(QuizMaker.class);
-        when(mockServer.getQuizMaker()).thenReturn(quizMaker);
+        when(serverLink.getQuizMaker()).thenReturn(quizMaker);
         quizCreator = new QuizCreatorImpl(serverLink);
     }
 

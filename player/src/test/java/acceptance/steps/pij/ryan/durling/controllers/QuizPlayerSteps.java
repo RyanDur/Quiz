@@ -1,6 +1,5 @@
 package acceptance.steps.pij.ryan.durling.controllers;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,7 +10,6 @@ import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.Score;
 import pij.ryan.durling.resources.QuizPlay;
-import pij.ryan.durling.resources.Server;
 import pij.ryan.durling.resources.ServerLink;
 
 import java.util.HashSet;
@@ -27,19 +25,15 @@ public class QuizPlayerSteps {
 
     private QuizPlayer quizPlayer;
     private Quiz quiz;
-    private int score;
     private String caught;
     private QuizPlay quizPlay;
     private Score score1;
-    private boolean won;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
         ServerLink serverLink = mock(ServerLink.class);
-        Server server = mock(Server.class);
         quizPlay = mock(QuizPlay.class);
-        when(serverLink.getQuizPlay()).thenReturn(server);
-        when(server.getQuizPlay()).thenReturn(quizPlay);
+        when(serverLink.getQuizPlay()).thenReturn(quizPlay);
         quizPlayer = new QuizPlayerImpl(serverLink);
     }
 
@@ -94,12 +88,6 @@ public class QuizPlayerSteps {
         }
     }
 
-    @Then("^a player should be able to get the score for the quiz$")
-    public void a_player_should_be_able_to_get_the_score_for_the_quiz() throws Throwable {
-        assertThat(quizPlayer.getScore(), is(equalTo(score)));
-    }
-
-
     @Then("^a player should not be able to get there name$")
     public void a_player_should_not_be_able_to_get_there() throws Throwable {
         assertThat(quizPlayer.getPlayerName(), is(equalTo(null)));
@@ -130,13 +118,6 @@ public class QuizPlayerSteps {
         quizPlayer.submitQuiz();
     }
 
-    @Then("^a player should be able to know if they have \"([^\"]*)\"$")
-    public void a_player_should_be_able_to_know_if_they_have(String value) throws Throwable {
-        won = ifTrue(value);
-        when(score1.getScore()).thenReturn(score);
-
-    }
-
     @When("^the (\\d+) for the quiz$")
     public void the_for_the_quiz(int current) throws Throwable {
         score1 = mock(Score.class);
@@ -147,6 +128,24 @@ public class QuizPlayerSteps {
     @When("^the players (\\d+) for the quiz$")
     public void the_players_for_the_quiz(int playersScore) throws Throwable {
         quizPlayer.addToScore(playersScore);
+    }
+
+    @And("^should be able to get the old players name$")
+    public void should_be_able_to_get_the_old_players_name() throws Throwable {
+        quizPlayer.getOldCurrentWinner();
+        verify(score1).getName();
+    }
+
+    @And("^should be able to get the old players score$")
+    public void should_be_able_to_get_the_old_players_score() throws Throwable {
+        quizPlayer.getOldHighScore();
+        verify(score1).getScore();
+    }
+
+    @Then("^a player should be able to know if they have \"([^\"]*)\"$")
+    public void a_player_should_be_able_to_know_if_they_have(String value) throws Throwable {
+        boolean won = ifTrue(value);
+        assertThat(quizPlayer.hasWon(), is(equalTo(won)));
     }
 
     private boolean ifTrue(String argument) {
@@ -160,23 +159,5 @@ public class QuizPlayerSteps {
         String nullValue = "null";
         if (nullValue.equals(argument)) argument = null;
         return argument;
-    }
-
-    @And("^a player has \"([^\"]*)\"$")
-    public void a_player_has(String value) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
-    }
-
-    @And("^should be able to get the old players name$")
-    public void should_be_able_to_get_the_old_players_name() throws Throwable {
-        quizPlayer.getOldCurrentWinner();
-        verify(score1).getName();
-    }
-
-    @And("^should be able to get the old players score$")
-    public void should_be_able_to_get_the_old_players_score() throws Throwable {
-        quizPlayer.getOldHighScore();
-        verify(score1).getScore();
     }
 }
