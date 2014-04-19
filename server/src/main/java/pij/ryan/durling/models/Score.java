@@ -5,4 +5,6 @@ import java.rmi.RemoteException;
 
 public interface Score extends Remote {
     int getScore() throws RemoteException;
+
+    String getName() throws RemoteException;
 }

@@ -18,4 +18,9 @@ public class ScoreImpl extends UnicastRemoteObject implements Score, Serializabl
     public int getScore() throws RemoteException {
         return score;
     }
+
+    @Override
+    public String getName() throws RemoteException {
+        return playerName;
+    }
 }

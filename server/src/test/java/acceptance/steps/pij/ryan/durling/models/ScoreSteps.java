@@ -22,4 +22,9 @@ public class ScoreSteps {
     public void a_player_has_a(int userScore) throws Throwable {
         assertThat(score.getScore(), is(equalTo(userScore)));
     }
+
+    @Then("^a player has a \"([^\"]*)\"$")
+    public void a_player_has_a(String name) throws Throwable {
+        assertThat(score.getName(), is(equalTo(name)));
+    }
 }
