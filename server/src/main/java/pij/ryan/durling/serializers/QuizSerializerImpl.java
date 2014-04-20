@@ -14,8 +14,8 @@ public class QuizSerializerImpl extends Serializer implements QuizSerializer {
     private ConcurrentSkipListMap<Integer, Quiz> closed;
 
     @Override
-    public void persist(ConcurrentSkipListMap<Integer, Quiz> quizzes, ConcurrentSkipListMap<Integer, Quiz> closed) {
-        this.available = quizzes;
+    public void persist(ConcurrentSkipListMap<Integer, Quiz> open, ConcurrentSkipListMap<Integer, Quiz> closed) {
+        this.available = open;
         this.closed = closed;
         Runtime.getRuntime().addShutdownHook(new Thread(this::serialize));
     }

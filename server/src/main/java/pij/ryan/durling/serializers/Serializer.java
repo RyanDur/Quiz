@@ -6,5 +6,8 @@ abstract class Serializer {
         Runtime.getRuntime().addShutdownHook(new Thread(this::serialize));
     }
 
+    /**
+     * serialize data
+     */
     abstract void serialize();
 }
