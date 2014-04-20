@@ -23,8 +23,8 @@ public class QuizPlayerImpl implements QuizPlayer {
     private Quiz quiz;
     private String playerName;
     private int score;
-    private boolean winner;
     private Score scoreObj;
+    private String oldCurrentWinner;
     private int oldHighScore;
 
 
@@ -46,6 +46,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     public void chooseQuiz(int choice) {
         score = 0;
         quiz = quizPlay.getQuiz(choice);
+
     }
 
     @Override
@@ -56,6 +57,11 @@ public class QuizPlayerImpl implements QuizPlayer {
     @Override
     public String getQuizName() {
         return quiz.getName();
+    }
+
+    @Override
+    public String getOldCurrentWinner() {
+        return oldCurrentWinner;
     }
 
     @Override
@@ -71,10 +77,8 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public void submitQuiz() {
-        scoreObj = quizPlay.getHighScore(quiz.getId());
-        oldHighScore = scoreObj.getScore();
-        setWinner(getOldHighScore() < getScore());
-        if (hasWon()) quizPlay.setHighScore(quiz.getId(), getPlayerName(), getScore());
+        getHighScore();
+        setHighScore();
     }
 
     @Override
@@ -88,21 +92,26 @@ public class QuizPlayerImpl implements QuizPlayer {
     }
 
     @Override
-    public boolean hasWon() {
-        return winner;
-    }
-
-    @Override
-    public String getOldCurrentWinner() {
-        return scoreObj.getName();
-    }
-
-    @Override
     public int getOldHighScore() {
         return oldHighScore;
     }
 
-    private void setWinner(boolean winner) {
-        this.winner = winner;
+    @Override
+    public boolean hasWon() {
+        return getOldHighScore() < getScore();
+    }
+
+    private void setHighScore() {
+        if (scoreObj == null || hasWon()) {
+            quizPlay.setHighScore(quiz.getId(), getPlayerName(), getScore());
+        }
+    }
+
+    private void getHighScore() {
+        scoreObj = quizPlay.getHighScore(quiz.getId());
+        if (scoreObj != null) {
+            oldCurrentWinner = scoreObj.getName();
+            oldHighScore = scoreObj.getScore();
+        }
     }
 }
