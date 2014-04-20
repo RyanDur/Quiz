@@ -59,4 +59,15 @@ public class ViewMessages {
     public static final String ERROR_VIEW_STYLE_SHEET = "styles/errorBox.css";
     public static final String ERROR_BOX_ID = "error";
     public static final String ERROR_LABEL_ID = "error-label";
+
+    //Menu
+    public static final String MENU_VIEW_STYLE_SHEET = "styles/menu.css";
+    public static final String MENU_VIEW_ID = "menu";
+    public static final String MENU_VIEW_CHOICES_ID = "choices";
+
+    //Split menu
+    public static final java.lang.String OPEN = "Open Quizzes";
+    public static final java.lang.String CLOSED = "Closed Quizzes";
+    public static final String SPLIT_MENU_STYLESHEETS = "styles/splitMenu.css";
+    public static final String SPLIT_MENU_ID = "split-menu";
 }

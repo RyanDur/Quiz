@@ -1,0 +1,17 @@
+#menu {
+    -fx-pref-height: 200;
+    -fx-pref-width: 200;
+    -fx-alignment: center;
+}
+
+#choices {
+    -fx-fit-to-height: true;
+    -fx-pref-width: 198;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+.button {
+    -fx-pref-height: 30;
+    -fx-pref-width: 500;
+}
