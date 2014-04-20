@@ -1,4 +1,5 @@
 grant {
     permission java.net.SocketPermission "*", "accept, connect";
     permission java.io.FilePermission "Quizzes.txt", "write";
+    permission java.io.FilePermission "Scores.txt", "write";
 };

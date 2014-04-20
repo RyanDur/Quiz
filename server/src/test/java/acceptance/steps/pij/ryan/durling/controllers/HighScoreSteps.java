@@ -9,6 +9,7 @@ import pij.ryan.durling.controllers.HighScoreCtrlImpl;
 import pij.ryan.durling.factories.ScoreFactory;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.Score;
+import pij.ryan.durling.serializers.ScoreSerializer;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -30,7 +31,8 @@ public class HighScoreSteps {
     public void there_is_a_high_score_controller() throws Throwable {
         scoreFactory = mock(ScoreFactory.class);
         when(scoreFactory.createScore(anyString(), anyInt())).thenReturn(score);
-        highScoreCtrl = new HighScoreCtrlImpl(scoreFactory);
+        ScoreSerializer scoreSerializer = mock(ScoreSerializer.class);
+        highScoreCtrl = new HighScoreCtrlImpl(scoreFactory,scoreSerializer);
     }
 
     @Then("^a user receives the \"([^\"]*)\"$")
