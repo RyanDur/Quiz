@@ -22,18 +22,16 @@ public class ResultsTest extends GuiTest{
     }
 
     @Test
-    public void shouldHaveANotificationOfWinner() throws InterruptedException {
+    public void shouldHaveANotificationOfWinner() {
         Platform.setImplicitExit(false);
         Platform.runLater(() -> results.setResults(true, 53, "Bob", 4));
-
         verifyThat("#" + ViewMessages.RESULT_ID, hasText(ViewMessages.WINNER));
     }
 
     @Test
-    public void shouldHaveANotificationOfLoser() throws InterruptedException {
+    public void shouldHaveANotificationOfLoser() {
         Platform.setImplicitExit(false);
         Platform.runLater(() -> results.setResults(false, 53, "Bob", 400));
-        Thread.sleep(10000);
         verifyThat("#" + ViewMessages.RESULT_ID, hasText(ViewMessages.LOSER));
     }
 }
