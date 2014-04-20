@@ -17,7 +17,11 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
     @Inject
     public HighScoreCtrlImpl(ScoreFactory scoreFactory, ScoreSerializer serializer) {
         this.scoreFactory = scoreFactory;
-        scores = new TreeMap<>();
+        if(serializer.dataExists()) {
+            scores = serializer.getScores();
+        } else {
+            scores = new TreeMap<>();
+        }
         Runtime.getRuntime().addShutdownHook(flushHook(serializer));
     }
 
