@@ -1,12 +1,14 @@
 package pij.ryan.durling.resources;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
 
+@Singleton
 public class ServerStartImpl implements ServerStart {
 
     private Server server;
