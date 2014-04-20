@@ -46,7 +46,6 @@ public class QuizPlayerImpl implements QuizPlayer {
     public void chooseQuiz(int choice) {
         score = 0;
         quiz = quizPlay.getQuiz(choice);
-
     }
 
     @Override

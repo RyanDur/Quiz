@@ -119,7 +119,7 @@ public class QuizNavImpl extends StackPane implements QuizNav {
 
     public void getResultsView() {
         Results results = views.getResultsView();
-        results.setResults(quizPlayer.hasWon(), quizPlayer.getScore());
+        results.setResults(quizPlayer.hasWon(), quizPlayer.getScore(), quizPlayer.getOldCurrentWinner(), quizPlayer.getOldHighScore());
         viewPane.setView((Node) results);
         getNewQuizButton();
     }

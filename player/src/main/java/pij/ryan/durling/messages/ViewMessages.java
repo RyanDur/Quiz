@@ -53,10 +53,13 @@ public class ViewMessages {
     public static final String SUBMIT = "Submit";
 
     //Results view
-    public static final String WINNER = "WINNER";
-    public static final String LOSER = "LOSER";
+    public static final String WINNER = "WINNER\nYou Won!";
+    public static final String LOSER = "LOSER\nSorry You Lost\nTry Again!";
     public static final String RESULTS_VIEW_STYLESHEETS = "styles/results.css";
     public static final String RESULTS_VIEW_ID = "results-view";
     public static final String RESULT_ID = "result";
     public static final String SCORE_ID = "score";
+    public static final java.lang.String LOSER_LABEL = "loser";
+    public static final String OLD_WINNER = "The Old winner was: ";
+    public static final String OLD_SCORE = "The Old score was: ";
 }
