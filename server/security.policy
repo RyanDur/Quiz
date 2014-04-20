@@ -1,0 +1,6 @@
+grant {
+    permission java.net.SocketPermission "*", "accept, connect";
+    permission java.io.FilePermission "server/Quizzes.txt", "write";
+    permission java.io.FilePermission "server/Scores.txt", "write";
+    permission java.io.FilePermission "server/Ids.txt", "write";
+};
