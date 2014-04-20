@@ -8,8 +8,6 @@ import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.resources.QuizMaker;
 import pij.ryan.durling.resources.ServerLink;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.Set;
 
 public class QuizCreatorImpl implements QuizCreator {
@@ -20,11 +18,7 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Inject
     public QuizCreatorImpl(ServerLink serverLink) {
-        try {
-            quizMaker = serverLink.getQuizMaker();
-        } catch (RemoteException | NotBoundException e) {
-            e.printStackTrace();
-        }
+        quizMaker = serverLink.getQuizMaker();
     }
 
     @Override

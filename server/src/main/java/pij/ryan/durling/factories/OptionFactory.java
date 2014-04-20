@@ -12,7 +12,7 @@ public interface OptionFactory {
      * @param id of the quiz
      * @param name name of the quiz
      * @return a quiz option
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     QuizOption createQuizOption(int id, String name) throws RemoteException;
 }

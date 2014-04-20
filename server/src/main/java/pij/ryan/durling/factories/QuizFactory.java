@@ -13,7 +13,7 @@ public interface QuizFactory {
      *
      * @param title of the quiz
      * @return a new quiz
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Quiz createQuiz(String title) throws RemoteException;
 
@@ -23,7 +23,7 @@ public interface QuizFactory {
      * @param question the users question
      * @param score score for the question
      * @return a new question
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Question createQuestion(String question, int score) throws RemoteException;
 
@@ -33,7 +33,7 @@ public interface QuizFactory {
      * @param answer users answer
      * @param value iif the answer is correct
      * @return a new answer
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Answer createAnswer(String answer, boolean value) throws RemoteException;
 }

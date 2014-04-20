@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pij.ryan.durling.messages.ControllerMessages;
-import pij.ryan.durling.messages.ServerMessages;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
@@ -13,8 +12,6 @@ import pij.ryan.durling.resources.QuizMaster;
 import pij.ryan.durling.resources.ServerLink;
 import pij.ryan.durling.resources.ServerLinkImpl;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.Set;
 
 public class QuizPlayerImpl implements QuizPlayer {
@@ -29,11 +26,7 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Inject
     public QuizPlayerImpl(ServerLink serverLink) {
-        try {
-            this.quizMaster = serverLink.getQuizMaster();
-        } catch (RemoteException | NotBoundException e) {
-            log.error(ServerMessages.ERROR_MESSAGE, e);
-        }
+        this.quizMaster = serverLink.getQuizMaster();
     }
 
     @Override

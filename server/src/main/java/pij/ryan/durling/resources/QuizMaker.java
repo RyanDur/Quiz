@@ -13,7 +13,7 @@ public interface QuizMaker extends Remote{
      *
      * @param title String
      * @return Quiz
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     int createQuiz(String title) throws RemoteException;
 
@@ -22,7 +22,7 @@ public interface QuizMaker extends Remote{
      *
      * @param question String
      * @param score int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void addQuestion(String question, int score) throws RemoteException;
 
@@ -31,14 +31,14 @@ public interface QuizMaker extends Remote{
      *
      * @param answer String
      * @param value boolean
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void addAnswer(String answer, boolean value) throws RemoteException;
 
     /**
      * Save a quiz
      *
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void save() throws RemoteException;
 
@@ -46,7 +46,7 @@ public interface QuizMaker extends Remote{
      * Check if quiz is valid
      *
      * @return boolean
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     boolean validQuiz() throws RemoteException;
 
@@ -54,7 +54,7 @@ public interface QuizMaker extends Remote{
      * check if there is no quiz
      *
      * @return boolean
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     boolean empty() throws RemoteException;
 
@@ -62,7 +62,7 @@ public interface QuizMaker extends Remote{
      * check if the question is valid
      *
      * @return boolean
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     boolean validQuestion() throws RemoteException;
 
@@ -70,7 +70,7 @@ public interface QuizMaker extends Remote{
      * get a list of available quizzes
      *
      * @return Set of quiz options
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Set<QuizOption> getAvailableQuizzes() throws RemoteException;
 
@@ -78,7 +78,7 @@ public interface QuizMaker extends Remote{
      * get a list of closed quizzes
      *
      * @return Set of quiz options
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Set<QuizOption> getClosedQuizzes() throws RemoteException;
 
@@ -86,7 +86,7 @@ public interface QuizMaker extends Remote{
      * close a quiz
      *
      * @param quizId int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void closeQuiz(int quizId) throws RemoteException;
 
@@ -94,7 +94,7 @@ public interface QuizMaker extends Remote{
      * open a quiz
      *
      * @param quizId int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void openQuiz(int quizId) throws RemoteException;
 }

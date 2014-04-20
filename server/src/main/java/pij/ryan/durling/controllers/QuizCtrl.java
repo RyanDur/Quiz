@@ -12,7 +12,7 @@ public interface QuizCtrl {
      * Add a quiz to the collection
      *
      * @param quiz to be added
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void add(Quiz quiz) throws RemoteException;
 

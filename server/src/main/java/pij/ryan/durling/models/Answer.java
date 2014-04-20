@@ -9,7 +9,7 @@ public interface Answer extends Remote {
      * Get the answer string
      *
      * @return an answer string
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     String getAnswer() throws RemoteException;
 
@@ -17,7 +17,7 @@ public interface Answer extends Remote {
      * tell if the answer is correct
      *
      * @return true or false
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     boolean getValue() throws RemoteException;
 }

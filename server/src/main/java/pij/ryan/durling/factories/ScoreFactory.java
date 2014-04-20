@@ -12,7 +12,7 @@ public interface ScoreFactory {
      * @param playerName String
      * @param score int
      * @return Score
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Score createScore(String playerName, int score) throws RemoteException;
 }

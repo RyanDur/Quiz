@@ -9,7 +9,7 @@ public interface Score extends Remote {
      * get the score for a quiz
      *
      * @return int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     int getScore() throws RemoteException;
 
@@ -17,7 +17,7 @@ public interface Score extends Remote {
      * get the name of a quiz
      *
      * @return string
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     String getName() throws RemoteException;
 }

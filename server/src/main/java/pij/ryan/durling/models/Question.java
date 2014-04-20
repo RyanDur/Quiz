@@ -10,7 +10,7 @@ public interface Question extends Remote {
      * get the question
      *
      * @return a string
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     String getQuestion() throws RemoteException;
 
@@ -18,7 +18,7 @@ public interface Question extends Remote {
      * the score for the question
      *
      * @return an int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     int getValue() throws RemoteException;
 
@@ -26,7 +26,7 @@ public interface Question extends Remote {
      * add an answer for the question
      *
      * @param answer takes an answer
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void add(Answer answer) throws RemoteException;
 
@@ -34,7 +34,7 @@ public interface Question extends Remote {
      * check if the question is valid. i.e. if it has one or more answers
      *
      * @return true or false
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     boolean valid() throws RemoteException;
 
@@ -42,7 +42,7 @@ public interface Question extends Remote {
      * get a set of answers
      *
      * @return a set of answers
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Set<Answer> getAnswers() throws RemoteException;
 }

@@ -14,7 +14,7 @@ public interface QuizMaster extends Remote {
      * Get a list of quizzes
      *
      * @return a set of quiz options
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Set<QuizOption> getQuizOptions() throws RemoteException;
 
@@ -23,7 +23,7 @@ public interface QuizMaster extends Remote {
      *
      * @param id int
      * @return Quiz
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Quiz getQuiz(int id) throws RemoteException;
 
@@ -32,7 +32,7 @@ public interface QuizMaster extends Remote {
      *
      * @param quizId int
      * @return Score
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Score getHighScore(int quizId) throws RemoteException;
 
@@ -42,7 +42,7 @@ public interface QuizMaster extends Remote {
      * @param quizId int
      * @param playerName String
      * @param score int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void setHighScore(int quizId, String playerName, int score) throws RemoteException;
 }

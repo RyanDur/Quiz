@@ -10,7 +10,7 @@ public interface Quiz extends Remote {
      * the name of the quiz
      *
      * @return a string
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     String getName() throws RemoteException;
 
@@ -18,7 +18,7 @@ public interface Quiz extends Remote {
      * the id for the quiz
      *
      * @return int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     int getId() throws RemoteException;
 
@@ -26,7 +26,7 @@ public interface Quiz extends Remote {
      * check if the quiz is valid, i.e. if the quiz has one or more questions
      *
      * @return true or false
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     boolean valid() throws RemoteException;
 
@@ -34,7 +34,7 @@ public interface Quiz extends Remote {
      * Add a question to the quiz
      *
      * @param question question for the quiz
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void add(Question question) throws RemoteException;
 
@@ -42,7 +42,7 @@ public interface Quiz extends Remote {
      * gets a set of questions for the quiz
      *
      * @return a set of questions
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Set<Question> getQuestions() throws RemoteException;
 }

@@ -12,7 +12,7 @@ public interface QuizCreator {
      * create a quiz
      *
      * @param name String
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if name is null
      */
     void createQuiz(String name) throws IllegalArgumentException;
 
@@ -28,6 +28,8 @@ public interface QuizCreator {
      *
      * @param question String
      * @param value int
+     * @throws IllegalQuizCreationException if invalid quiz
+     * @throws IllegalArgumentException if argument is null
      */
     void addQuestion(String question, int value) throws IllegalQuizCreationException, IllegalArgumentException;
 
@@ -36,16 +38,16 @@ public interface QuizCreator {
      *
      * @param answer String
      * @param value boolean
-     * @throws IllegalArgumentException
-     * @throws IllegalQuizCreationException
+     * @throws IllegalArgumentException if argument is null
+     * @throws IllegalQuizCreationException if invalid quiz
      */
     void addAnswer(String answer, boolean value) throws IllegalArgumentException, IllegalQuizCreationException;
 
     /**
      * Save the quiz
      *
-     * @throws IllegalQuizCreationException
-     * @throws InvalidQuizException
+     * @throws IllegalQuizCreationException if invalid quiz
+     * @throws InvalidQuizException if invalid quiz
      */
     void save() throws IllegalQuizCreationException, InvalidQuizException;
 

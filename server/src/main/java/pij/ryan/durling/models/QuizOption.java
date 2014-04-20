@@ -9,7 +9,7 @@ public interface QuizOption extends Remote {
      * return the title for a quiz
      *
      * @return string
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     String getQuizTitle() throws RemoteException;
 
@@ -17,7 +17,7 @@ public interface QuizOption extends Remote {
      * return the id for a quiz
      *
      * @return int
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     int getQuizId() throws RemoteException;
 }

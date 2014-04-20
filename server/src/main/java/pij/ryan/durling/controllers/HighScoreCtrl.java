@@ -11,7 +11,7 @@ public interface HighScoreCtrl {
      * @param quizId id of the quiz
      * @param player name of the player
      * @param score score of the player for the quiz
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     void setHighScore(int quizId, String player, int score) throws RemoteException;
 
@@ -20,7 +20,7 @@ public interface HighScoreCtrl {
      *
      * @param quizId the id of th quiz
      * @return a score object
-     * @throws RemoteException
+     * @throws RemoteException if problem with server
      */
     Score getHighScore(int quizId) throws RemoteException;
 }
