@@ -6,7 +6,7 @@ import pij.ryan.durling.views.pages.*;
 public class ViewsImpl implements Views {
 
     @Override
-    public ViewBox getErrorBox() {
+    public ViewBox getViewBox() {
         return new ViewBoxImpl();
     }
 

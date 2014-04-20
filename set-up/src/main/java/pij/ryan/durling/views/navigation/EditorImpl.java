@@ -38,7 +38,7 @@ public class EditorImpl extends BorderPane implements Editor {
     }
 
     private void addCenter() {
-        viewBox = views.getErrorBox();
+        viewBox = views.getViewBox();
         viewBox.setView((Node) getSplitMenu(views));
         this.setCenter((Node) viewBox);
     }

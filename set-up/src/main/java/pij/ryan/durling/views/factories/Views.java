@@ -9,15 +9,40 @@ import pij.ryan.durling.views.pages.SplitMenu;
 
 public interface Views {
 
-    ViewBox getErrorBox();
+    /**
+     * get the view box
+     * @return Viewbox
+     */
+    ViewBox getViewBox();
 
+    /**
+     * get the question view
+     * @return QuestionView
+     */
     Questions getQuestionView();
 
+    /**
+     * get the answer view
+     * @return AnswerView
+     */
     Answers getAnswerView();
 
+    /**
+     * Get the header
+     *
+     * @return Header
+     */
     Header getHeader();
 
+    /**
+     * get the footer
+     * @return Footer
+     */
     Footer getFooter();
 
+    /**
+     * get the split menu
+     * @return SplitMenu
+     */
     SplitMenu getSplitMenu();
 }
