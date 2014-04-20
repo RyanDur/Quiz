@@ -16,9 +16,9 @@ import java.util.TreeMap;
 public class QuizCtrlImpl implements QuizCtrl {
 
     private final TreeMap<Integer, Quiz> quizzes;
+    private final TreeMap<Integer, Quiz> closed;
     private OptionFactory optionFactory;
     private QuizSerializer quizSerializer;
-    private final TreeMap<Integer, Quiz> closed;
 
     @Inject
     public QuizCtrlImpl(OptionFactory optionFactory, QuizSerializer quizSerializer) {
@@ -27,7 +27,6 @@ public class QuizCtrlImpl implements QuizCtrl {
         if (this.quizSerializer.dataExists()) {
             this.quizSerializer.deserialize();
             quizzes = quizSerializer.getQuizzes();
-            System.out.println(quizzes);
         } else {
             quizzes = new TreeMap<>();
         }
