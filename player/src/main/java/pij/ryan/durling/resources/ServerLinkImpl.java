@@ -25,7 +25,7 @@ public class ServerLinkImpl implements ServerLink {
     }
 
     @Override
-    public QuizMaster getQuizPlay()  {
+    public QuizMaster getQuizMaster()  {
         QuizMaster quizMaster = null;
         try {
             Server server = (Server) registry.lookup("Server");

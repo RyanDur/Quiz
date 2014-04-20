@@ -10,7 +10,6 @@ import pij.ryan.durling.serializers.QuizSerializer;
 import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 @Singleton
@@ -38,12 +37,12 @@ public class QuizCtrlImpl implements QuizCtrl {
     }
 
     @Override
-    public synchronized Set<QuizOption> getQuizOptions() {
+    public synchronized Set<QuizOption> getAvailableQuizzes() {
         return getOptions(available);
     }
 
     @Override
-    public synchronized Set<QuizOption> getClosedOptions() {
+    public synchronized Set<QuizOption> getClosedQuizzes() {
         return getOptions(closed);
     }
 

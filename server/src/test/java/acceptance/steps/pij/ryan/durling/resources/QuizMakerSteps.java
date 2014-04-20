@@ -109,7 +109,7 @@ public class QuizMakerSteps {
 
     @Then("^a user should receive the available quizzes$")
     public void a_user_should_receive_the_available_quizzes() throws Throwable {
-        verify(quizCtrl).getQuizOptions();
+        verify(quizCtrl).getAvailableQuizzes();
     }
 
     @When("^a user asks for the closed quizzes$")
@@ -119,7 +119,7 @@ public class QuizMakerSteps {
 
     @Then("^a user should receive the closed quizzes$")
     public void a_user_should_receive_the_closed_quizzes() throws Throwable {
-        verify(quizCtrl).getClosedOptions();
+        verify(quizCtrl).getClosedQuizzes();
     }
 
     @When("^a user closes quiz (\\d+)$")

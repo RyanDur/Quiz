@@ -61,12 +61,12 @@ public class QuizMakerImpl extends UnicastRemoteObject implements QuizMaker {
 
     @Override
     public Set<QuizOption> getAvailableQuizzes() throws RemoteException {
-        return quizCtrl.getQuizOptions();
+        return quizCtrl.getAvailableQuizzes();
     }
 
     @Override
     public Set<QuizOption> getClosedQuizzes() throws RemoteException {
-        return quizCtrl.getClosedOptions();
+        return quizCtrl.getClosedQuizzes();
     }
 
     @Override

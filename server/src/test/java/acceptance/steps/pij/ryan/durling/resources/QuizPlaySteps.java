@@ -34,7 +34,7 @@ public class QuizPlaySteps {
 
     @Then("^a user should receive a list of available quizzes$")
     public void a_user_should_receive_a_list_of_available_quizzes() throws Throwable {
-        verify(quizCtrl).getQuizOptions();
+        verify(quizCtrl).getAvailableQuizzes();
     }
 
     @When("^a user request a (\\d+)$")

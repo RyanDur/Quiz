@@ -59,7 +59,7 @@ public class QuizCtrlSteps {
         options.add(option);
         when(option.getQuizId()).thenReturn(id);
 
-        Set<QuizOption> quizOptions = quizCtrl.getQuizOptions();
+        Set<QuizOption> quizOptions = quizCtrl.getAvailableQuizzes();
         verify(optionFactory).createQuizOption(anyInt(), anyString());
         assertThat(quizOptions, is(equalTo(options)));
         assertThat(quizOptions.toArray(new QuizOption[quizOptions.size()])[0].getQuizId(), is(equalTo(id)));
@@ -77,8 +77,8 @@ public class QuizCtrlSteps {
         Set<QuizOption> closed = new HashSet<>();
         closed.add(option);
 
-        assertThat(quizCtrl.getClosedOptions(), is(equalTo(closed)));
-        assertThat(quizCtrl.getQuizOptions(), is(equalTo(open)));
+        assertThat(quizCtrl.getClosedQuizzes(), is(equalTo(closed)));
+        assertThat(quizCtrl.getAvailableQuizzes(), is(equalTo(open)));
     }
 
 
@@ -94,8 +94,8 @@ public class QuizCtrlSteps {
         Set<QuizOption> open = new HashSet<>();
         open.add(option);
 
-        assertThat(quizCtrl.getClosedOptions(), is(equalTo(closed)));
-        assertThat(quizCtrl.getQuizOptions(), is(equalTo(open)));
+        assertThat(quizCtrl.getClosedQuizzes(), is(equalTo(closed)));
+        assertThat(quizCtrl.getAvailableQuizzes(), is(equalTo(open)));
     }
 
 }

@@ -9,11 +9,11 @@ import java.util.Set;
 public interface QuizCtrl {
     void add(Quiz quiz) throws RemoteException;
 
-    Set<QuizOption> getQuizOptions();
+    Set<QuizOption> getAvailableQuizzes();
 
     Quiz getQuiz(int id);
 
-    Set<QuizOption> getClosedOptions();
+    Set<QuizOption> getClosedQuizzes();
 
     void open(int quizId);
 

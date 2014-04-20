@@ -33,7 +33,7 @@ public class QuizPlayerSteps {
     public void there_is_a_quiz_player() throws Throwable {
         ServerLink serverLink = mock(ServerLink.class);
         quizMaster = mock(QuizMaster.class);
-        when(serverLink.getQuizPlay()).thenReturn(quizMaster);
+        when(serverLink.getQuizMaster()).thenReturn(quizMaster);
         quizPlayer = new QuizPlayerImpl(serverLink);
     }
 

@@ -30,7 +30,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     @Inject
     public QuizPlayerImpl(ServerLink serverLink) {
         try {
-            this.quizMaster = serverLink.getQuizPlay();
+            this.quizMaster = serverLink.getQuizMaster();
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE, e);
         }

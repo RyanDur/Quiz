@@ -21,7 +21,7 @@ public class QuizMasterImpl extends UnicastRemoteObject implements QuizMaster {
 
     @Override
     public Set<QuizOption> getQuizOptions() throws RemoteException {
-        return quizCtrl.getQuizOptions();
+        return quizCtrl.getAvailableQuizzes();
     }
 
     @Override
