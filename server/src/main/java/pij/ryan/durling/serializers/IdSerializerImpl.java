@@ -6,10 +6,13 @@ public class IdSerializerImpl implements IdSerializer {
     private static String fileName = "Ids.txt";
     private Integer id;
 
+    public IdSerializerImpl() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::serialize));
+    }
+
     @Override
     public void persist(Integer id) {
         this.id = id;
-        Runtime.getRuntime().addShutdownHook(new Thread(this::serialize));
     }
 
     @Override

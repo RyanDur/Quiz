@@ -10,7 +10,7 @@ public class ResultsImpl extends StackPane implements Results {
 
     private Label winnerLabel;
     private Label scoreLabel;
-    private Label loserLabel;
+    private Label oldWinnerLabel;
     private Label oldScoreLabel;
 
     public ResultsImpl() {
@@ -25,20 +25,22 @@ public class ResultsImpl extends StackPane implements Results {
         borderPane.setAlignment(Pos.CENTER);
         winnerLabel = new Label();
         winnerLabel.setId(ViewMessages.RESULT_ID);
-        loserLabel = new Label(ViewMessages.LOSER_LABEL);
+        oldWinnerLabel = new Label(ViewMessages.LOSER_LABEL);
         scoreLabel = new Label();
         oldScoreLabel = new Label();
         scoreLabel.setId(ViewMessages.SCORE_ID);
         borderPane.add(winnerLabel, 0, 0);
-        borderPane.add(loserLabel, 0, 1);
-        borderPane.add(scoreLabel, 0, 2);
+        borderPane.add(scoreLabel, 0, 1);
+        borderPane.add(oldWinnerLabel, 0, 2);
+        borderPane.add(oldScoreLabel, 0, 3);
         return borderPane;
     }
 
     /*
     You Won
-    The old winner is
-    The old winning score is
+    Your score is:
+    The old winner is:
+    The old winning score is:
      */
 
     @Override
@@ -48,7 +50,10 @@ public class ResultsImpl extends StackPane implements Results {
         } else {
             winnerLabel.setText(ViewMessages.LOSER);
         }
-        loserLabel.setText(ViewMessages.OLD_WINNER + oldWinner);
-        scoreLabel.setText(ViewMessages.OLD_SCORE + String.valueOf(oldScore));
+        scoreLabel.setText(ViewMessages.SCORE + String.valueOf(score));
+        if (oldWinner != null) {
+            oldWinnerLabel.setText(ViewMessages.OLD_WINNER + oldWinner);
+            oldScoreLabel.setText(ViewMessages.OLD_SCORE + String.valueOf(oldScore));
+        }
     }
 }

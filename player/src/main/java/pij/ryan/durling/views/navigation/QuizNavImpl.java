@@ -50,6 +50,7 @@ public class QuizNavImpl extends StackPane implements QuizNav {
         SignIn signIn = views.getSignInView();
 
         signIn.getSignInButton().setOnAction(e -> {
+            quizPlayer.setPlayerName(signIn.getName());
             header.setPlayerName(signIn.getName());
             viewPane.setView((Node) getMenuView());
         });

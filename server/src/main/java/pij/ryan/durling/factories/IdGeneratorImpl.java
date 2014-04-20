@@ -7,16 +7,19 @@ import pij.ryan.durling.serializers.IdSerializer;
 @Singleton
 public class IdGeneratorImpl implements IdGenerator {
     Integer id;
+    private IdSerializer serializer;
 
     @Inject
     public IdGeneratorImpl(IdSerializer serializer) {
+        this.serializer = serializer;
         setUpId(serializer);
-        serializer.persist(id);
     }
 
     @Override
     public Integer generateId() {
-        return id++;
+        id += 1;
+        serializer.persist(id);
+        return id += 1;
     }
 
     private void setUpId(IdSerializer serializer) {

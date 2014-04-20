@@ -23,7 +23,6 @@ public class QuizPlayerImpl implements QuizPlayer {
     private Quiz quiz;
     private String playerName;
     private int score;
-    private Score scoreObj;
     private String oldCurrentWinner;
     private int oldHighScore;
 
@@ -97,17 +96,17 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public boolean hasWon() {
-        return getOldHighScore() < getScore();
+        return getScore() >= getOldHighScore();
     }
 
     private void setHighScore() {
-        if (scoreObj == null || hasWon()) {
+        if (getOldHighScore() == 0 || hasWon()) {
             quizPlay.setHighScore(quiz.getId(), getPlayerName(), getScore());
         }
     }
 
     private void getHighScore() {
-        scoreObj = quizPlay.getHighScore(quiz.getId());
+        Score scoreObj = quizPlay.getHighScore(quiz.getId());
         if (scoreObj != null) {
             oldCurrentWinner = scoreObj.getName();
             oldHighScore = scoreObj.getScore();
