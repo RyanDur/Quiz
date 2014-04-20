@@ -60,26 +60,4 @@ public class HeaderTest extends GuiTest {
 
         verify(mockViews).getQuestionView();
     }
-
-    @Test
-    public void shouldBeAbleToLockAQuizAfterCreation() {
-
-        click(addQuizButton)
-                .click(quizTitleField)
-                .type(title)
-                .click(createQuizButton);
-
-        verifyThat(lock, hasText(ViewMessages.LOCK_QUIZ_BUTTON));
-    }
-
-    @Test
-    public void shouldKnowWhenTheQuizIsLocked() {
-        click(addQuizButton)
-                .click(quizTitleField)
-                .type(title)
-                .click(createQuizButton)
-                .click(lock);
-
-        verifyThat(lock, hasText(ViewMessages.LOCKED_QUIZ_BUTTON));
-    }
 }
