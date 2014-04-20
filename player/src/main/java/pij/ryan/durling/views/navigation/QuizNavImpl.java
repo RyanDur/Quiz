@@ -63,8 +63,20 @@ public class QuizNavImpl extends StackPane implements QuizNav {
         for (QuizOption option : quizPlayer.getMenu()) {
             Button button = getButton(option.getQuizTitle(), y);
             button.setOnAction(e -> {
-                header.setQuizTitle(option.getQuizTitle());
-                getQuestionView(option);
+                try {
+                    viewPane.setMessage("");
+                    getQuestionView(option);
+                    header.setQuizTitle(option.getQuizTitle());
+                } catch (NullPointerException e1) {
+                    if (quizPlayer.getMenu().isEmpty()) {
+                        viewPane.setMessage(ViewMessages.CLOSED_QUIZ + "\n" +
+                                ViewMessages.NO_QUIZZES);
+                    } else {
+                        viewPane.setMessage(ViewMessages.CLOSED_QUIZ + "\n" +
+                                ViewMessages.CHOOSE_ANOTHER);
+                    }
+                    viewPane.setView((Node) getMenuView());
+                }
             });
             menu.addOption(button, y++);
         }
@@ -73,17 +85,16 @@ public class QuizNavImpl extends StackPane implements QuizNav {
 
     private void getQuestionView(QuizOption option) {
         Button submitButton = getButton();
-        footer.setSubmitButton(submitButton);
         quizPlayer.chooseQuiz(option.getQuizId());
-        ScrollPane questions = getQuestions();
-        viewPane.setView(questions);
+        viewPane.setView(getQuestions());
+        footer.setSubmitButton(submitButton);
     }
 
     private ScrollPane getQuestions() {
         ScrollPane scrollPane = new ScrollPane();
         GridPane gridPane = new GridPane();
         int y = 0;
-        for(pij.ryan.durling.models.Question question : quizPlayer.getQuestions()) {
+        for (pij.ryan.durling.models.Question question : quizPlayer.getQuestions()) {
             Question questionView = views.getQuestionView(question, getAnswers(question.getAnswers(), question));
             gridPane.add((Node) questionView, 0, y++);
         }
@@ -98,7 +109,7 @@ public class QuizNavImpl extends StackPane implements QuizNav {
             RadioButton radioButton = new RadioButton();
             radioButton.setId(ViewMessages.ANSWER_ID + y);
             radioButton.setOnAction(e -> {
-                if(answer.getValue()) {
+                if (answer.getValue()) {
                     quizPlayer.addToScore(question.getValue());
                 }
             });
