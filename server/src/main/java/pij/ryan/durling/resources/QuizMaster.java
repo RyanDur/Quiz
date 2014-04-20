@@ -37,7 +37,7 @@ public interface QuizMaster extends Remote {
     Score getHighScore(int quizId) throws RemoteException;
 
     /**
-     * Set the highscore for a quiz
+     * Set the high score for a quiz
      *
      * @param quizId int
      * @param playerName String
