@@ -32,10 +32,6 @@ public class HeaderTest extends GuiTest {
 
         quizView = new HeaderImpl();
         quizView.getCreateQuizButton().setOnMousePressed(e -> {
-            quizView.getLockQuizButton().setOnAction(event -> {
-                quizView.toggleLock();
-            });
-            quizView.setLockQuiz();
             mockViews.getQuestionView();
             mockQuizCreator.createQuiz(quizView.getTitle());
             quizView.setTitle(mockQuizCreator.getName());

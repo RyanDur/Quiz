@@ -9,9 +9,9 @@ public interface ScoreFactory {
     /**
      * Holds the name of the player and score
      *
-     * @param playerName
-     * @param score
-     * @return
+     * @param playerName String
+     * @param score int
+     * @return Score
      * @throws RemoteException
      */
     Score createScore(String playerName, int score) throws RemoteException;
