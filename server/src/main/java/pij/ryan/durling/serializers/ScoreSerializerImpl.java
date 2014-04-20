@@ -10,20 +10,24 @@ public class ScoreSerializerImpl implements ScoreSerializer {
     private TreeMap<Integer, Score> scores;
 
     @Override
-    public void serialize(TreeMap<Integer, Score> scores) {
-        try {
-            FileOutputStream fout = new FileOutputStream(ScoreSerializerImpl.fileName);
-            ObjectOutputStream oos = new ObjectOutputStream(fout);
-            oos.writeObject(scores);
-            oos.close();
-            fout.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void persist(TreeMap<Integer, Score> scores) {
+        this.scores = scores;
+        Runtime.getRuntime().addShutdownHook(new Thread(this::serialize));
     }
 
     @Override
-    public void deserialize() {
+    public TreeMap<Integer, Score> getScores() {
+        deserialize();
+        if (scores == null) scores = new TreeMap<>();
+        return scores;
+    }
+
+    @Override
+    public boolean dataExists() {
+        return new File(ScoreSerializerImpl.fileName).exists();
+    }
+
+    private void deserialize() {
         try {
             FileInputStream fin = new FileInputStream(ScoreSerializerImpl.fileName);
             ObjectInputStream ois = new ObjectInputStream(fin);
@@ -35,13 +39,15 @@ public class ScoreSerializerImpl implements ScoreSerializer {
         }
     }
 
-    @Override
-    public TreeMap<Integer, Score> getScores() {
-        return scores;
-    }
-
-    @Override
-    public boolean dataExists() {
-        return new File(ScoreSerializerImpl.fileName).exists();
+    private void serialize() {
+        try {
+            FileOutputStream fout = new FileOutputStream(ScoreSerializerImpl.fileName);
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(scores);
+            oos.close();
+            fout.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

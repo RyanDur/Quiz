@@ -17,13 +17,8 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
     @Inject
     public HighScoreCtrlImpl(ScoreFactory scoreFactory, ScoreSerializer serializer) {
         this.scoreFactory = scoreFactory;
-        if(serializer.dataExists()) {
-            serializer.deserialize();
-            scores = serializer.getScores();
-        } else {
-            scores = new TreeMap<>();
-        }
-        Runtime.getRuntime().addShutdownHook(flushHook(serializer));
+        setupScores(serializer);
+        serializer.persist(scores);
     }
 
     @Override
@@ -37,11 +32,16 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
         return scores.get(quizId);
     }
 
-    private Thread flushHook(ScoreSerializer serializer) {
-        return new Thread(() -> flush(serializer));
+    @Override
+    public TreeMap<Integer, Score> getScores() {
+        return scores;
     }
 
-    private void flush(ScoreSerializer serializer) {
-        serializer.serialize(scores);
+    private void setupScores(ScoreSerializer serializer) {
+        if(serializer.dataExists()) {
+            scores = serializer.getScores();
+        } else {
+            scores = new TreeMap<>();
+        }
     }
 }

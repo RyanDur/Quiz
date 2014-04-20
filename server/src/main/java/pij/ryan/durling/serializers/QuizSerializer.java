@@ -6,11 +6,10 @@ import java.util.TreeMap;
 
 public interface QuizSerializer {
 
-    void serialize(TreeMap<Integer, Quiz> quizzes, TreeMap<Integer, Quiz> closed);
 
-    void deserialize();
+    void persist(TreeMap<Integer, Quiz> quizzes, TreeMap<Integer, Quiz> closed);
 
-    TreeMap<Integer, Quiz> getQuizzes();
+    TreeMap<Integer, Quiz> getAvailable();
 
     TreeMap<Integer, Quiz> getClosed();
 

@@ -1,11 +1,9 @@
 package pij.ryan.durling.serializers;
 
 public interface IdSerializer {
-    void serialize(int id);
+    void persist(Integer id);
 
-    void deserialize();
-
-    int getId();
+    Integer getId();
 
     boolean dataExists();
 }

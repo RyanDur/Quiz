@@ -23,7 +23,7 @@ public class QuizCtrlImpl implements QuizCtrl {
     public QuizCtrlImpl(OptionFactory optionFactory, QuizSerializer quizSerializer) {
         this.optionFactory = optionFactory;
         setupQuizzes(quizSerializer);
-        Runtime.getRuntime().addShutdownHook(flushHook(quizSerializer));
+        quizSerializer.persist(available, closed);
     }
 
     @Override
@@ -58,21 +58,10 @@ public class QuizCtrlImpl implements QuizCtrl {
         closed.put(quizId, quiz);
     }
 
-    private Thread flushHook(QuizSerializer serializer) {
-        return new Thread(() -> flush(serializer));
-    }
-
-    private void flush(QuizSerializer serializer) {
-        serializer.serialize(available,closed);
-    }
-
     private void setupQuizzes(QuizSerializer quizSerializer) {
         if (quizSerializer.dataExists()) {
-            quizSerializer.deserialize();
             closed = quizSerializer.getClosed();
-            if (closed == null) closed = new TreeMap<>();
-            available = quizSerializer.getQuizzes();
-            if (available == null) available = new TreeMap<>();
+            available = quizSerializer.getAvailable();
         } else {
             available = new TreeMap<>();
             closed = new TreeMap<>();

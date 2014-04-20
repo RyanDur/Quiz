@@ -4,10 +4,27 @@ import java.io.*;
 
 public class IdSerializerImpl implements IdSerializer {
     private static String fileName = "Ids.txt";
-    private int id;
+    private Integer id;
 
     @Override
-    public void serialize(int id) {
+    public void persist(Integer id) {
+        this.id = id;
+        Runtime.getRuntime().addShutdownHook(new Thread(this::serialize));
+    }
+
+    @Override
+    public Integer getId() {
+        deserialize();
+        if(id == null) id = 0;
+        return id;
+    }
+
+    @Override
+    public boolean dataExists() {
+        return new File(IdSerializerImpl.fileName).exists();
+    }
+
+    public void serialize() {
         try {
             FileOutputStream fout = new FileOutputStream(IdSerializerImpl.fileName);
             ObjectOutputStream oos = new ObjectOutputStream(fout);
@@ -19,7 +36,6 @@ public class IdSerializerImpl implements IdSerializer {
         }
     }
 
-    @Override
     public void deserialize() {
         try {
             FileInputStream fin = new FileInputStream(IdSerializerImpl.fileName);
@@ -30,15 +46,5 @@ public class IdSerializerImpl implements IdSerializer {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public boolean dataExists() {
-        return new File(IdSerializerImpl.fileName).exists();
     }
 }
