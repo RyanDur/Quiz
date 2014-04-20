@@ -8,7 +8,7 @@ public class ViewMessages {
     public static final String MENU_VIEW_CHOICES_ID = "choices";
     public static final String CLOSED_QUIZ = "Sorry\nThat quiz was closed";
     public static final String CHOOSE_ANOTHER = "Please Choose another";
-    public static final String NO_QUIZZES = "There are no more quizzes to choose from";
+    public static final String NO_QUIZZES = "There are no quizzes to choose from";
     public static final String MENU_VIEW_BUTTON_ID = "choices";
 
     // Sign in

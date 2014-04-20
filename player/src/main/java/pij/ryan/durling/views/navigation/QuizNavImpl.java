@@ -60,17 +60,16 @@ public class QuizNavImpl extends StackPane implements QuizNav {
     private Menu getMenuView() {
         Menu menu = views.getMenuView();
         Set<QuizOption> options = quizPlayer.getMenu();
-        if(options.isEmpty()) {
-            viewPane.setMessage(ViewMessages.CLOSED_QUIZ + "\n" +
-                    ViewMessages.CHOOSE_ANOTHER);
+        if (quizPlayer.getMenu().isEmpty()) {
+            viewPane.setMessage(ViewMessages.NO_QUIZZES);
         } else {
-            setMenu(menu, 0);
+            setMenu(menu, 0, options);
         }
         return menu;
     }
 
-    private void setMenu(Menu menu, int y) {
-        for (QuizOption option : quizPlayer.getMenu()) {
+    private void setMenu(Menu menu, int y, Set<QuizOption> options) {
+        for (QuizOption option : options) {
             Button button = getButton(option.getQuizTitle(), y);
             button.setOnAction(e -> {
                 try {
@@ -78,10 +77,8 @@ public class QuizNavImpl extends StackPane implements QuizNav {
                     getQuestionView(option);
                     header.setQuizTitle(option.getQuizTitle());
                 } catch (NullPointerException e1) {
-                    if (quizPlayer.getMenu().isEmpty()) {
-                        viewPane.setMessage(ViewMessages.CLOSED_QUIZ + "\n" +
-                                ViewMessages.NO_QUIZZES);
-                    }
+                    viewPane.setMessage(ViewMessages.CLOSED_QUIZ + "\n" +
+                            ViewMessages.CHOOSE_ANOTHER);
                     viewPane.setView((Node) getMenuView());
                 }
             });
