@@ -1,7 +1,10 @@
 package pij.ryan.durling.resources;
 
+import pij.ryan.durling.models.QuizOption;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 public interface QuizMaker extends Remote{
     int createQuiz(String title) throws RemoteException;
@@ -14,15 +17,15 @@ public interface QuizMaker extends Remote{
 
     boolean validQuiz() throws RemoteException;
 
-    String getName() throws RemoteException;
-
     boolean empty() throws RemoteException;
 
-    int getId() throws RemoteException;
-
-    String getQuestion() throws RemoteException;
-
-    int getQuestionValue() throws RemoteException;
-
     boolean validQuestion() throws RemoteException;
+
+    Set<QuizOption> getAvailableQuizzes() throws RemoteException;
+
+    Set<QuizOption> getClosedQuizzes() throws RemoteException;
+
+    void closeQuiz(int quizId) throws RemoteException;
+
+    void openQuiz(int quizId) throws RemoteException;
 }

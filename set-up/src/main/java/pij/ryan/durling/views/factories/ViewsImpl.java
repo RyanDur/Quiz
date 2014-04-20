@@ -1,10 +1,7 @@
 package pij.ryan.durling.views.factories;
 
 import pij.ryan.durling.views.elements.*;
-import pij.ryan.durling.views.pages.Answers;
-import pij.ryan.durling.views.pages.AnswersImpl;
-import pij.ryan.durling.views.pages.Questions;
-import pij.ryan.durling.views.pages.QuestionsImpl;
+import pij.ryan.durling.views.pages.*;
 
 public class ViewsImpl implements Views {
 
@@ -31,5 +28,12 @@ public class ViewsImpl implements Views {
     @Override
     public Footer getFooter() {
         return new FooterImpl();
+    }
+
+    @Override
+    public SplitMenu getSplitMenu() {
+        Menu left = new MenuImpl();
+        Menu right = new MenuImpl();
+        return new SplitMenuImpl(left, right);
     }
 }

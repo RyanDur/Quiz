@@ -2,6 +2,9 @@ package pij.ryan.durling.controllers;
 
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
+import pij.ryan.durling.models.QuizOption;
+
+import java.util.Set;
 
 public interface QuizCreator {
     void createQuiz(String name) throws IllegalArgumentException;
@@ -18,5 +21,11 @@ public interface QuizCreator {
 
     String getQuestion();
 
-    int getQuizId();
+    Set<QuizOption> getAvailableQuizzes();
+
+    Set<QuizOption> getClosedQuizzes();
+
+    void closeQuiz(int quizId);
+
+    void openQuiz(int quizId);
 }

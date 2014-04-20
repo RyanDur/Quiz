@@ -4,9 +4,11 @@ import pij.ryan.durling.controllers.QuizCtrl;
 import pij.ryan.durling.factories.QuizFactory;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
+import pij.ryan.durling.models.QuizOption;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Set;
 
 public class QuizMakerImpl extends UnicastRemoteObject implements QuizMaker {
 
@@ -48,32 +50,32 @@ public class QuizMakerImpl extends UnicastRemoteObject implements QuizMaker {
     }
 
     @Override
-    public String getName() throws RemoteException {
-        return quiz.getName();
-    }
-
-    @Override
     public boolean empty() throws  RemoteException{
         return quiz == null;
     }
 
     @Override
-    public int getId() throws RemoteException {
-        return quiz.getId();
-    }
-
-    @Override
-    public String getQuestion() throws RemoteException {
-        return question.getQuestion();
-    }
-
-    @Override
-    public int getQuestionValue() throws RemoteException {
-        return question.getValue();
-    }
-
-    @Override
     public boolean validQuestion() throws RemoteException {
         return question.valid();
+    }
+
+    @Override
+    public Set<QuizOption> getAvailableQuizzes() throws RemoteException {
+        return quizCtrl.getQuizOptions();
+    }
+
+    @Override
+    public Set<QuizOption> getClosedQuizzes() throws RemoteException {
+        return quizCtrl.getClosedOptions();
+    }
+
+    @Override
+    public void closeQuiz(int quizId) throws RemoteException {
+        quizCtrl.close(quizId);
+    }
+
+    @Override
+    public void openQuiz(int quizId) throws RemoteException {
+        quizCtrl.open(quizId);
     }
 }

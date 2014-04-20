@@ -1,5 +1,6 @@
 package pij.ryan.durling.views.pages;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ public class SplitMenuImpl extends GridPane implements SplitMenu {
     public SplitMenuImpl(Menu left, Menu right) {
         this.getStylesheets().add(ViewMessages.SPLIT_MENU_STYLESHEETS);
         this.setId(ViewMessages.SPLIT_MENU_ID);
+        this.setAlignment(Pos.CENTER);
         this.left = left;
         this.right = right;
         Label open = new Label(ViewMessages.OPEN);

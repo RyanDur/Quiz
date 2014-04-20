@@ -2,11 +2,13 @@ package pij.ryan.durling.views.navigation;
 
 import com.google.inject.Inject;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import pij.ryan.durling.controllers.QuizCreator;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.messages.ViewMessages;
+import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.views.elements.Footer;
 import pij.ryan.durling.views.elements.Header;
 import pij.ryan.durling.views.elements.ViewBox;
@@ -30,10 +32,46 @@ public class EditorImpl extends BorderPane implements Editor {
         this.setId(ViewMessages.EDITOR_VIEW_ID);
         this.views = views;
         this.quizCreator = quizCreator;
-        viewBox = views.getErrorBox();
         addHeader();
-        this.setCenter((Node) viewBox);
+        addCenter();
         addFooter();
+    }
+
+    private void addCenter() {
+        viewBox = views.getErrorBox();
+        viewBox.setView((Node) getSplitMenu(views));
+        this.setCenter((Node) viewBox);
+    }
+
+    private SplitMenu getSplitMenu(Views views) {
+        SplitMenu splitMenu = views.getSplitMenu();
+        splitLeft(splitMenu);
+        splitRight(splitMenu);
+        return splitMenu;
+    }
+
+    private void splitRight(SplitMenu splitMenu) {
+        int y = 0;
+        for(QuizOption option : quizCreator.getClosedQuizzes()) {
+            Button button = new Button(option.getQuizTitle());
+            button.setOnAction(e -> {
+                quizCreator.openQuiz(option.getQuizId());
+                addCenter();
+            });
+            splitMenu.addOptionRight(button, y++);
+        }
+    }
+
+    private void splitLeft(SplitMenu splitMenu) {
+        int y = 0;
+        for(QuizOption option : quizCreator.getAvailableQuizzes()) {
+            Button button = new Button(option.getQuizTitle());
+            button.setOnAction(e -> {
+                quizCreator.closeQuiz(option.getQuizId());
+                addCenter();
+            });
+            splitMenu.addOptionLeft(button, y++);
+        }
     }
 
     private void addHeader() {
@@ -114,9 +152,8 @@ public class EditorImpl extends BorderPane implements Editor {
     }
 
     private void resetEditor() {
-        viewBox.removeMessage();
-        viewBox.removeView();
         addHeader();
+        addCenter();
         addFooter();
     }
 }

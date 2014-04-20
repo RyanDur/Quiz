@@ -5,6 +5,7 @@ import pij.ryan.durling.views.elements.Header;
 import pij.ryan.durling.views.elements.ViewBox;
 import pij.ryan.durling.views.pages.Answers;
 import pij.ryan.durling.views.pages.Questions;
+import pij.ryan.durling.views.pages.SplitMenu;
 
 public interface Views {
 
@@ -17,4 +18,6 @@ public interface Views {
     Header getHeader();
 
     Footer getFooter();
+
+    SplitMenu getSplitMenu();
 }

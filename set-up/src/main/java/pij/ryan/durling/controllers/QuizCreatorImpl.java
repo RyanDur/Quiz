@@ -4,16 +4,19 @@ import com.google.inject.Inject;
 import pij.ryan.durling.exceptions.IllegalQuizCreationException;
 import pij.ryan.durling.exceptions.InvalidQuizException;
 import pij.ryan.durling.messages.ControllerMessages;
+import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.resources.QuizMaker;
 import pij.ryan.durling.resources.ServerLink;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 public class QuizCreatorImpl implements QuizCreator {
 
     private QuizMaker quizMaker;
-    private int quizId;
+    private String name;
+    private String question;
 
     @Inject
     public QuizCreatorImpl(ServerLink serverLink) {
@@ -26,13 +29,14 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public String getName() {
-        return quizMaker.getName();
+        return name;
     }
 
     @Override
     public void createQuiz(String name) throws IllegalArgumentException {
         if (inValid(name)) throw new IllegalArgumentException(ControllerMessages.EMPTY_TITLE);
-        quizId = quizMaker.createQuiz(name);
+        this.name = name;
+        quizMaker.createQuiz(name);
     }
 
     @Override
@@ -40,6 +44,7 @@ public class QuizCreatorImpl implements QuizCreator {
         if (quizMaker.empty()) throw new IllegalQuizCreationException();
         if (score < 1) throw new IllegalArgumentException(ControllerMessages.INVALID_SCORE);
         if (inValid(question)) throw new IllegalArgumentException(ControllerMessages.EMPTY_QUESTION);
+        this.question = question;
         quizMaker.addQuestion(question, score);
     }
 
@@ -64,12 +69,27 @@ public class QuizCreatorImpl implements QuizCreator {
 
     @Override
     public String getQuestion() {
-        return quizMaker.getQuestion();
+        return question;
     }
 
     @Override
-    public int getQuizId() {
-        return quizId;
+    public Set<QuizOption> getAvailableQuizzes() {
+        return quizMaker.getAvailableQuizzes();
+    }
+
+    @Override
+    public Set<QuizOption> getClosedQuizzes() {
+        return quizMaker.getClosedQuizzes();
+    }
+
+    @Override
+    public void closeQuiz(int quizId) {
+        quizMaker.closeQuiz(quizId);
+    }
+
+    @Override
+    public void openQuiz(int quizId) {
+        quizMaker.openQuiz(quizId);
     }
 
     private boolean inValid(String argument) {

@@ -1,6 +1,8 @@
 package pij.ryan.durling.resources;
 
-import java.rmi.RemoteException;
+import pij.ryan.durling.models.QuizOption;
+
+import java.util.Set;
 
 public interface QuizMaker {
     int createQuiz(String title);
@@ -9,19 +11,19 @@ public interface QuizMaker {
 
     void addAnswer(String answer, boolean value);
 
+    Set<QuizOption> getAvailableQuizzes();
+
+    Set<QuizOption> getClosedQuizzes();
+
     void save();
 
     boolean validQuiz();
 
-    String getName();
-
     boolean empty();
 
-    int getId() throws RemoteException;
-
-    String getQuestion();
-
-    int getQuestionValue();
-
     boolean validQuestion();
+
+    void closeQuiz(int quizId);
+
+    void openQuiz(int quizId);
 }

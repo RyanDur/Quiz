@@ -12,17 +12,14 @@ import pij.ryan.durling.resources.QuizMaker;
 import pij.ryan.durling.resources.ServerLink;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class QuizCreatorSteps {
 
     private QuizCreator quizCreator;
-    private Integer quizId;
     private Throwable thrown;
     private QuizMaker quizMaker;
 
@@ -38,12 +35,8 @@ public class QuizCreatorSteps {
     public void a_user_creates_a_quiz_named(String name) throws Throwable {
         name = ifNull(name);
 
-        when(quizMaker.getName()).thenReturn(name);
-        when(quizMaker.getId()).thenReturn(5);
-
         try {
             quizCreator.createQuiz(name);
-            quizId = quizCreator.getQuizId();
         } catch (IllegalArgumentException e) {
             thrown = e;
         }
@@ -60,12 +53,6 @@ public class QuizCreatorSteps {
     @Then("^a quiz should not be created$")
     public void a_quiz_should_not_be_created() throws Throwable {
         verify(quizMaker, never()).createQuiz(anyString());
-    }
-
-    @And("^not return the quiz ID$")
-    public void not_return_the_quiz_ID() throws Throwable {
-        assertThat(quizId, is(nullValue()));
-        verify(quizMaker, never()).getId();
     }
 
     @Then("^the question should be added$")
@@ -92,11 +79,6 @@ public class QuizCreatorSteps {
         verify(quizMaker, never()).save();
     }
 
-    @And("^return the quiz ID$")
-    public void return_the_quiz_ID() throws Throwable {
-        assertNotNull(quizId);
-    }
-
     @Then("^the quiz should be saved$")
     public void the_quiz_should_be_saved() throws Throwable {
         verify(quizMaker).save();
@@ -105,9 +87,6 @@ public class QuizCreatorSteps {
     @When("^a user creates a question with \"([^\"]*)\" and (.*)$")
     public void a_user_creates_a_question_with_and(String questionString, int value) throws Throwable {
         questionString = ifNull(questionString);
-
-        when(quizMaker.getQuestion()).thenReturn(questionString);
-        when(quizMaker.getQuestionValue()).thenReturn(value);
 
         try {
             quizCreator.addQuestion(questionString, value);
@@ -182,7 +161,6 @@ public class QuizCreatorSteps {
 
     @Then("^a user should be able to get the \"([^\"]*)\"$")
     public void a_user_should_be_able_to_get_the(String question) throws Throwable {
-        when(quizMaker.getQuestion()).thenReturn(question);
         assertThat(quizCreator.getQuestion(), is(equalTo(question)));
     }
 
@@ -202,5 +180,45 @@ public class QuizCreatorSteps {
     @Given("^a quiz is never created$")
     public void a_quiz_is_never_created() throws Throwable {
         when(quizMaker.empty()).thenReturn(true);
+    }
+
+    @When("^a user asks for the available quizzes$")
+    public void a_user_asks_for_the_available_quizzes() throws Throwable {
+        quizCreator.getAvailableQuizzes();
+    }
+
+    @Then("^a user should receive the available quizzes$")
+    public void a_user_should_receive_the_available_quizzes() throws Throwable {
+        verify(quizMaker).getAvailableQuizzes();
+    }
+
+    @When("^a user asks for the closed quizzes$")
+    public void a_user_asks_for_the_closed_quizzes() throws Throwable {
+        quizCreator.getClosedQuizzes();
+    }
+
+    @Then("^a user should receive the closed quizzes$")
+    public void a_user_should_receive_the_closed_quizzes() throws Throwable {
+        verify(quizMaker).getClosedQuizzes();
+    }
+
+    @When("^a user closes quiz (\\d+)$")
+    public void a_user_closes_quiz(int id) throws Throwable {
+        quizCreator.closeQuiz(id);
+    }
+
+    @Then("^quiz (\\d+) should be closed$")
+    public void quiz_should_be_closed(int id) throws Throwable {
+        verify(quizMaker).closeQuiz(id);
+    }
+
+    @When("^a user opens quiz (\\d+)$")
+    public void a_user_opens_quiz(int id) throws Throwable {
+        quizCreator.openQuiz(id);
+    }
+
+    @Then("^quiz (\\d+) should be opened$")
+    public void quiz_should_be_opened(int id) throws Throwable {
+        verify(quizMaker).openQuiz(id);
     }
 }

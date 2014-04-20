@@ -10,7 +10,6 @@ Feature: The ability to create quizzes
   Scenario Outline: should be able to make a quiz with a name and get the quiz id
     When a user creates a quiz named <name>
     Then they should have a quiz with the name <name>
-    And return the quiz ID
 
   Examples:
     | name  |
@@ -20,7 +19,6 @@ Feature: The ability to create quizzes
   Scenario Outline: should not be able to make a quiz without a name
     When a user creates a quiz named <name>
     Then a quiz should not be created
-    And not return the quiz ID
     And throw an IllegalArgumentException
     And have the message "Must specify a name for the quiz"
 
@@ -165,3 +163,20 @@ Feature: The ability to create quizzes
     | name  | question | value |
     | "foo" | " ello"  | 3     |
     | "foo" | " ello"  | 3     |
+
+
+  Scenario: should get the list of available quizzes
+    When a user asks for the available quizzes
+    Then a user should receive the available quizzes
+
+  Scenario: should get the list of closed quizzes
+    When a user asks for the closed quizzes
+    Then a user should receive the closed quizzes
+
+  Scenario: should be able to close a quiz
+    When a user closes quiz 7
+    Then quiz 7 should be closed
+
+  Scenario: should be able to open a quiz
+    When a user opens quiz 7
+    Then quiz 7 should be opened

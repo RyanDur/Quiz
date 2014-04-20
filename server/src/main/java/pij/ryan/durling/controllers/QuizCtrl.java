@@ -13,5 +13,9 @@ public interface QuizCtrl {
 
     Quiz getQuiz(int id);
 
-    void flush();
+    Set<QuizOption> getClosedOptions();
+
+    void open(int quizId);
+
+    void close(int quizId);
 }

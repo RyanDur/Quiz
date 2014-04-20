@@ -53,16 +53,6 @@ Feature: Orchestrate the making of a quiz
     | "foo" |
     | "bar" |
 
-
-  Scenario Outline: should be able to get the name of the quiz
-    Given a user creates a quiz <title>
-    Then a user can get the name of the quiz
-
-  Examples:
-    | title |
-    | "foo" |
-    | "bar" |
-
   Scenario Outline: should be able to check if the quiz exists
     Given a user creates a quiz <title>
     Then a user can check if the quiz is <empty>
@@ -79,3 +69,31 @@ Feature: Orchestrate the making of a quiz
     | empty  |
     | "true" |
     | "true" |
+
+
+  Scenario: should get the list of available quizzes
+    When a user asks for the available quizzes
+    Then a user should receive the available quizzes
+
+  Scenario: should get the list of closed quizzes
+    When a user asks for the closed quizzes
+    Then a user should receive the closed quizzes
+
+  Scenario: should be able to close a quiz
+    When a user closes quiz 7
+    Then quiz 7 should be closed
+
+  Scenario: should be able to open a quiz
+    When a user opens quiz 7
+    Then quiz 7 should be opened
+
+  Scenario Outline: should be able to add a question to a quiz
+    Given a user creates a quiz <title>
+    When a user adds a <question> with a <score>
+    And a user asks if a question is valid
+    Then it should check if it is valid
+
+  Examples:
+    | title | question | score |
+    | "foo" | "Whaaa?" | 7     |
+    | "bar" | "noooo?" | 78    |

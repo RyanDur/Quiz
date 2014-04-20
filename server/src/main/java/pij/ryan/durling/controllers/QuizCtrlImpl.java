@@ -57,11 +57,25 @@ public class QuizCtrlImpl implements QuizCtrl {
     }
 
     @Override
-    public void flush() {
-        quizSerializer.serialize(quizzes);
+    public Set<QuizOption> getClosedOptions() {
+        return null;
+    }
+
+    @Override
+    public void open(int quizId) {
+
+    }
+
+    @Override
+    public void close(int quizId) {
+
     }
 
     private Thread flushHook() {
         return new Thread(this::flush);
+    }
+
+    private void flush() {
+        quizSerializer.serialize(quizzes);
     }
 }

@@ -95,16 +95,60 @@ public class QuizMakerSteps {
         verify(quiz).valid();
     }
 
-    @Then("^a user can get the name of the quiz$")
-    public void a_user_can_get_the_name_of_the_quiz() throws Throwable {
-        quizMaker.getName();
-        verify(quiz).getName();
-    }
-
     @Then("^a user can check if the quiz is \"([^\"]*)\"$")
     public void a_user_can_check_if_the_quiz_is(String value) throws Throwable {
         boolean empty = ifTrue(value);
 
         assertThat(quizMaker.empty(), is(equalTo(empty)));
+    }
+
+    @When("^a user asks for the available quizzes$")
+    public void a_user_asks_for_the_available_quizzes() throws Throwable {
+        quizMaker.getAvailableQuizzes();
+    }
+
+    @Then("^a user should receive the available quizzes$")
+    public void a_user_should_receive_the_available_quizzes() throws Throwable {
+        verify(quizCtrl).getQuizOptions();
+    }
+
+    @When("^a user asks for the closed quizzes$")
+    public void a_user_asks_for_the_closed_quizzes() throws Throwable {
+        quizMaker.getClosedQuizzes();
+    }
+
+    @Then("^a user should receive the closed quizzes$")
+    public void a_user_should_receive_the_closed_quizzes() throws Throwable {
+        verify(quizCtrl).getClosedOptions();
+    }
+
+    @When("^a user closes quiz (\\d+)$")
+    public void a_user_closes_quiz(int id) throws Throwable {
+        quizMaker.closeQuiz(id);
+    }
+
+    @Then("^quiz (\\d+) should be closed$")
+    public void quiz_should_be_closed(int id) throws Throwable {
+        verify(quizCtrl).close(id);
+    }
+
+    @When("^a user opens quiz (\\d+)$")
+    public void a_user_opens_quiz(int id) throws Throwable {
+        quizMaker.openQuiz(id);
+    }
+
+    @Then("^quiz (\\d+) should be opened$")
+    public void quiz_should_be_opened(int id) throws Throwable {
+        verify(quizCtrl).open(id);
+    }
+
+    @When("^a user asks if a question is valid$")
+    public void a_user_asks_if_a_question_is_valid() throws Throwable {
+        quizMaker.validQuestion();
+    }
+
+    @Then("^it should check if it is valid$")
+    public void it_should_check_if_it_is_valid() throws Throwable {
+        verify(question).valid();
     }
 }
