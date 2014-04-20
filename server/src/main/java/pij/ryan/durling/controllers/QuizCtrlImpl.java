@@ -15,37 +15,71 @@ import java.util.TreeMap;
 @Singleton
 public class QuizCtrlImpl implements QuizCtrl {
 
-    private final TreeMap<Integer, Quiz> quizzes;
-    private final TreeMap<Integer, Quiz> closed;
+    private TreeMap<Integer, Quiz> available;
+    private TreeMap<Integer, Quiz> closed;
     private OptionFactory optionFactory;
-    private QuizSerializer quizSerializer;
 
     @Inject
     public QuizCtrlImpl(OptionFactory optionFactory, QuizSerializer quizSerializer) {
         this.optionFactory = optionFactory;
-        this.quizSerializer = quizSerializer;
-        if (this.quizSerializer.dataExists()) {
-            this.quizSerializer.deserialize();
-            quizzes = quizSerializer.getQuizzes();
-        } else {
-            quizzes = new TreeMap<>();
-        }
-        closed = new TreeMap<>();
-        Runtime.getRuntime().addShutdownHook(flushHook());
+        setupQuizzes(quizSerializer);
+        Runtime.getRuntime().addShutdownHook(flushHook(quizSerializer));
     }
 
     @Override
     public void add(Quiz quiz) throws RemoteException {
-        quizzes.put(quiz.getId(), quiz);
+        available.put(quiz.getId(), quiz);
     }
 
     @Override
     public Quiz getQuiz(int id) {
-        return quizzes.get(id);
+        return available.get(id);
     }
 
     @Override
     public Set<QuizOption> getQuizOptions() {
+        return getOptions(available);
+    }
+
+    @Override
+    public Set<QuizOption> getClosedOptions() {
+        return getOptions(closed);
+    }
+
+    @Override
+    public void open(int quizId) {
+        Quiz quiz = closed.remove(quizId);
+        available.put(quizId, quiz);
+    }
+
+    @Override
+    public void close(int quizId) {
+        Quiz quiz = available.remove(quizId);
+        closed.put(quizId, quiz);
+    }
+
+    private Thread flushHook(QuizSerializer serializer) {
+        return new Thread(() -> flush(serializer));
+    }
+
+    private void flush(QuizSerializer serializer) {
+        serializer.serialize(available,closed);
+    }
+
+    private void setupQuizzes(QuizSerializer quizSerializer) {
+        if (quizSerializer.dataExists()) {
+            quizSerializer.deserialize();
+            closed = quizSerializer.getClosed();
+            if (closed == null) closed = new TreeMap<>();
+            available = quizSerializer.getQuizzes();
+            if (available == null) available = new TreeMap<>();
+        } else {
+            available = new TreeMap<>();
+            closed = new TreeMap<>();
+        }
+    }
+
+    private Set<QuizOption> getOptions(TreeMap<Integer, Quiz> quizzes) {
         Set<QuizOption> options = new HashSet<>();
         quizzes.values().forEach(quiz -> {
             try {
@@ -55,38 +89,5 @@ public class QuizCtrlImpl implements QuizCtrl {
             }
         });
         return options;
-    }
-
-    @Override
-    public Set<QuizOption> getClosedOptions() {
-        Set<QuizOption> options = new HashSet<>();
-        closed.values().forEach(quiz -> {
-            try {
-                options.add(optionFactory.createQuizOption(quiz.getId(), quiz.getName()));
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
-        return options;
-    }
-
-    @Override
-    public void open(int quizId) {
-        Quiz quiz = closed.remove(quizId);
-        quizzes.put(quizId, quiz);
-    }
-
-    @Override
-    public void close(int quizId) {
-        Quiz quiz = quizzes.remove(quizId);
-        closed.put(quizId, quiz);
-    }
-
-    private Thread flushHook() {
-        return new Thread(this::flush);
-    }
-
-    private void flush() {
-        quizSerializer.serialize(quizzes);
     }
 }

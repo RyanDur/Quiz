@@ -9,13 +9,15 @@ public class QuizSerializerImpl implements QuizSerializer {
 
     private static String fileName = "Quizzes.txt";
     private TreeMap<Integer, Quiz> quizzes;
+    private TreeMap<Integer, Quiz> closed;
 
     @Override
-    public void serialize(TreeMap<Integer, Quiz> quizzes) {
+    public void serialize(TreeMap<Integer, Quiz> quizzes, TreeMap<Integer, Quiz> closed) {
         try {
             FileOutputStream fout = new FileOutputStream(fileName);
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(quizzes);
+            oos.writeObject(closed);
             oos.close();
             fout.close();
         } catch (IOException e) {
@@ -29,6 +31,7 @@ public class QuizSerializerImpl implements QuizSerializer {
             FileInputStream fin = new FileInputStream(fileName);
             ObjectInputStream ois = new ObjectInputStream(fin);
             quizzes = (TreeMap<Integer, Quiz>) ois.readObject();
+            closed = (TreeMap<Integer, Quiz>) ois.readObject();
             ois.close();
             fin.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -39,6 +42,11 @@ public class QuizSerializerImpl implements QuizSerializer {
     @Override
     public TreeMap<Integer, Quiz> getQuizzes() {
         return quizzes;
+    }
+
+    @Override
+    public TreeMap<Integer, Quiz> getClosed() {
+        return closed;
     }
 
     @Override
