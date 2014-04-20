@@ -18,6 +18,7 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
     public HighScoreCtrlImpl(ScoreFactory scoreFactory, ScoreSerializer serializer) {
         this.scoreFactory = scoreFactory;
         if(serializer.dataExists()) {
+            serializer.deserialize();
             scores = serializer.getScores();
         } else {
             scores = new TreeMap<>();

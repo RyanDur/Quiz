@@ -11,6 +11,7 @@ public class IdGeneratorImpl implements IdGenerator {
     @Inject
     public IdGeneratorImpl(IdSerializer serializer) {
         if (serializer.dataExists()) {
+            serializer.deserialize();
             id = serializer.getId();
         } else {
             id = 0;
