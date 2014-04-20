@@ -7,12 +7,12 @@ import pij.ryan.durling.models.Score;
 import pij.ryan.durling.serializers.ScoreSerializer;
 
 import java.rmi.RemoteException;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 @Singleton
 public class HighScoreCtrlImpl implements HighScoreCtrl {
     private ScoreFactory scoreFactory;
-    private TreeMap<Integer, Score> scores;
+    private ConcurrentSkipListMap<Integer, Score> scores;
 
     @Inject
     public HighScoreCtrlImpl(ScoreFactory scoreFactory, ScoreSerializer serializer) {
@@ -22,13 +22,13 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
     }
 
     @Override
-    public void setHighScore(int quizId, String player, int userScore) throws RemoteException {
+    public synchronized void setHighScore(int quizId, String player, int userScore) throws RemoteException {
         Score score = scoreFactory.createScore(player, userScore);
         scores.put(quizId, score);
     }
 
     @Override
-    public Score getHighScore(int quizId) throws RemoteException {
+    public synchronized Score getHighScore(int quizId) throws RemoteException {
         return scores.get(quizId);
     }
 
@@ -36,7 +36,7 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
         if(serializer.dataExists()) {
             scores = serializer.getScores();
         } else {
-            scores = new TreeMap<>();
+            scores = new ConcurrentSkipListMap<>();
         }
     }
 }

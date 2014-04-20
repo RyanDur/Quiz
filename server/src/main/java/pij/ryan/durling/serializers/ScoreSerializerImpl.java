@@ -5,22 +5,22 @@ import org.slf4j.LoggerFactory;
 import pij.ryan.durling.models.Score;
 
 import java.io.*;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class ScoreSerializerImpl extends Serializer implements ScoreSerializer {
     private static final Logger log = LoggerFactory.getLogger(ScoreSerializerImpl.class);
     private static String fileName = "server/Scores.txt";
-    private TreeMap<Integer, Score> scores;
+    private ConcurrentSkipListMap<Integer, Score> scores;
 
     @Override
-    public void persist(TreeMap<Integer, Score> scores) {
+    public void persist(ConcurrentSkipListMap<Integer, Score> scores) {
         this.scores = scores;
     }
 
     @Override
-    public TreeMap<Integer, Score> getScores() {
+    public ConcurrentSkipListMap<Integer, Score> getScores() {
         deserialize();
-        if (scores == null) scores = new TreeMap<>();
+        if (scores == null) scores = new ConcurrentSkipListMap<>();
         return scores;
     }
 
@@ -47,7 +47,7 @@ public class ScoreSerializerImpl extends Serializer implements ScoreSerializer {
         try {
             FileInputStream fin = new FileInputStream(ScoreSerializerImpl.fileName);
             ObjectInputStream ois = new ObjectInputStream(fin);
-            scores = (TreeMap<Integer, Score>) ois.readObject();
+            scores = (ConcurrentSkipListMap<Integer, Score>) ois.readObject();
             ois.close();
             fin.close();
             log.info("Scores Retrieved");

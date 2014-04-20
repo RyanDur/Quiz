@@ -2,16 +2,15 @@ package pij.ryan.durling.serializers;
 
 import pij.ryan.durling.models.Quiz;
 
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public interface QuizSerializer {
 
+    void persist(ConcurrentSkipListMap<Integer, Quiz> quizzes, ConcurrentSkipListMap<Integer, Quiz> closed);
 
-    void persist(TreeMap<Integer, Quiz> quizzes, TreeMap<Integer, Quiz> closed);
+    ConcurrentSkipListMap<Integer, Quiz> getAvailable();
 
-    TreeMap<Integer, Quiz> getAvailable();
-
-    TreeMap<Integer, Quiz> getClosed();
+    ConcurrentSkipListMap<Integer, Quiz> getClosed();
 
     boolean dataExists();
 }

@@ -2,12 +2,12 @@ package pij.ryan.durling.serializers;
 
 import pij.ryan.durling.models.Score;
 
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public interface ScoreSerializer {
-    TreeMap<Integer, Score> getScores();
+    ConcurrentSkipListMap<Integer, Score> getScores();
 
     boolean dataExists();
 
-    void persist(TreeMap<Integer, Score> scores);
+    void persist(ConcurrentSkipListMap<Integer, Score> scores);
 }

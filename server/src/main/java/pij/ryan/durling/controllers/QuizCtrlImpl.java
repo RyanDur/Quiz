@@ -11,12 +11,13 @@ import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 @Singleton
 public class QuizCtrlImpl implements QuizCtrl {
 
-    private TreeMap<Integer, Quiz> available;
-    private TreeMap<Integer, Quiz> closed;
+    private ConcurrentSkipListMap<Integer, Quiz> available;
+    private ConcurrentSkipListMap<Integer, Quiz> closed;
     private OptionFactory optionFactory;
 
     @Inject
@@ -27,33 +28,33 @@ public class QuizCtrlImpl implements QuizCtrl {
     }
 
     @Override
-    public void add(Quiz quiz) throws RemoteException {
+    public synchronized void add(Quiz quiz) throws RemoteException {
         available.put(quiz.getId(), quiz);
     }
 
     @Override
-    public Quiz getQuiz(int id) {
+    public synchronized Quiz getQuiz(int id) {
         return available.get(id);
     }
 
     @Override
-    public Set<QuizOption> getQuizOptions() {
+    public synchronized Set<QuizOption> getQuizOptions() {
         return getOptions(available);
     }
 
     @Override
-    public Set<QuizOption> getClosedOptions() {
+    public synchronized Set<QuizOption> getClosedOptions() {
         return getOptions(closed);
     }
 
     @Override
-    public void open(int quizId) {
+    public synchronized void open(int quizId) {
         Quiz quiz = closed.remove(quizId);
         available.put(quizId, quiz);
     }
 
     @Override
-    public void close(int quizId) {
+    public synchronized void close(int quizId) {
         Quiz quiz = available.remove(quizId);
         closed.put(quizId, quiz);
     }
@@ -63,12 +64,12 @@ public class QuizCtrlImpl implements QuizCtrl {
             closed = quizSerializer.getClosed();
             available = quizSerializer.getAvailable();
         } else {
-            available = new TreeMap<>();
-            closed = new TreeMap<>();
+            available = new ConcurrentSkipListMap<>();
+            closed = new ConcurrentSkipListMap<>();
         }
     }
 
-    private Set<QuizOption> getOptions(TreeMap<Integer, Quiz> quizzes) {
+    private Set<QuizOption> getOptions(ConcurrentSkipListMap<Integer, Quiz> quizzes) {
         Set<QuizOption> options = new HashSet<>();
         quizzes.values().forEach(quiz -> {
             try {
