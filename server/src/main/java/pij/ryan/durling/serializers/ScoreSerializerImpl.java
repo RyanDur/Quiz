@@ -37,6 +37,7 @@ public class ScoreSerializerImpl extends Serializer implements ScoreSerializer {
             oos.writeObject(scores);
             oos.close();
             fout.close();
+            log.info("Scores Saved");
         } catch (IOException e) {
             log.error("Problem with serialization", e);
         }
@@ -49,6 +50,7 @@ public class ScoreSerializerImpl extends Serializer implements ScoreSerializer {
             scores = (TreeMap<Integer, Score>) ois.readObject();
             ois.close();
             fin.close();
+            log.info("Scores Retrieved");
         } catch (IOException | ClassNotFoundException e) {
             log.error("Problem with deserialization", e);
         }

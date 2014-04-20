@@ -35,6 +35,7 @@ public class IdSerializerImpl extends Serializer implements IdSerializer {
             oos.writeObject(id);
             oos.close();
             fout.close();
+            log.info("Ids Saved");
         } catch (IOException e) {
             log.error("Problem with serialization", e);
         }
@@ -47,6 +48,7 @@ public class IdSerializerImpl extends Serializer implements IdSerializer {
             id = (Integer) ois.readObject();
             ois.close();
             fin.close();
+            log.info("Ids Retrieved");
         } catch (IOException | ClassNotFoundException e) {
             log.error("Problem with deserialization", e);
         }

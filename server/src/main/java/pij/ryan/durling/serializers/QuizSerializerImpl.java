@@ -48,6 +48,7 @@ public class QuizSerializerImpl extends Serializer implements QuizSerializer {
             oos.writeObject(closed);
             oos.close();
             fout.close();
+            log.info("Quizzes Saved");
         } catch (IOException e) {
             log.error("Problem with serialization", e);
         }
@@ -61,6 +62,7 @@ public class QuizSerializerImpl extends Serializer implements QuizSerializer {
             closed = (TreeMap<Integer, Quiz>) ois.readObject();
             ois.close();
             fin.close();
+            log.info("Quizzes Retrieved");
         } catch (IOException | ClassNotFoundException e) {
             log.error("Problem with deserialization", e);
         }
