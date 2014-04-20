@@ -10,7 +10,7 @@ public class ViewMessages {
     public static final String CHOOSE_ANOTHER = "Please Choose another";
     public static final String NO_QUIZZES = "There are no more quizzes to choose from";
     public static final String MENU_VIEW_BUTTON_ID = "choices";
-    
+
     // Sign in
     public static final String SIGN_IN_VIEW_STYLE_SHEET = "styles/signin.css";
     public static final String SIGN_IN_BUTTON = "Sign In";
@@ -24,8 +24,8 @@ public class ViewMessages {
     public static final String QUESTION_VIEW_STYLE_SHEET = "styles/questions.css";
     public static final String QUESTION_VIEW_ID = "questions-view";
     public static final String QUESTIONS_ID = "questions";
-
     public static final String QUESTION_ID = "question";
+    
     // Answer View
     public static final String ANSWER_VIEW_STYLE_SHEET = "styles/answers.css";
     public static final String ANSWER_ID = "answer";

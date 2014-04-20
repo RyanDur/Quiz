@@ -4,5 +4,5 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public interface ServerLink {
-    QuizPlay getQuizPlay() throws RemoteException, NotBoundException;
+    QuizMaster getQuizPlay() throws RemoteException, NotBoundException;
 }

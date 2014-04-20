@@ -25,14 +25,14 @@ public class ServerLinkImpl implements ServerLink {
     }
 
     @Override
-    public QuizPlay getQuizPlay()  {
-        QuizPlay quizPlay = null;
+    public QuizMaster getQuizPlay()  {
+        QuizMaster quizMaster = null;
         try {
             Server server = (Server) registry.lookup("Server");
-            quizPlay = server.getQuizPlay();
+            quizMaster = server.getQuizPlay();
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE);
         }
-        return quizPlay;
+        return quizMaster;
     }
 }

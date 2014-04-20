@@ -9,7 +9,7 @@ import pij.ryan.durling.controllers.QuizPlayerImpl;
 import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.Score;
-import pij.ryan.durling.resources.QuizPlay;
+import pij.ryan.durling.resources.QuizMaster;
 import pij.ryan.durling.resources.ServerLink;
 
 import java.util.HashSet;
@@ -26,14 +26,14 @@ public class QuizPlayerSteps {
     private QuizPlayer quizPlayer;
     private Quiz quiz;
     private String caught;
-    private QuizPlay quizPlay;
+    private QuizMaster quizMaster;
     private Score score1;
 
     @Given("^there is a quiz player$")
     public void there_is_a_quiz_player() throws Throwable {
         ServerLink serverLink = mock(ServerLink.class);
-        quizPlay = mock(QuizPlay.class);
-        when(serverLink.getQuizPlay()).thenReturn(quizPlay);
+        quizMaster = mock(QuizMaster.class);
+        when(serverLink.getQuizPlay()).thenReturn(quizMaster);
         quizPlayer = new QuizPlayerImpl(serverLink);
     }
 
@@ -41,16 +41,16 @@ public class QuizPlayerSteps {
     public void a_player_has_a_menu() throws Throwable {
         quizPlayer.getMenu();
 
-        verify(quizPlay).getQuizOptions();
+        verify(quizMaster).getQuizOptions();
     }
 
     @When("^a player chooses an available quiz (\\d+)$")
     public void a_player_chooses_an_available_quiz(int menuOption) throws Throwable {
         quiz = mock(Quiz.class);
-        when(quizPlay.getQuiz(anyInt())).thenReturn(quiz);
+        when(quizMaster.getQuiz(anyInt())).thenReturn(quiz);
         quizPlayer.chooseQuiz(menuOption);
 
-        verify(quizPlay).getQuiz(anyInt());
+        verify(quizMaster).getQuiz(anyInt());
     }
 
     @Then("^a player should be able to get the questions for that quiz$")
@@ -110,7 +110,7 @@ public class QuizPlayerSteps {
 
     @Then("^the high score should be submitted$")
     public void the_high_score_should_be_submitted() throws Throwable {
-        verify(quizPlay).setHighScore(anyInt(), anyString(), anyInt());
+        verify(quizMaster).setHighScore(anyInt(), anyString(), anyInt());
     }
 
     @And("^a player submits the quiz$")
@@ -121,7 +121,7 @@ public class QuizPlayerSteps {
     @When("^the (\\d+) for the quiz$")
     public void the_for_the_quiz(int current) throws Throwable {
         score1 = mock(Score.class);
-        when(quizPlay.getHighScore(anyInt())).thenReturn(score1);
+        when(quizMaster.getHighScore(anyInt())).thenReturn(score1);
         when(score1.getScore()).thenReturn(current);
     }
 

@@ -8,7 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Set;
 
-public interface QuizPlay extends Remote {
+public interface QuizMaster extends Remote {
     Set<QuizOption> getQuizOptions() throws RemoteException;
 
     Quiz getQuiz(int id) throws RemoteException;

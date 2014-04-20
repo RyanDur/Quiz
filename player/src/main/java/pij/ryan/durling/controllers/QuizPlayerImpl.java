@@ -9,7 +9,7 @@ import pij.ryan.durling.models.Question;
 import pij.ryan.durling.models.Quiz;
 import pij.ryan.durling.models.QuizOption;
 import pij.ryan.durling.models.Score;
-import pij.ryan.durling.resources.QuizPlay;
+import pij.ryan.durling.resources.QuizMaster;
 import pij.ryan.durling.resources.ServerLink;
 import pij.ryan.durling.resources.ServerLinkImpl;
 
@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class QuizPlayerImpl implements QuizPlayer {
     private static final Logger log = LoggerFactory.getLogger(ServerLinkImpl.class);
-    private QuizPlay quizPlay;
+    private QuizMaster quizMaster;
     private Quiz quiz;
     private String playerName;
     private int score;
@@ -30,7 +30,7 @@ public class QuizPlayerImpl implements QuizPlayer {
     @Inject
     public QuizPlayerImpl(ServerLink serverLink) {
         try {
-            this.quizPlay = serverLink.getQuizPlay();
+            this.quizMaster = serverLink.getQuizPlay();
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE, e);
         }
@@ -38,13 +38,13 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     @Override
     public Set<QuizOption> getMenu() {
-        return quizPlay.getQuizOptions();
+        return quizMaster.getQuizOptions();
     }
 
     @Override
     public void chooseQuiz(int choice) {
         score = 0;
-        quiz = quizPlay.getQuiz(choice);
+        quiz = quizMaster.getQuiz(choice);
     }
 
     @Override
@@ -101,12 +101,12 @@ public class QuizPlayerImpl implements QuizPlayer {
 
     private void setHighScore() {
         if (getOldHighScore() == 0 || hasWon()) {
-            quizPlay.setHighScore(quiz.getId(), getPlayerName(), getScore());
+            quizMaster.setHighScore(quiz.getId(), getPlayerName(), getScore());
         }
     }
 
     private void getHighScore() {
-        Score scoreObj = quizPlay.getHighScore(quiz.getId());
+        Score scoreObj = quizMaster.getHighScore(quiz.getId());
         if (scoreObj != null) {
             oldCurrentWinner = scoreObj.getName();
             oldHighScore = scoreObj.getScore();

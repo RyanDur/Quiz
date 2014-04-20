@@ -6,7 +6,7 @@ import pij.ryan.durling.models.Score;
 
 import java.util.Set;
 
-public interface QuizPlay {
+public interface QuizMaster {
     Set<QuizOption> getQuizOptions();
 
     Quiz getQuiz(int id);

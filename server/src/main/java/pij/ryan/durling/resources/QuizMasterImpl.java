@@ -10,11 +10,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Set;
 
-public class QuizPlayImpl extends UnicastRemoteObject implements QuizPlay {
+public class QuizMasterImpl extends UnicastRemoteObject implements QuizMaster {
     private QuizCtrl quizCtrl;
     private HighScoreCtrl highSoreCtrl;
 
-    public QuizPlayImpl(QuizCtrl quizCtrl, HighScoreCtrl highSoreCtrl) throws RemoteException {
+    public QuizMasterImpl(QuizCtrl quizCtrl, HighScoreCtrl highSoreCtrl) throws RemoteException {
         this.quizCtrl = quizCtrl;
         this.highSoreCtrl = highSoreCtrl;
     }

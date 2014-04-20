@@ -26,7 +26,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public QuizPlay getQuizPlay() throws RemoteException {
-        return new QuizPlayImpl(quizCtrl, highSoreCtrl);
+    public QuizMaster getQuizPlay() throws RemoteException {
+        return new QuizMasterImpl(quizCtrl, highSoreCtrl);
     }
 }

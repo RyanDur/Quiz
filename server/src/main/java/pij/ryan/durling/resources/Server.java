@@ -7,5 +7,5 @@ public interface Server extends Remote {
 
     QuizMaker getQuizMaker() throws RemoteException;
 
-    QuizPlay getQuizPlay() throws RemoteException;
+    QuizMaster getQuizPlay() throws RemoteException;
 }
