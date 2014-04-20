@@ -32,11 +32,6 @@ public class HighScoreCtrlImpl implements HighScoreCtrl {
         return scores.get(quizId);
     }
 
-    @Override
-    public TreeMap<Integer, Score> getScores() {
-        return scores;
-    }
-
     private void setupScores(ScoreSerializer serializer) {
         if(serializer.dataExists()) {
             scores = serializer.getScores();
