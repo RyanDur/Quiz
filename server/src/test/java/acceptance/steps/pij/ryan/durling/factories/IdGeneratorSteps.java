@@ -5,6 +5,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import pij.ryan.durling.factories.IdGenerator;
 import pij.ryan.durling.factories.IdGeneratorImpl;
+import pij.ryan.durling.serializers.IdSerializer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class IdGeneratorSteps {
 
@@ -21,7 +23,8 @@ public class IdGeneratorSteps {
 
     @Given("^there is a id generator$")
     public void there_is_a_id_generator() throws Throwable {
-        idGenerator = new IdGeneratorImpl();
+        IdSerializer serializer = mock(IdSerializer.class);
+        idGenerator = new IdGeneratorImpl(serializer);
     }
 
     @When("^it generates (\\d+) ids$")

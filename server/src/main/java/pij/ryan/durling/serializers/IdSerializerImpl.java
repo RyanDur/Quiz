@@ -3,7 +3,7 @@ package pij.ryan.durling.serializers;
 import java.io.*;
 
 public class IdSerializerImpl implements IdSerializer {
-    private static String fileName = "Scores.txt";
+    private static String fileName = "Ids.txt";
     private int id;
 
     @Override
