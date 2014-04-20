@@ -4,8 +4,6 @@ import cucumber.api.java.en.Given;
 import pij.ryan.durling.controllers.HighScoreCtrl;
 import pij.ryan.durling.controllers.QuizCtrl;
 import pij.ryan.durling.factories.QuizFactory;
-import pij.ryan.durling.resources.Server;
-import pij.ryan.durling.resources.ServerImpl;
 
 import static org.mockito.Mockito.mock;
 

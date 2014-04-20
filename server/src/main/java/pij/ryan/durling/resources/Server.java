@@ -1,11 +1,9 @@
 package pij.ryan.durling.resources;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+public interface Server {
 
-public interface Server extends Remote {
-
-    QuizMaker getQuizMaker() throws RemoteException;
-
-    QuizMaster getQuizPlay() throws RemoteException;
+    /**
+     * register the server for the clients to talk to
+     */
+    void registerServer();
 }

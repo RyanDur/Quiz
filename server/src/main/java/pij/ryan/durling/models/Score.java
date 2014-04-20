@@ -4,7 +4,20 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface Score extends Remote {
+
+    /**
+     * get the score for a quiz
+     *
+     * @return int
+     * @throws RemoteException
+     */
     int getScore() throws RemoteException;
 
+    /**
+     * get the name of a quiz
+     *
+     * @return string
+     * @throws RemoteException
+     */
     String getName() throws RemoteException;
 }

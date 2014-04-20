@@ -1,32 +1,45 @@
 package pij.ryan.durling.resources;
 
 import com.google.inject.Inject;
-import pij.ryan.durling.controllers.HighScoreCtrl;
-import pij.ryan.durling.controllers.QuizCtrl;
-import pij.ryan.durling.factories.QuizFactory;
+import com.google.inject.Singleton;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Scanner;
 
-public class ServerImpl extends UnicastRemoteObject implements Server {
-    private QuizCtrl quizCtrl;
-    private HighScoreCtrl highSoreCtrl;
-    private QuizFactory quizFactory;
+@Singleton
+public class ServerImpl implements Server {
+
+    private QuizMaker quizMaker;
+    private QuizMaster quizMaster;
 
     @Inject
-    public ServerImpl(QuizCtrl quizCtrl, HighScoreCtrl highSoreCtrl, QuizFactory quizFactory) throws RemoteException {
-        this.quizCtrl = quizCtrl;
-        this.highSoreCtrl = highSoreCtrl;
-        this.quizFactory = quizFactory;
+    public ServerImpl(QuizMaker quizMaker, QuizMaster quizMaster) {
+        this.quizMaker = quizMaker;
+        this.quizMaster = quizMaster;
     }
 
     @Override
-    public QuizMaker getQuizMaker() throws RemoteException {
-        return new QuizMakerImpl(quizCtrl, quizFactory);
+    public void registerServer() {
+        System.setProperty("java.security.policy", "server/security.policy");
+        if (System.getSecurityManager() == null) {
+            System.setSecurityManager(new SecurityManager());
+        }
+        try {
+            Registry registry = LocateRegistry.createRegistry(1099);
+            registry.rebind("QuizMaker", quizMaker);
+            registry.rebind("QuizMaster", quizMaster);
+            exitAction();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public QuizMaster getQuizPlay() throws RemoteException {
-        return new QuizMasterImpl(quizCtrl, highSoreCtrl);
+    private void exitAction() {
+        System.out.println("Server is ready.\nPress Enter to save data and exit");
+        new Scanner(System.in).nextLine();
+        System.out.println("Saving Data");
+        System.exit(0);
     }
 }

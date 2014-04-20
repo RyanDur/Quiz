@@ -28,8 +28,7 @@ public class ServerLinkImpl implements ServerLink {
     public QuizMaster getQuizMaster()  {
         QuizMaster quizMaster = null;
         try {
-            Server server = (Server) registry.lookup("Server");
-            quizMaster = server.getQuizPlay();
+            quizMaster = (QuizMaster) registry.lookup("QuizMaster");
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE);
         }

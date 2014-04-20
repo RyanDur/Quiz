@@ -28,8 +28,7 @@ public class ServerLinkImpl implements ServerLink {
     public QuizMaker getQuizMaker()  {
         QuizMaker quizMaker = null;
         try {
-            Server server = (Server) registry.lookup("Server");
-            quizMaker = server.getQuizMaker();
+            quizMaker = (QuizMaker) registry.lookup("QuizMaker");
         } catch (RemoteException | NotBoundException e) {
             log.error(ServerMessages.ERROR_MESSAGE);
         }
