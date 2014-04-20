@@ -10,7 +10,7 @@ public interface QuizPlayer {
     /**
      * Get the available quizzes from the server
      *
-     * @return Set<QuizOption>
+     * @return Set of QuizOption
      */
     Set<QuizOption> getMenu();
 
@@ -24,7 +24,7 @@ public interface QuizPlayer {
     /**
      * get the questions from the chosen quiz
      *
-     * @return Set<Question>
+     * @return Set of Question
      */
     Set<Question> getQuestions();
 
@@ -39,7 +39,7 @@ public interface QuizPlayer {
      * Set the players name
      *
      * @param name String
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException throw if name is empty or null
      */
     void setPlayerName(String name) throws IllegalArgumentException;
 
