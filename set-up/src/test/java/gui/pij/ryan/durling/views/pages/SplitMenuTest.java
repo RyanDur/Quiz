@@ -17,13 +17,11 @@ import pij.ryan.durling.views.pages.SplitMenuImpl;
 public class SplitMenuTest extends GuiTest {
 
     private SplitMenu splitMenu;
-    private Menu left;
-    private Menu right;
 
     @Override
     protected Parent getRootNode() {
-        left = new MenuImpl();
-        right = new MenuImpl();
+        Menu left = new MenuImpl();
+        Menu right = new MenuImpl();
         splitMenu = new SplitMenuImpl(left, right);
 
         StackPane stackPane = new StackPane();
