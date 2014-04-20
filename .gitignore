@@ -3,7 +3,8 @@
 *.iws
 .gradle
 .DS_Store
-build/
 out/
 screenshot*
 *.txt
+!player/build/docs/*
+build/
