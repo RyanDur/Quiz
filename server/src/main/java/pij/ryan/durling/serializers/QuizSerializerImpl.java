@@ -2,6 +2,7 @@ package pij.ryan.durling.serializers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pij.ryan.durling.messages.SerializerMessages;
 import pij.ryan.durling.models.Quiz;
 
 import java.io.*;
@@ -9,7 +10,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 public class QuizSerializerImpl extends Serializer implements QuizSerializer {
     private static final Logger log = LoggerFactory.getLogger(QuizSerializerImpl.class);
-    private static String fileName = "server/Quizzes.txt";
+    private static String fileName = SerializerMessages.QUIZ_FILE;
     private ConcurrentSkipListMap<Integer, Quiz> available;
     private ConcurrentSkipListMap<Integer, Quiz> closed;
 
@@ -48,9 +49,9 @@ public class QuizSerializerImpl extends Serializer implements QuizSerializer {
             oos.writeObject(closed);
             oos.close();
             fout.close();
-            log.info("Quizzes Saved");
+            log.info(SerializerMessages.QUIZ_SAVE);
         } catch (IOException e) {
-            log.error("Problem with serialization", e);
+            log.error(SerializerMessages.PROBLEM_SER, e);
         }
     }
 
@@ -62,9 +63,9 @@ public class QuizSerializerImpl extends Serializer implements QuizSerializer {
             closed = (ConcurrentSkipListMap<Integer, Quiz>) ois.readObject();
             ois.close();
             fin.close();
-            log.info("Quizzes Retrieved");
+            log.info(SerializerMessages.QUIZ_GET);
         } catch (IOException | ClassNotFoundException e) {
-            log.error("Problem with deserialization", e);
+            log.error(SerializerMessages.PROBLEM_DESER, e);
         }
     }
 }

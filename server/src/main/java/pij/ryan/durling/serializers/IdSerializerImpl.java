@@ -2,12 +2,13 @@ package pij.ryan.durling.serializers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pij.ryan.durling.messages.SerializerMessages;
 
 import java.io.*;
 
 public class IdSerializerImpl extends Serializer implements IdSerializer {
     private static final Logger log = LoggerFactory.getLogger(IdSerializerImpl.class);
-    private static String fileName = "server/Ids.txt";
+    private static String fileName = SerializerMessages.ID_FILE;
     private Integer id;
 
     @Override
@@ -35,9 +36,9 @@ public class IdSerializerImpl extends Serializer implements IdSerializer {
             oos.writeObject(id);
             oos.close();
             fout.close();
-            log.info("Ids Saved");
+            log.info(SerializerMessages.ID_SAVED);
         } catch (IOException e) {
-            log.error("Problem with serialization", e);
+            log.error(SerializerMessages.PROBLEM_SER, e);
         }
     }
 
@@ -48,9 +49,9 @@ public class IdSerializerImpl extends Serializer implements IdSerializer {
             id = (Integer) ois.readObject();
             ois.close();
             fin.close();
-            log.info("Ids Retrieved");
+            log.info(SerializerMessages.ID_GET);
         } catch (IOException | ClassNotFoundException e) {
-            log.error("Problem with deserialization", e);
+            log.error(SerializerMessages.PROBLEM_DESER, e);
         }
     }
 }

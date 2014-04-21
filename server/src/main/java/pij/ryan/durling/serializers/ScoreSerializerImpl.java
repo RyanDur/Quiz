@@ -2,6 +2,7 @@ package pij.ryan.durling.serializers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pij.ryan.durling.messages.SerializerMessages;
 import pij.ryan.durling.models.Score;
 
 import java.io.*;
@@ -9,7 +10,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 public class ScoreSerializerImpl extends Serializer implements ScoreSerializer {
     private static final Logger log = LoggerFactory.getLogger(ScoreSerializerImpl.class);
-    private static String fileName = "server/Scores.txt";
+    private static String fileName = SerializerMessages.SCORE_FILE;
     private ConcurrentSkipListMap<Integer, Score> scores;
 
     @Override
@@ -37,9 +38,9 @@ public class ScoreSerializerImpl extends Serializer implements ScoreSerializer {
             oos.writeObject(scores);
             oos.close();
             fout.close();
-            log.info("Scores Saved");
+            log.info(SerializerMessages.SCORE_SAVE);
         } catch (IOException e) {
-            log.error("Problem with serialization", e);
+            log.error(SerializerMessages.PROBLEM_SER, e);
         }
     }
 
@@ -50,9 +51,9 @@ public class ScoreSerializerImpl extends Serializer implements ScoreSerializer {
             scores = (ConcurrentSkipListMap<Integer, Score>) ois.readObject();
             ois.close();
             fin.close();
-            log.info("Scores Retrieved");
+            log.info(SerializerMessages.SCORE_GET);
         } catch (IOException | ClassNotFoundException e) {
-            log.error("Problem with deserialization", e);
+            log.error(SerializerMessages.PROBLEM_DESER, e);
         }
     }
 }

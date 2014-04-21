@@ -2,6 +2,7 @@ package pij.ryan.durling.resources;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import pij.ryan.durling.messages.ServerMessages;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -22,14 +23,14 @@ public class ServerImpl implements Server {
 
     @Override
     public void registerServer() {
-        System.setProperty("java.security.policy", "server/security.policy");
+        System.setProperty(ServerMessages.JAVA_PROPERTY, ServerMessages.POLICY);
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-            Registry registry = LocateRegistry.createRegistry(1099);
-            registry.rebind("QuizMaker", quizMaker);
-            registry.rebind("QuizMaster", quizMaster);
+            Registry registry = LocateRegistry.createRegistry(ServerMessages.PORT);
+            registry.rebind(ServerMessages.MAKER, quizMaker);
+            registry.rebind(ServerMessages.MASTER, quizMaster);
             exitAction();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -37,9 +38,9 @@ public class ServerImpl implements Server {
     }
 
     private void exitAction() {
-        System.out.println("Server is ready.\nPress Enter to save data and exit");
+        System.out.println(ServerMessages.SERVER_READY);
         new Scanner(System.in).nextLine();
-        System.out.println("Saving Data");
+        System.out.println(ServerMessages.EXIT);
         System.exit(0);
     }
 }
